@@ -10,6 +10,9 @@ Command used by a user in welcome, for verification.
 `!ping`
 Command to check if bot is online and latency.
 
+`!google`
+Googles the top 5 results for you.
+
 """
 
 veteranhelplist = """
@@ -48,3 +51,5 @@ Bans a specified user. !ban [user mention or id] [reason]
 **Also Every command a Veteran|Member can use**
 
 """
+
+swearwords = ['cunt', 'dick', 'prick', 'vagina', 'porn', 'pussy', 'bastard', 'chutiya', 'motherfucker', 'dickhead', 'bellend', 'Ass', 'Arse', 'balls', 'Shit']
