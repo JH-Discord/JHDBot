@@ -12,7 +12,7 @@ bot.remove_command('help')
 
 ###Loading Cogs##########################################################################################
 
-extensions=['moderation', 'veteran']
+extensions=['moderation', 'veteran','general']
 
 if __name__ == '__main__':
     sys.path.insert(1, os.getcwd() + '/cogs/')
@@ -38,12 +38,6 @@ async def on_member_join(member):   #a function which works when any member join
     print(f'{member} has joined the server :)')
     channel = discord.utils.get(member.guild.channels, name="welcome")
     await channel.send(f'***Hi there, {member.mention} Welcome to JHDiscord!***\n\nTo gain access to the rest of the server. please read the \#obligatory-rules and then verify yourself.\nTo Verify yourself, Please fill the info in this JSON formated string and use command\n`!verify <JSON string>` to verify yourself\n\nJSON formatted string```{{"name":"<yournickname>", "Announcement role":"(Yes|no)", "What brought you here?":"<reason to join server>"}}```\n***Don\'t worry, If in case verification fails, a moderator/admin will help you with it.***') #member.mention pings a user !
-
-@bot.event
-async def on_member_leave(member):  #a function which works when any member lefts,need param `member`
-    print(f'{member} has left the server :(')
-    channel = bot.get_channel(id=698224498796920885)
-    await channel.send(f'Ah Goodbye {member}, you won\'t be missed') #doesn't print it, idk why
 
 
 ###############################################################################

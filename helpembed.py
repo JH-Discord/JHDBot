@@ -9,6 +9,7 @@ Command used by a user in welcome, for verification.
 **General commands**
 `!ping`
 Command to check if bot is online and latency.
+
 """
 
 veteranhelplist = """
@@ -29,6 +30,7 @@ Account recovery auto message.
 What is CTF auto message.
 
 **Also Every command a Member can use**
+
 """
 
 moderatorhelplist = """
@@ -44,4 +46,5 @@ Kicks a specified user. !kick [user mention or id] [reason]
 Bans a specified user. !ban [user mention or id] [reason]
 
 **Also Every command a Veteran|Member can use**
+
 """
