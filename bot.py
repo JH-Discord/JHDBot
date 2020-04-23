@@ -56,13 +56,16 @@ async def verify(ctx, *, input):
         if(len(data['name'])==0 or len(data['Announcement role'])==0 or len(data['What brought you here?'])==0):	#check length of input if any value == null
             await ctx.send("Incomplete arguments, please re-verify yourself with proper inputs")					#prints Incomplete arguments
         elif(len(data['name'])>0 and len(data['Announcement role'])>0 and len(data['What brought you here?'])>0):	#search for Member roles from all the roles in server, guild==server
-            role = discord.utils.get(ctx.guild.roles, name="Member")												#give role to author of message i.e person who sended verfication message
-            await ctx.message.author.add_roles(role)
-            await ctx.send("You are successfully verified")
-            if(data['Announcement role']=="Yes" or data['Announcement role']=="YES" or data['Announcement role']=="yes"):	#search for Member roles from all the roles in server, guild==server
-                role = discord.utils.get(ctx.guild.roles, name="Announcements")												#give announcement role to author of message i.e person who sended verfication message
-                await ctx.message.author.add_roles(role)	
-                await ctx.send("Announcement role succesfully given : )")        
+            if(data['name']=="<yournickname>" and data['Announcement role']=="(Yes|no)" and data['What brought you here?']=="<reason to join server>"):
+                await ctx.send("Default arguments passed, please re-verify yourself with proper inputs")
+            else:            
+                role = discord.utils.get(ctx.guild.roles, name="Member")												
+                await ctx.message.author.add_roles(role)
+                await ctx.send("You are successfully verified")
+                if(data['Announcement role']=="Yes" or data['Announcement role']=="YES" or data['Announcement role']=="yes"):	#search for Member roles from all the roles in server, guild==server
+                    role = discord.utils.get(ctx.guild.roles, name="Announcements")												#give announcement role to author of message i.e person who sended verfication message
+                    await ctx.message.author.add_roles(role)	
+                    await ctx.send("Announcement role succesfully given : )")        
         else:
             await ctx.send("Sorry, failed to authorize you, relax a moderator/admin will help you soon : )")			#error message because I am paranoid
     except:
