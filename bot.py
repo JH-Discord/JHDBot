@@ -94,6 +94,16 @@ async def _help(ctx, role=None):                         #can't figure out why I
         emb.set_footer(text="Created by: JHD Moderation team ")
         await ctx.send(embed=emb)
 
+################################################################################################################################################  
+#FAQ message
+@bot.command(aliases=['qna'])
+async def FAQ(ctx):
+    emb = discord.Embed(description=helpembed.faq, colour=0xff002a)
+    emb.set_author(name="JHDiscord Bot", icon_url=f"{ctx.guild.icon_url}")
+    emb.set_thumbnail(url=f"{ctx.guild.icon_url}")
+    emb.set_footer(text="JHD Moderation team ")
+    await ctx.send(embed=emb)
+
 
 
 ### Token ###
