@@ -63,6 +63,18 @@ class VeteranCog(commands.Cog):
         else:
             await ctx.send('Seems like you are not authorized to use this command D:')
 
+    #just ask it mate
+    @commands.command(aliases=['ja'])       #creating Commands ctx is something like context, send automatically 
+    async def justask(self, ctx):
+        role = discord.utils.get(ctx.author.roles, name="Veteran")
+        coolpeople = discord.utils.get(ctx.author.roles, name="Cool People")
+        if(role!=None or coolpeople!=None):
+            await ctx.send('Please don\'t ask to ask a question, ask if anyone is on, or ask for an expert. Just ask your question. That is the only way to get an answer.')
+        elif(ctx.message.author.guild_permissions.manage_messages):
+            await ctx.send('Please don\'t ask to ask a question, ask if anyone is on, or ask for an expert. Just ask your question. That is the only way to get an answer.')
+        else:
+            await ctx.send('Seems like you are not authorized to use this command D:')
+
 
     #ctfwhat command
     @commands.command()       #creating Commands ctx is something like context, send automatically 

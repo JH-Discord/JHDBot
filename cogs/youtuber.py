@@ -5,10 +5,23 @@ from requests_html import HTML, HTMLSession
 import requests
 import re
 
-class GeneralCog(commands.Cog):
+class YoutuberCog(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+
+
+    #Add stream feature
+
+
+
+
+
+
+
+
+
+
 
     #GoogleSearchcommand ... IT works but we removed it because someone can search for explicit content too..
 """ @commands.command(aliases=['google', 'g'])  
@@ -55,5 +68,5 @@ class GeneralCog(commands.Cog):
 """
 
 def setup(bot):
-    bot.add_cog(GeneralCog(bot))
+    bot.add_cog(YoutuberCog(bot))
     print('General cog loaded')

@@ -1,0 +1,89 @@
+#general
+Channel For Rational Conversation / Conversation about Infosec / Cyber Security / Computer Programming / Computers
+
+#shiptoasting
+Channel topic: Brought to you by skuxnet 
+The official discord channel of https://johnhammond.dev/ 
+Channel for memes and other such nonsense. Strictly no actual NSFW content. If you have to question if it's allowed, it's not.
+
+#bot commands
+Come one come all! This is the one and only place to use the bots! Please use all commands here unless otherwise specified.
+
+#veteran-chat
+Welcome to the Veteran Chat! Check pinned for some info on your new powers. :grinning:
+
+#resources
+Drop your resources for CTFs, hacking, cyber security, program, networking, etc. here! Nothing that you shouldn't share please.
+
+#github
+Share GitHub projects here!
+
+#wargames-list
+List of ongong wargames.
+
+#ctf-writeups
+Channel to post writeups for past ctfs. 
+
+#vc-text
+Voice chat text.
+
+#capture-the-flag
+A channel for discussing anything CTF that doesn't have a specific channel. PLEASE keep spoilers to DMs!
+
+#over-the-wire
+Channel for OverTheWire challenges. Please keep spoilers in PMs
+
+#tryhackme
+Channel for discussion of Try Hack Me http://tryhackme.com
+
+#hackthebox
+Request for help in DM, asking questions for HackTheBox, please do not post spoilers
+
+#archived_ctfs
+Archives of channels for past ctf competitions
+
+#beginners
+Channel for those new into hacking/security. Please be respectful with your questions/responses and DO NOT put down others for not having a level of knowledge similar to yours. This  is a NEWB FRIENDLY ZONE
+
+#news
+Feel free to link news stories relevant to hacking, cybersecurity, ctfs, tech, etc. here. 
+
+#web-hacking
+Browsers, web apps, and all that jazz.
+
+#osint-privacy
+Open Source Intelligent and privacy discussion and so forth. Do NOT dox anyone!
+
+#pwning-and-reversing
+Discussion that relates to binary exploitation and reverse engineering.
+
+#blue-ir-forensics
+Blue teaming, incident response and forensics discussion all goes here.
+
+#wireless-hacking
+Discussion about Wifi, RFID, forms of wireless hacking.
+
+#programming
+Channel for anything programming related. Due to overwhelming majority, this will be replacing the single channels for specific programming languages.
+
+#certifications
+Discuss the certifications you have or want here. What they are. Which ones are useful. How to get them. etc. Do NOT ask for copyrighted content. Obtain it from legal sources.
+
+#katana
+Discuss and coordinate work on Katana Modules here.
+
+#welcome
+Hey there, thanks for joining JHDiscord! Please introduce yourself and gain access to the rest of the server, we are excited you are part of the community!
+
+#roles
+Pick up optional swag roles here from a reaciton menu.
+
+#suggestions
+Channel where suggestions appear as polls! Cast your votes!
+
+#tweets
+Info Sec related twitter feed.
+
+
+
+1440x900
