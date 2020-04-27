@@ -14,7 +14,7 @@ bot.remove_command('help')
 
 ###Loading Cogs##########################################################################################
 
-extensions=['moderation', 'veteran','youtuber']
+extensions=['moderation', 'veteran',]
 
 if __name__ == '__main__':
     sys.path.insert(1, os.getcwd() + '/cogs/')
