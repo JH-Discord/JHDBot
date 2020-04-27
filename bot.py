@@ -9,7 +9,7 @@ import os
 import random
 import helpembed
 
-bot = commands.Bot(command_prefix = '!', case_insensitive=True)  #bot command prefix
+bot = commands.Bot(command_prefix = '$', case_insensitive=True)  #bot command prefix
 bot.remove_command('help')
 
 ###Loading Cogs##########################################################################################
@@ -40,13 +40,13 @@ async def on_member_join(member):   #a function which works when any member join
     print(f'{member} has joined the server :)')
     channel = discord.utils.get(member.guild.channels, name="welcome")
     rchannel = discord.utils.get(member.guild.channels, name="obligatory-rules")
-    await channel.send(f'***Hi there, {member.mention} Welcome to JHDiscord!***\n\nTo gain access to the rest of the server. please read the {rchannel.mention} and then verify yourself.\nTo Verify yourself, Please use command `!verify` and complete the **true or false quiz** that follows based off the obligatory rules.\n**Don\'t worry, If in case verification fails, our moderation team will be notified and will assist you.\nThere is no need to ping us.**')
+    await channel.send(f'***Hi there, {member.mention} Welcome to JHDiscord!***\n\nTo gain access to the rest of the server. please read the {rchannel.mention} and then verify yourself.\nTo Verify yourself, Please use command `$verify` and complete the **true or false quiz** that follows based off the obligatory rules.\n**Don\'t worry, If in case verification fails, our moderation team will be notified and will assist you.\nThere is no need to ping us.**')
 
 #On error Event
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
-        await ctx.send("Invalid command passed. Please Use `!help` to know valid commands")
+        await ctx.send("Invalid command passed. Please Use `$help` to know valid commands")
     else:
         await ctx.send(f"There was an error, sorry! If you belive it's a mistake by bot, let our moderators/admins know about it")
 
@@ -159,7 +159,7 @@ async def verify(ctx):
     i=0
     flag=0
     if(str(ctx.message.channel)=="welcome"):
-        await ctx.message.author.send("**Hey Again, I hope you ready for verification quiz**\nVerification quiz will start in `30` secound hope you have read the rules properly, also you will have `60` seconds to answer each question so please read the question properly : )\n\nDon't worry, if verification fail please go back to welcome channel and again type `!verify` to re-verify yourself, or just ask moderators for help.")
+        await ctx.message.author.send("**Hey Again, I hope you ready for verification quiz**\nVerification quiz will start in `30` secound hope you have read the rules properly, also you will have `60` seconds to answer each question so please read the question properly : )\n\nDon't worry, if verification fail please go back to welcome channel and again type `$verify` to re-verify yourself, or just ask moderators for help.")
         time.sleep(35)
         while True:
             index=random.randint(0,20)
@@ -189,7 +189,7 @@ async def verify(ctx):
             else:
                 continue
         if(flag>=1):
-            await ctx.message.author.send(f"{ctx.message.author.mention} Verification failed, it seems you gave a wrong answer leading to this fail, please go through rules again and re-verify yourself(you can again use `!verify` command to verify yourself), if you have any other question or if you want to be manually verified, please wait for our veterans/moderators/admins, they will help you as soon as they see your texts in this channel. Note: Please don't ping a role, our team is already notified. :)")
+            await ctx.message.author.send(f"{ctx.message.author.mention} Verification failed, it seems you gave a wrong answer leading to this fail, please go through rules again and re-verify yourself(you can again use `$verify` command to verify yourself), if you have any other question or if you want to be manually verified, please wait for our veterans/moderators/admins, they will help you as soon as they see your texts in this channel. Note: Please don't ping a role, our team is already notified. :)")
             channel = discord.utils.get(ctx.message.author.guild.channels, name="verifications-help")
             await channel.send(f"Seems like {ctx.message.author}, failed his verification.. If anyone is online and free atm, please help that member, thank ya.. I will owe you one :P")
             await channel.send(f"log: {ctx.message.author} failed on this question: {question}")
@@ -211,7 +211,7 @@ async def verify(ctx):
                 role = discord.utils.get(ctx.guild.roles, name="Announcements")
                 await ctx.message.author.add_roles(role)
             channel = discord.utils.get(ctx.message.author.guild.channels, name="bot-commands")
-            await ctx.message.author.send(f'**Welcome to the Server, **{ctx.message.author.mention} **!** \nWe are glad to have you here. if you wanna go through quick server description please go to {channel.mention} and enter command `!chdesc` to get a description of almost every channel and `!faq` to get frequently asked questions.\nWe hope you enjoy your stay and contribute in our community : )')
+            await ctx.message.author.send(f'**Welcome to the Server, **{ctx.message.author.mention} **!** \nWe are glad to have you here. if you wanna go through quick server description please go to {channel.mention} and enter command `$chdesc` to get a description of almost every channel and `$faq` to get frequently asked questions.\nWe hope you enjoy your stay and contribute in our community : )')
     else:
         await ctx.send("Mate..You are already verified : )")
 
