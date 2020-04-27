@@ -4,6 +4,10 @@ import asyncio
 from requests_html import HTML, HTMLSession
 import requests
 import re
+import pytz
+import datetime
+import sqlite3
+import cogs.streamlists
 
 class YoutuberCog(commands.Cog):
 
@@ -11,17 +15,48 @@ class YoutuberCog(commands.Cog):
         self.bot = bot
 
 
-    #Add stream feature
+"""    #Add stream feature
+    @commands.command()
+    async def addstream(self, ctx, name, link, year, month, date, hr, mins, sec):
+        time = datetime.datetime(int(year), int(month), int(date), int(hr), int(mins), int(sec), tzinfo=pytz.UTC)
+        timenow = datetime.datetime.now(tz=pytz.UTC)
+        print(timenow-time)
+        daysahead=re.compile(r'\d+\s').search(str(time-timenow)).group(0)
+        if(int(daysahead)>=2):
+            await ctx.send("Failed: Sorry a stream can only be added 2 days prior to the stream day, not before that")
+            return
+        youtubers = discord.utils.get(ctx.author.roles, name="Youtuber")
+        if(youtubers!=None):
+            db= sqlite3.connect("youtubers.sqlite")
+            cursor = db.cursor()
+            sql= ("Insert into youtubers(Name, link, time) values(?,?,?)")
+            val= (name, link, time)
+            cursor.execute(sql,val)
+            db.commit()
+            db.close
+            await ctx.send("Stream Information succesfully added")
+        else:
+            await ctx.send("Sorry, it seems like you are not authorized to use this command :' (")
 
-
-
-
-
-
-
-
-
-
+    #Show stream feature
+    @commands.command()
+    async def showstreams(self, ctx):
+        db= sqlite3.connect("youtubers.sqlite")
+        cursor = db.cursor()
+        cursor.execute("select Name from youtubers")
+        result=cursor.fetchone()
+        if result==None:
+            await ctx.send("Seems like the stream list is empty D:\n_Ask John to do more streams/premiures..lol_")
+            return
+        else:
+            cursor.execute("select * from youtubers")
+            result=cursor.fetchall()
+            for x in range(len(result)):
+                tup=result[x]
+                emb = discord.Embed(description="**Youtuber : "+tup[0]+"\nLink : "+tup[1]+"\nTime : "+tup[2]+"**", colour=0xff002a)
+                emb.set_thumbnail(url=f"{ctx.guild.icon_url}")
+                await ctx.send(embed=emb)"""
+        
 
     #GoogleSearchcommand ... IT works but we removed it because someone can search for explicit content too..
 """ @commands.command(aliases=['google', 'g'])  
@@ -69,4 +104,4 @@ class YoutuberCog(commands.Cog):
 
 def setup(bot):
     bot.add_cog(YoutuberCog(bot))
-    print('General cog loaded')
+    print('Youtube useless cog loaded')

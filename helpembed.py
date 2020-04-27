@@ -15,6 +15,7 @@ The list of frequently asked question.
 
 `!Channeldesc`
 Give the description of all channels
+
 """
 
 veteranhelplist = """

@@ -1,5 +1,0 @@
-listyoutuber = """ """
-
-listtime= """ """
-
-listlink= """ """
