@@ -192,7 +192,7 @@ listofquestions = [
     'You should totally dump all your flags here ?',
     'You should not link to graphic, illegal or NSFW content ?',
     'you should keep HTB nudges to Direct Messages ?', 
-    'You should report any broken rules with `-report [user mention] [reason]`.',
+    'You should report any broken rules with `$report [user mention] [reason]`.',
     'Flag and hint sharing is not permitted on private CTFs ?',  
     'Advertisement without permission is fine ?', 
     'This is an okay place to try out your new IP grabber or virus ?', 
@@ -202,7 +202,7 @@ listofquestions = [
     'You should be nice to all server members ?', 
     'You should ask permission before sending a DM ?', 
     'Is this is a whitehat discord server ?', 
-    'Is this is not a dark marketplace ?', 
+    'This is not a dark marketplace', 
     'Harassment in any form is not permitted.', 
     'When asking for help on a challenge you should specify where it comes from ?', 
     'You get five warnings before being banned.'
