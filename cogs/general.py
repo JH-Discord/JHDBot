@@ -14,7 +14,7 @@ class GeneralCog(commands.Cog):
         role = discord.utils.get(ctx.author.roles, name="Veteran")
         coolpeople = discord.utils.get(ctx.author.roles, name="Cool People")
         if(str(ctx.message.channel)=="bot-commands" or role!=None or coolpeople!=None or ctx.message.author.guild_permissions.manage_messages):
-            await ctx.send(f"Ping - {round(bot.latency * 1000)}ms")
+            await ctx.send(f"Ping - {round(self.bot.latency * 1000)}ms")
         else:
             await ctx.send("Please use this command in `#bot-commands`")
 
@@ -36,7 +36,7 @@ class GeneralCog(commands.Cog):
             if reason==None:
                 await ctx.send("Invalid syntax, please add the issue you are facing.")
             else:
-                creator = await bot.fetch_user(554907015785218050)
+                creator = await self.bot.fetch_user(554907015785218050)
                 await creator.send(f"Reported by user {ctx.message.author} : "+reason)
                 await ctx.send("Your report has been successfully forwarded to moderators")
         else:
