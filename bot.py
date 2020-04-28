@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 import discord 
 from discord.ext import commands
 import asyncio
@@ -48,7 +47,7 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         await ctx.send("Invalid command passed. Please Use `$help` to know valid commands")
     else:
-        await ctx.send(f"There was an error, sorry! If you belive it's a mistake by bot, let our moderators/admins know about it")
+        await ctx.send("There was an error, sorry! If you belive it's a mistake by bot, let our moderators/admins know about it")
 
 ################################################################################################################################################  
 #JHDbot help message

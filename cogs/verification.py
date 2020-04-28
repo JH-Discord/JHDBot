@@ -3,7 +3,6 @@ from discord.ext import commands
 import asyncio
 import time
 import random
-import cogs.qna
 
 class VerifyCog(commands.Cog):
 
@@ -13,19 +12,54 @@ class VerifyCog(commands.Cog):
     #Current Verification method
     @commands.command(aliases=['verification'])
     async def verify(self, ctx):
+        listofquestions = [
+        'Can we help you get your Instagram account back ?', 
+        'Are we selling accounts ?', 
+        'Can we help you set up a botnet ?', 
+        'To get an answer to a question, should you ask it repeatedly in every channel ?',
+        'You should totally dump all your flags here ?',
+        'You should not link to graphic, illegal or NSFW content ?',
+        'you should keep HTB nudges to Direct Messages ?', 
+        'You should report any broken rules with `$report [user mention] [reason]`.',
+        'Flag and hint sharing is not permitted on private CTFs ?',  
+        'Advertisement without permission is fine ?', 
+        'This is the right place to try out your new IP grabber or virus ?', 
+        'You can post illegal content here ?', 
+        'Is being nice is optional ?', 
+        'Is this is a blackhat server ?', 
+        'You should be nice to all server members ?', 
+        'You should ask permission before sending a DM ?', 
+        'Is this is a whitehat discord server ?', 
+        'This is not a dark marketplace', 
+        'Harassment in any form is not permitted.', 
+        'When asking for help on a challenge you should specify where it comes from ?', 
+        'You get five warnings before being banned.',
+        'We can help you recover your Facebook account.',
+        'We can\'t help you get your Roblox account back.',
+        'We cannot help you crack applications.',
+        'Self Advertising includes posting Discord invite links.',
+        'Flag sharing is allowed.',
+        'Harassment includes deliberate intimidation and targeting individuals in a manner that makes them feel uncomfortable, unwelcome, or afraid.',
+        'We can help you make an aimbot.',
+        'You should have full permission and or ownership before doing any hacking.',
+        'You should help make this community welcoming for everyone.',
+        'We can help you get unbanned from _______.'
+        ]
+
+        answers = ['false', 'false', 'false', 'false', 'false', 'true', 'true', 'true', 'true', 'false', 'false', 'false', 'false', 'false', 'true', 'true', 'true', 'true', 'true', 'true', 'false', 'false', 'true', 'true', 'true', 'false', 'true', 'false', 'true', 'true', 'false']
         gotindex=[]
         i=0
         flag=0
         if(str(ctx.message.channel)=="welcome"):
-            await ctx.message.author.send("**Hey Again, I hope you ready for verification quiz**\nVerification quiz will start in `30` secound hope you have read the rules properly, also you will have `60` seconds to answer each question so please read the question properly : )\n\nDon't worry, if verification fail please go back to welcome channel and again type `$verify` to re-verify yourself, or just ask moderators for help.")
-            time.sleep(30)
+            await ctx.message.author.send("**Hey Again, I hope you ready for verification quiz**\nVerification quiz will start in `30` secound hope you have read the rules properly, also you will have `60` seconds to answer each question so please read the question properly, till the quiz begin please be patient and don't type anything(else sometimes bot gets mad.) : )\n\nDon't worry, if verification fail please go back to welcome channel and again type `$verify` to re-verify yourself, or just ask moderators for help.")
+            await asyncio.sleep(30)
             while True:
-                index=random.randint(0,31)
+                index=random.randint(0,30)
                 if index not in gotindex:
                     i+=1
                     gotindex.append(index)
-                    question=cogs.qna.listofquestions[index]
-                    answer=cogs.qna.answers[index]
+                    question=listofquestions[index]
+                    answer=answers[index]
                     await ctx.message.author.send("**Question : "+question+"[Answer as either `True` or `False`.]**")
 
                     def check(m):
@@ -41,13 +75,14 @@ class VerifyCog(commands.Cog):
                             flag+=1
                             break
                     except asyncio.TimeoutError:
-                        await ctx.message.author.send('Times out')
+                        flag+=1
+                        break
                     if i>=4:
                         break
                 else:
                     continue
             if(flag>=1):
-                await ctx.message.author.send(f"{ctx.message.author.mention} Verification failed, it seems you gave a wrong answer leading to this fail, please go through rules again and re-verify yourself(you can again use `$verify` command to verify yourself), if you have any other question or if you want to be manually verified, please wait for our veterans/moderators/admins, they will help you as soon as they see your texts in this channel. Note: Please don't ping a role, our team is already notified. :)")
+                await ctx.message.author.send(f"{ctx.message.author.mention} Verification failed, it seems you gave a wrong answer or the time ran out leading to this fail, please go through rules again and re-verify yourself(you can again use `$verify` command to verify yourself), if you have any other question or if you want to be manually verified, please wait for our veterans/moderators/admins, they will help you as soon as they see your texts in this channel. Note: Please don't ping a role, our team is already notified. :)")
                 channel = discord.utils.get(ctx.message.author.guild.channels, name="verifications-help")
                 await channel.send(f"Seems like {ctx.message.author}, failed his verification.. If anyone is online and free atm, please help that member, thank ya.. I will owe you one : P")
                 await channel.send(f"log: {ctx.message.author} failed on this question: {question}")
@@ -72,7 +107,7 @@ class VerifyCog(commands.Cog):
                 await ctx.message.author.send(f'**Welcome to the Server, **{ctx.message.author.mention} **!** \nWe are glad to have you here. if you wanna go through quick server description please go to {channel1.mention} and enter command `$chdesc` to get a description of almost every channel and `$faq` to get frequently asked questions.\nWe hope you enjoy your stay and contribute in our community : )')
                 await channel2.send(f"log: {ctx.message.author} successfully verified")
         else:
-            await ctx.send("Mate..You are already verified : )")
+            await ctx.send("Command only works in #welcome channel : )")
 
 def setup(bot):
     bot.add_cog(VerifyCog(bot))
