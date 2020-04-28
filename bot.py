@@ -54,12 +54,31 @@ async def on_command_error(ctx, error):
 #Ping Command to check if server is up or not
 @bot.command()       #creating Commands ctx is something like context, send automatically 
 async def ping(ctx):
-    await ctx.send(f"Ping - {round(bot.latency * 1000)}ms")
+    role = discord.utils.get(ctx.author.roles, name="Veteran")
+    coolpeople = discord.utils.get(ctx.author.roles, name="Cool People")
+    if(str(ctx.message.channel)=="bot-commands" or role!=None or coolpeople!=None or ctx.message.author.guild_permissions.manage_messages):
+        await ctx.send(f"Ping - {round(bot.latency * 1000)}ms")
+    else:
+        await ctx.send("Please use this command in `#bot-commands`")
 
 #For Likt
 @bot.command()
-async def solve(ctx, *, input):
-    await ctx.send("That is a definite maybe")
+async def solve(ctx, *, input=None):
+    role = discord.utils.get(ctx.author.roles, name="Veteran")
+    coolpeople = discord.utils.get(ctx.author.roles, name="Cool People")
+    if(str(ctx.message.channel)=="bot-commands" or role!=None or coolpeople!=None or ctx.message.author.guild_permissions.manage_messages):
+        await ctx.send("That is a definite maybe")
+    else:
+        await ctx.send("Please use this command in `#bot-commands`")
+
+#For Sinister
+@bot.command()
+async def scary(ctx, *, input=None):
+    coolpeople = discord.utils.get(ctx.author.roles, name="Cool People")
+    if(coolpeople!=None or ctx.message.author.guild_permissions.manage_messages):
+        await ctx.send("Did you mean SinisterMatrix")
+    else:
+        await ctx.send("You are not authorized to use this command")
 
 
 ################################################################################################################################################
@@ -196,7 +215,7 @@ async def verify(ctx):
             await channel.send("...")
         else:
             announ=0
-            await ctx.message.author.send("**Question: Do you also want announcement role ? [Answer as either `Yes` or `No`.]**")
+            await ctx.message.author.send("**Question: Do you also want announcement role(it is for pings about server updates, polls, upcoming ctfs and such information.) ? [Answer as either `Yes` or `No`.]**")
             def check(m):
                 return m.author == ctx.message.author 
             try:
@@ -210,8 +229,10 @@ async def verify(ctx):
             if(announ==1):
                 role = discord.utils.get(ctx.guild.roles, name="Announcements")
                 await ctx.message.author.add_roles(role)
-            channel = discord.utils.get(ctx.message.author.guild.channels, name="bot-commands")
-            await ctx.message.author.send(f'**Welcome to the Server, **{ctx.message.author.mention} **!** \nWe are glad to have you here. if you wanna go through quick server description please go to {channel.mention} and enter command `$chdesc` to get a description of almost every channel and `$faq` to get frequently asked questions.\nWe hope you enjoy your stay and contribute in our community : )')
+            channel1 = discord.utils.get(ctx.message.author.guild.channels, name="bot-commands")
+            channel2 = discord.utils.get(ctx.message.author.guild.channels, name="verifications-help")
+            await ctx.message.author.send(f'**Welcome to the Server, **{ctx.message.author.mention} **!** \nWe are glad to have you here. if you wanna go through quick server description please go to {channel1.mention} and enter command `$chdesc` to get a description of almost every channel and `$faq` to get frequently asked questions.\nWe hope you enjoy your stay and contribute in our community : )')
+            await channel2.send(f"log: {ctx.message.author} successfully verified")
     else:
         await ctx.send("Mate..You are already verified : )")
 
