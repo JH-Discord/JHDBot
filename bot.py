@@ -14,7 +14,7 @@ bot.remove_command('help')
 
 ###Loading Cogs##########################################################################################
 
-extensions=['moderation', 'veteran',]
+extensions=['moderation', 'veteran', 'general']
 
 if __name__ == '__main__':
     sys.path.insert(1, os.getcwd() + '/cogs/')
@@ -49,61 +49,6 @@ async def on_command_error(ctx, error):
         await ctx.send("Invalid command passed. Please Use `$help` to know valid commands")
     else:
         await ctx.send(f"There was an error, sorry! If you belive it's a mistake by bot, let our moderators/admins know about it")
-
-###############################################################################
-#Ping Command to check if server is up or not
-@bot.command()       #creating Commands ctx is something like context, send automatically 
-async def ping(ctx):
-    role = discord.utils.get(ctx.author.roles, name="Veteran")
-    coolpeople = discord.utils.get(ctx.author.roles, name="Cool People")
-    if(str(ctx.message.channel)=="bot-commands" or role!=None or coolpeople!=None or ctx.message.author.guild_permissions.manage_messages):
-        await ctx.send(f"Ping - {round(bot.latency * 1000)}ms")
-    else:
-        await ctx.send("Please use this command in `#bot-commands`")
-
-#For Likt
-@bot.command()
-async def solve(ctx, *, input=None):
-    role = discord.utils.get(ctx.author.roles, name="Veteran")
-    coolpeople = discord.utils.get(ctx.author.roles, name="Cool People")
-    if(str(ctx.message.channel)=="bot-commands" or role!=None or coolpeople!=None or ctx.message.author.guild_permissions.manage_messages):
-        await ctx.send("That is a definite maybe")
-    else:
-        await ctx.send("Please use this command in `#bot-commands`")
-
-#For Sinister
-@bot.command()
-async def scary(ctx, *, input=None):
-    coolpeople = discord.utils.get(ctx.author.roles, name="Cool People")
-    if(coolpeople!=None or ctx.message.author.guild_permissions.manage_messages):
-        await ctx.send("Did you mean SinisterMatrix")
-    else:
-        await ctx.send("You are not authorized to use this command")
-
-
-################################################################################################################################################
-
-"""    @bot.command()								#role verifictaion
-    async def verify(ctx, *, input):
-        try:
-            data = json.loads(input)																					#take input data and put it in json format
-            if(len(data['name'])==0 or len(data['Announcement role'])==0 or len(data['What brought you here?'])==0):	#check length of input if any value == null
-                await ctx.send("Incomplete arguments, please re-verify yourself with proper inputs")					#prints Incomplete arguments
-            elif(len(data['name'])>0 and len(data['Announcement role'])>0 and len(data['What brought you here?'])>0):	#search for Member roles from all the roles in server, guild==server
-                if(data['name']=="<yournickname>" and data['Announcement role']=="(Yes|no)" and data['What brought you here?']=="<reason to join server>"):
-                    await ctx.send("Default arguments passed, please re-verify yourself with proper inputs")
-                else:            
-                    role = discord.utils.get(ctx.guild.roles, name="Member")												
-                    await ctx.message.author.add_roles(role)
-                    await ctx.send("You are successfully verified")
-                    if(data['Announcement role']=="Yes" or data['Announcement role']=="YES" or data['Announcement role']=="yes"):	#search for Member roles from all the roles in server, guild==server
-                        role = discord.utils.get(ctx.guild.roles, name="Announcements")												#give announcement role to author of message i.e person who sended verfication message
-                        await ctx.message.author.add_roles(role)	
-                        await ctx.send("Announcement role succesfully given : )")        
-            else:
-                await ctx.send("Sorry, failed to authorize you, relax a moderator/admin will help you soon : )")			#error message because I am paranoid
-        except:
-            await ctx.send("Sorry, failed to authorize you, relax a moderator/admin will help you soon.")"""					#As I said, I am paranoid
 
 ################################################################################################################################################  
 #JHDbot help message
@@ -236,35 +181,6 @@ async def verify(ctx):
     else:
         await ctx.send("Mate..You are already verified : )")
 
-############################################################################################################################
-# Reportbot command
-@bot.command()
-async def reportbot(ctx, *,reason=None):
-    coolpeople = discord.utils.get(ctx.author.roles, name="Cool People")
-    if(str(ctx.message.channel)=="bot-commands" or coolpeople!=None or ctx.message.author.guild_permissions.manage_messages):
-        if reason==None:
-            await ctx.send("Invalid syntax, please add the issue you are facing.")
-        else:
-            creator = await bot.fetch_user(554907015785218050)
-            await creator.send(f"Reported by user {ctx.message.author} : "+reason)
-            await ctx.send("Your report has been successfully forwarded to moderators")
-    else:
-        await ctx.send("Please use this command in `#bot-commands`")
-
-
-#reporting users
-@bot.command()
-async def report(ctx, user=None, *,reason=None):
-    coolpeople = discord.utils.get(ctx.author.roles, name="Cool People")
-    if(str(ctx.message.channel)=="bot-commands" or coolpeople!=None or ctx.message.author.guild_permissions.manage_messages):
-        if reason==None or user==None:
-            await ctx.send("Invalid syntax, please check `$help` to check the syntax and pass proper arguments.")
-        else:
-            channel = discord.utils.get(ctx.message.author.guild.channels, name="moderators")
-            await channel.send(f"Reported by user {ctx.message.author} : Complain against user {user} - "+reason)
-            await ctx.send("Your report has been successfully forwarded to moderators")
-    else:
-        await ctx.send("Please use this command in `#bot-commands`")
 
 ### Token ###
 bot.run("Njk4MjIxNTk2MTg3NTU3OTQw.XpCrmQ.DWu6ars9vZT5pLqW_Sva8I2FDCQ") #token
