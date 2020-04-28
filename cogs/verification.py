@@ -18,9 +18,9 @@ class VerifyCog(commands.Cog):
         flag=0
         if(str(ctx.message.channel)=="welcome"):
             await ctx.message.author.send("**Hey Again, I hope you ready for verification quiz**\nVerification quiz will start in `30` secound hope you have read the rules properly, also you will have `60` seconds to answer each question so please read the question properly : )\n\nDon't worry, if verification fail please go back to welcome channel and again type `$verify` to re-verify yourself, or just ask moderators for help.")
-            time.sleep(35)
+            time.sleep(30)
             while True:
-                index=random.randint(0,20)
+                index=random.randint(0,31)
                 if index not in gotindex:
                     i+=1
                     gotindex.append(index)
@@ -51,7 +51,6 @@ class VerifyCog(commands.Cog):
                 channel = discord.utils.get(ctx.message.author.guild.channels, name="verifications-help")
                 await channel.send(f"Seems like {ctx.message.author}, failed his verification.. If anyone is online and free atm, please help that member, thank ya.. I will owe you one : P")
                 await channel.send(f"log: {ctx.message.author} failed on this question: {question}")
-                await channel.send("...")
             else:
                 announ=0
                 await ctx.message.author.send("**Question: Do you also want announcement role(it is for pings about server updates, polls, upcoming ctfs and such information.) ? [Answer as either `Yes` or `No`.]**")
