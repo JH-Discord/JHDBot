@@ -40,7 +40,7 @@ async def on_member_join(member):   #a function which works when any member join
     print(f'{member} has joined the server :)')
     channel = discord.utils.get(member.guild.channels, name="welcome")
     rchannel = discord.utils.get(member.guild.channels, name="obligatory-rules")
-    await channel.send(f'***Hi there, {member.mention} Welcome to JHDiscord!***\n\nTo gain access to the rest of the server. please read the {rchannel.mention} and then verify yourself.\nTo Verify yourself, Please use command `$verify` and complete the **true or false quiz** that follows based off the obligatory rules.\n**Don\'t worry, If in case verification fails, our moderation team will be notified and will assist you.\nThere is no need to ping us.**')
+    await channel.send(f'***Hi there, {member.mention} Welcome to JHDiscord!***\n\nTo gain access to the rest of the server. please read the {rchannel.mention} and then verify yourself.\nTo Verify yourself, Please use command `$verify` and complete the **true or false quiz** that follows based off the obligatory rules.\n**Don\'t worry, If in case verification fails, our moderation team will be notified and will assist you.**\nThere is no need to ping us but you can still tell us if you face a problem in this channel\n\nAlso the JHD_Bot will send you a DM, so please make sure you have DM\'s from server members `on` in `privacy settings` before you use `$verify` command, thanks')
 
 #On error Event
 @bot.event
@@ -210,7 +210,7 @@ async def verify(ctx):
         if(flag>=1):
             await ctx.message.author.send(f"{ctx.message.author.mention} Verification failed, it seems you gave a wrong answer leading to this fail, please go through rules again and re-verify yourself(you can again use `$verify` command to verify yourself), if you have any other question or if you want to be manually verified, please wait for our veterans/moderators/admins, they will help you as soon as they see your texts in this channel. Note: Please don't ping a role, our team is already notified. :)")
             channel = discord.utils.get(ctx.message.author.guild.channels, name="verifications-help")
-            await channel.send(f"Seems like {ctx.message.author}, failed his verification.. If anyone is online and free atm, please help that member, thank ya.. I will owe you one :P")
+            await channel.send(f"Seems like {ctx.message.author}, failed his verification.. If anyone is online and free atm, please help that member, thank ya.. I will owe you one : P")
             await channel.send(f"log: {ctx.message.author} failed on this question: {question}")
             await channel.send("...")
         else:
@@ -235,6 +235,36 @@ async def verify(ctx):
             await channel2.send(f"log: {ctx.message.author} successfully verified")
     else:
         await ctx.send("Mate..You are already verified : )")
+
+############################################################################################################################
+# Reportbot command
+@bot.command()
+async def reportbot(ctx, *,reason=None):
+    coolpeople = discord.utils.get(ctx.author.roles, name="Cool People")
+    if(str(ctx.message.channel)=="bot-commands" or coolpeople!=None or ctx.message.author.guild_permissions.manage_messages):
+        if reason==None:
+            await ctx.send("Invalid syntax, please add the issue you are facing.")
+        else:
+            creator = await bot.fetch_user(554907015785218050)
+            await creator.send(f"Reported by user {ctx.message.author} : "+reason)
+            await ctx.send("Your report has been successfully forwarded to moderators")
+    else:
+        await ctx.send("Please use this command in `#bot-commands`")
+
+
+#reporting users
+@bot.command()
+async def report(ctx, user=None, *,reason=None):
+    coolpeople = discord.utils.get(ctx.author.roles, name="Cool People")
+    if(str(ctx.message.channel)=="bot-commands" or coolpeople!=None or ctx.message.author.guild_permissions.manage_messages):
+        if reason==None or user==None:
+            await ctx.send("Invalid syntax, please check `$help` to check the syntax and pass proper arguments.")
+        else:
+            channel = discord.utils.get(ctx.message.author.guild.channels, name="moderators")
+            await channel.send(f"Reported by user {ctx.message.author} : Complain against user {user} - "+reason)
+            await ctx.send("Your report has been successfully forwarded to moderators")
+    else:
+        await ctx.send("Please use this command in `#bot-commands`")
 
 ### Token ###
 bot.run("Njk4MjIxNTk2MTg3NTU3OTQw.XpCrmQ.DWu6ars9vZT5pLqW_Sva8I2FDCQ") #token

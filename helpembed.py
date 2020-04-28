@@ -1,9 +1,9 @@
 memberhelplist = """
 Welcome to John hammond discord !\nHope you all have a fun time here, if you have some trouble reach out to our Admins or Moderators !
-_For moderators|veterans - $help (moderator|veteran)_
+**For moderators|veterans - $help (moderator|veteran)**
 
 **Verification command**
-`$verify <jsonstringhere>`
+`$verify`
 Command used by a user in welcome, for verification.
 
 **General commands**
@@ -14,8 +14,14 @@ Command to check if bot is online and latency.
 The list of frequently asked question.
 
 `$Channeldesc`
-Give the description of all channels
+Give the description of all channels.
 
+`$reportbot <issue>`
+You can use this command to report any issue with JHD_Bot or new suggestions.
+
+`$report [user] [reason]`
+You can use this command to report against a user, you need to tag user and give the reason, please don't use this command as some play thing.
+also feel free to drop a DM to any of our moderators/admins.
 """
 
 veteranhelplist = """
@@ -36,7 +42,7 @@ Account recovery auto message.
 What is CTF auto message.
 
 `$justask`
-When someone asks to ask a question or asks if someone is online
+When someone asks to ask a question or asks if someone is online.
 
 **Also Every command a Member can use**
 
@@ -82,8 +88,8 @@ No, please ask that person if he/she is okay with DM's, before sending a DM
 NO !! That channel is only for tech memes and SFW image posting, we have marked that channel NSFW because some meme contains explicit language.
 
 **How did you guys build the JHD_bot ? resources ?**
-Really thankfull for a guy named jared, his youtube tutorials & Discord, `Drillenissen` too, it's a indirect shoutout to them, they don't know about it : P
-also Nullpxl's bot - NullCTF !
+Really thankfull for a guy named `jared`, his youtube tutorials & Discord, `Drillenissen` too, it's a indirect shoutout to them, they don't know about it : P
+also `Nullpxl's bot - NullCTF`, I have read it's source code like thrice, it's super cool !
 """
 
 channels = """
