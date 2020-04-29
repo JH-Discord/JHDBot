@@ -85,7 +85,7 @@ class VerifyCog(commands.Cog):
                 await ctx.message.author.send(f"{ctx.message.author.mention} Verification failed, it seems you gave a wrong answer or the time ran out leading to this fail, please go through rules again and re-verify yourself(you can again use `$verify` command to verify yourself), if you have any other question or if you want to be manually verified, please wait for our veterans/moderators/admins, they will help you as soon as they see your texts in this channel. Note: Please don't ping a role, our team is already notified. :)")
                 channel = discord.utils.get(ctx.message.author.guild.channels, name="verifications-help")
                 await channel.send(f"Seems like {ctx.message.author}, failed his verification.. If anyone is online and free atm, please help that member, thank ya.. I will owe you one : P")
-                await channel.send(f"log: {ctx.message.author} failed on this question: {question}")
+                await channel.send(f"log: {ctx.message.author} failed on this question: {question}\n...")
             else:
                 announ=0
                 await ctx.message.author.send("**Question: Do you also want announcement role(it is for pings about server updates, polls, upcoming ctfs and such information.) ? [Answer as either `Yes` or `No`.]**")
@@ -105,7 +105,7 @@ class VerifyCog(commands.Cog):
                 channel1 = discord.utils.get(ctx.message.author.guild.channels, name="bot-commands")
                 channel2 = discord.utils.get(ctx.message.author.guild.channels, name="verifications-help")
                 await ctx.message.author.send(f'**Welcome to the Server, **{ctx.message.author.mention} **!** \nWe are glad to have you here. if you wanna go through quick server description please go to {channel1.mention} and enter command `$chdesc` to get a description of almost every channel and `$faq` to get frequently asked questions.\nWe hope you enjoy your stay and contribute in our community : )')
-                await channel2.send(f"log: {ctx.message.author} successfully verified")
+                await channel2.send(f"log: {ctx.message.author} successfully verified\n...")
         else:
             await ctx.send("Command only works in #welcome channel : )")
 

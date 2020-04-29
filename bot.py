@@ -1,9 +1,7 @@
 import discord 
 from discord.ext import commands
 import asyncio
-import json
 import sys
-import time
 import os
 import random
 import helpembed
@@ -52,7 +50,7 @@ async def on_command_error(ctx, error):
 ################################################################################################################################################  
 #JHDbot help message
 @bot.command(name="help")       #alias of command name
-async def _help(ctx, helprole=None):                         #can't figure out why I can't name command help #role-vise help section
+async def _help(ctx, helprole=None):                              #role-vise help section
     role = discord.utils.get(ctx.author.roles, name="Veteran")
     coolpeople = discord.utils.get(ctx.author.roles, name="Cool People")
     if(str(ctx.message.channel)=="bot-commands" or role!=None or coolpeople!=None or ctx.message.author.guild_permissions.manage_messages):
