@@ -43,18 +43,19 @@ class VerifyCog(commands.Cog):
         'We can help you make an aimbot.',
         'You should have full permission and or ownership before doing any hacking.',
         'You should help make this community welcoming for everyone.',
-        'We can help you get unbanned from _______.'
+        'We can help you get unbanned from _______.',
+        'Does repeatedly asking or begging people to look at a problem get people to help you?'
         ]
 
-        answers = ['false', 'false', 'false', 'false', 'false', 'true', 'true', 'true', 'true', 'false', 'false', 'false', 'false', 'false', 'true', 'true', 'true', 'true', 'true', 'true', 'false', 'false', 'true', 'true', 'true', 'false', 'true', 'false', 'true', 'true', 'false']
+        answers = ['false', 'false', 'false', 'false', 'false', 'true', 'true', 'true', 'true', 'false', 'false', 'false', 'false', 'false', 'true', 'true', 'true', 'true', 'true', 'true', 'false', 'false', 'true', 'true', 'true', 'false', 'true', 'false', 'true', 'true', 'false', 'false']
         gotindex=[]
         i=0
         flag=0
         if(str(ctx.message.channel)=="welcome"):
-            await ctx.message.author.send("**Hey Again, I hope you ready for verification quiz**\nVerification quiz will start in `30` secound hope you have read the rules properly, also you will have `60` seconds to answer each question so please read the question properly, till the quiz begin please be patient and don't type anything(else sometimes bot gets mad.) : )\n\nDon't worry, if verification fail please go back to welcome channel and again type `$verify` to re-verify yourself, or just ask moderators for help.")
+            await ctx.message.author.send("**Hey Again, I hope you ready for verification quiz**\nVerification quiz will start in `30` second hope you have read the rules properly, also you will have `60` seconds to answer each question so please read the question properly, till the quiz begin please be patient and don't type anything(else sometimes bot gets mad.) : )\n\nDon't worry, if verification fail please go back to welcome channel and again type `$verify` to re-verify yourself, or just ask moderators for help.")
             await asyncio.sleep(30)
             while True:
-                index=random.randint(0,30)
+                index=random.randint(0,31)
                 if index not in gotindex:
                     i+=1
                     gotindex.append(index)
