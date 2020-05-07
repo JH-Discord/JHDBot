@@ -57,6 +57,10 @@ async def on_message(message):
                 fa.write("# "+str(message.author.name)+"\n")
                 fa.write("-----\n")
                 fa.write("Message : "+str(message.content)+"\n\n")
+        else:
+            await bot.process_commands(message)
+            return
+    await bot.process_commands(message)
 
 ################################################################################################################################################  
 #JHDbot help message
