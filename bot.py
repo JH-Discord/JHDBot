@@ -51,6 +51,14 @@ async def on_command_error(ctx, error):
 async def on_message(message):
     if 'bad bot' in message.content.lower() or 'chutiya bot' in message.content.lower() or 'stupid bot' in message.content.lower() or 'baka bot' in message.content.lower() or 'bitch' in message.content.lower() or 'chutiya' in message.content.lower():
         await message.channel.send(f"No U, {message.author.mention}")
+    elif 'scary' in message.content.lower() or 'sinister' in message.content.lower():
+        await message.channel.send(f"You mean @SinisterMatrix right..")
+    elif 'bruh' in message.content.lower() or 'bruhh' in message.content.lower():
+        await message.channel.send(f"bruhhh...")
+    elif 'duh'==message.content or "Duh"==message.content or "DUH"==message.content:
+        await message.channel.send("Duh... ")
+    elif 'tell me a legend' in message.content:
+        await message.channel.send(helpembed.legends[random.randint(0, 20)])
     elif 'https://' in message.content.lower() or 'http://' in message.content.lower() or 'ftp://' in message.content.lower():
         if str(message.channel)=="resources":
             with open('/home/ubuntu/JHD_Resources/botfile.md','a+') as fa:
