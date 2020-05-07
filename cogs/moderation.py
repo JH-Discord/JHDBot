@@ -17,10 +17,64 @@ class ModeratorCog(commands.Cog):
                 await ctx.channel.send(f"Deleted {amount} messages D:")
             else:
                 await ctx.send("Sorry, it seems like you are not authorized to do it")
+            await asyncio.sleep(5)
+            await ctx.message.delete()
         except:
             await ctx.send("The bot is unauthorized to delete messages D:")
 
 
+    #Mute Command..
+    @commands.command() #a function to mute members
+    async def mute(self, ctx, user: discord.Member, seconds=None):                      #gets context user and time(in seconds), default being None
+        try:
+            if ctx.message.author.guild_permissions.kick_members: 
+                if seconds==None or int(seconds)<0:
+                    await ctx.send("Please also supply time in seconds(proper +ve int format plz).")                        #if no time suplied, function exits
+                    return
+                else:
+                    if user.guild_permissions.manage_messages:                                  #check perms. if user has perms to manage message like if he mod he can't be muted by the bot.
+                        await ctx.send(f"Sorry, can't mute {user} because of perms : (") 
+                        return
+                    #add mute role
+                    role = discord.utils.get(ctx.guild.roles, name="Muted")
+                    mrole = discord.utils.get(ctx.guild.roles, name="Member")
+                    await user.add_roles(role)
+                    await user.remove_roles(mrole)
+                    await user.send("You were muted in JHDiscord for `"+str(seconds)+"` seconds")
+                    await ctx.send(f"{user} has been muted in JHD for `{seconds}` seconds")
+                    muted = discord.utils.get(ctx.author.roles, name="Muted")
+                    if(muted!=None):
+                        await asyncio.sleep(int(seconds))
+                        await user.remove_roles(role)
+                        await user.add_roles(mrole)
+                        await user.send("You were un-muted in JHDiscord, we hope you don't repeat the actions that lead the mods/admin to mute you.")
+                        await ctx.send(f"{user} has been unmuted in JHD")
+            else:
+                await ctx.send("Sorry, it seems like you are not authorized to do it")
+        except:
+            await ctx.send("Seems like the Bot is not authorized to run this command")
+
+    #unmute command..
+    @commands.command()
+    async def unmute(self, ctx, user: discord.Member):
+        try:
+            if ctx.message.author.guild_permissions.kick_members:
+                muted = discord.utils.get(ctx.author.roles, name="Muted")
+                if(muted!=None):
+                    role = discord.utils.get(ctx.guild.roles, name="Muted")
+                    mrole = discord.utils.get(ctx.guild.roles, name="Member")
+                    await user.remove_roles(role)
+                    await user.add_roles(mrole)
+                    await user.send("You were un-muted in JHDiscord, we hope you don't repeat the actions that lead the mods/admin to mute you.")
+                    await ctx.send(f"{user} has been unmuted in JHD")
+                else:
+                    await ctx.send(f"{user} is not muted ¯\_(ツ)_/¯ ")
+            else:
+                await ctx.send("Sorry, it seems like you are not authorized to do it")
+            await asyncio.sleep(5)
+            await ctx.message.delete()
+        except:
+            await ctx.send("Seems like the Bot is not authorized to run this command") 
 
     #Kick Member Command..
     @commands.command() #a function to kick members
@@ -34,6 +88,8 @@ class ModeratorCog(commands.Cog):
                 await ctx.send(f'{user} has been kicked out from the server')
             else:
                 await ctx.send("Sorry, it seems like you are not authorized to do it")
+            await asyncio.sleep(5)
+            await ctx.message.delete()
         except:
             await ctx.send("The bot is unauthorized to kick members D:")
 
@@ -50,6 +106,8 @@ class ModeratorCog(commands.Cog):
                 await ctx.send(f'{user} has been banned from the server')
             else:
                 await ctx.send("Sorry, it seems like you are not authorized to do it")
+            await asyncio.sleep(5)
+            await ctx.message.delete()
         except:
             await ctx.sent("The bot is unauthorized to ban members D:")
 

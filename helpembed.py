@@ -16,6 +16,9 @@ The list of frequently asked question.
 `$Channeldesc`
 Give the description of all channels.
 
+`$suggest <suggestion>`
+To submit a suggestion for the JHD server.
+
 `$reportbot <issue>`
 You can use this command to report any issue with JHD_Bot or new suggestions.
 
@@ -53,6 +56,12 @@ moderatorhelplist = """
 
 **`$clear`**
 Deletes messages $clear [number of messages to delete]
+
+**`$mute`**
+Mutes a specified user for some time. $mute [user mention or id] [time in second]
+
+**`$unmute`**
+unmutes a specified user. $mute [user mention or id] 
 
 **`$kick`**
 Kicks a specified user. $kick [user mention or id] [reason]

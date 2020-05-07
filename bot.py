@@ -47,6 +47,17 @@ async def on_command_error(ctx, error):
     else:
         await ctx.send("There was an error, sorry! If you belive it's a mistake by bot, let our moderators/admins know about it")
 
+@bot.event
+async def on_message(message):
+    if 'bad bot' in message.content.lower() or 'chutiya bot' in message.content.lower() or 'stupid bot' in message.content.lower() or 'baka bot' in message.content.lower() or 'bitch' in message.content.lower() or 'chutiya' in message.content.lower():
+        await message.channel.send(f"No U, {message.author.mention}")
+    elif 'https://' in message.content.lower() or 'http://' in message.content.lower() or 'ftp://' in message.content.lower():
+        if str(message.channel)=="resources":
+            with open('/home/ubuntu/JHD_Resources/botfile.md','a+') as fa:
+                fa.write("# "+str(message.author.name)+"\n")
+                fa.write("-----\n")
+                fa.write("Message : "+str(message.content)+"\n\n")
+
 ################################################################################################################################################  
 #JHDbot help message
 @bot.command(name="help")       #alias of command name

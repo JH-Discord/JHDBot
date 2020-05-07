@@ -56,6 +56,26 @@ class GeneralCog(commands.Cog):
         else:
             await ctx.send("Please use this command in `#bot-commands`")
 
+    #Suggestion command
+    @commands.command()
+    async def suggest(self, ctx, *, sug=None):
+        coolpeople = discord.utils.get(ctx.author.roles, name="Cool People")
+        if(str(ctx.message.channel)=="bot-commands" or coolpeople!=None or ctx.message.author.guild_permissions.manage_messages):
+            if sug==None:
+                await ctx.send("oopse, seems like you forgot to add the suggestion : P")
+            else:
+                channel = discord.utils.get(ctx.message.author.guild.channels, name="suggestions")
+                emb = discord.Embed(description=sug, colour=0xff002a)
+                emb.set_author(name=f"{ctx.message.author}", icon_url=f"{ctx.message.author.avatar_url}")
+                emb.set_footer(text="Submit your suggestions using: $suggest <suggestion> in #bot-commands")
+                msg = await channel.send(embed=emb)
+                await msg.add_reaction('👍')
+                await msg.add_reaction('👎')
+                await ctx.send(f"Your suggestion has been added in {channel.mention}")
+        else:
+            await ctx.send("Please use this command in `#bot-commands`")  
+        
+
 def setup(bot):
     bot.add_cog(GeneralCog(bot))
     print('General cog loaded')
