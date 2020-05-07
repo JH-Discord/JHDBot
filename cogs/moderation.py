@@ -42,7 +42,7 @@ class ModeratorCog(commands.Cog):
                     await user.remove_roles(mrole)
                     await user.send("You were muted in JHDiscord for `"+str(seconds)+"` seconds")
                     await ctx.send(f"{user} has been muted in JHD for `{seconds}` seconds")
-                    muted = discord.utils.get(ctx.author.roles, name="Muted")
+                    muted = discord.utils.get(user.roles, name="Muted")
                     if(muted!=None):
                         await asyncio.sleep(int(seconds))
                         await user.remove_roles(role)
@@ -59,7 +59,7 @@ class ModeratorCog(commands.Cog):
     async def unmute(self, ctx, user: discord.Member):
         try:
             if ctx.message.author.guild_permissions.kick_members:
-                muted = discord.utils.get(ctx.author.roles, name="Muted")
+                muted = discord.utils.get(user.roles, name="Muted")
                 if(muted!=None):
                     role = discord.utils.get(ctx.guild.roles, name="Muted")
                     mrole = discord.utils.get(ctx.guild.roles, name="Member")
