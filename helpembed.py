@@ -93,6 +93,10 @@ NO, reach the support of respective service/social network
 **Can I send a DM to anyone in the server ?**
 No, please ask that person if he/she is okay with DM's, before sending a DM
 
+**Is there place where JHD resources are stored ?**
+We have a repo in which the JHD_Bot dump all the resources from `#resources` channel.
+link - https://github.com/Fumenoid/JHDBot 
+
 **Is Shiptoasting channel a NSFW channel ?**
 NO !! That channel is only for tech memes and SFW image posting, we have marked that channel NSFW because some meme contains explicit language.
 
