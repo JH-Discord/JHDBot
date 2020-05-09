@@ -97,6 +97,20 @@ class VeteranCog(commands.Cog):
         await asyncio.sleep(5)
         await ctx.message.delete()
 
+    #howtoask command
+    @commands.command()       #creating Commands ctx is something like context, send automatically 
+    async def howtoask(self, ctx):
+        role = discord.utils.get(ctx.author.roles, name="Veteran")
+        coolpeople = discord.utils.get(ctx.author.roles, name="Cool People")
+        if(role!=None or coolpeople!=None):
+            await ctx.send('Hey there, if you ask the question like this, it might help us, to help you - https://www.youtube.com/watch?v=53zkBvL4ZB4 \n_LiveOverflow is dope_ : P')
+        elif(ctx.message.author.guild_permissions.manage_messages):
+            await ctx.send('Hey there, if you ask the question like this, it might help us, to help you - https://www.youtube.com/watch?v=53zkBvL4ZB4 \n_LiveOverflow is dope_ : P')
+        else:
+            await ctx.send('Seems like you are not authorized to use this command D:')
+        await asyncio.sleep(5)
+        await ctx.message.delete()
+
 def setup(bot):
     bot.add_cog(VeteranCog(bot))
     print('Veteran cog loaded')

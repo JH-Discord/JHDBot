@@ -47,6 +47,9 @@ What is CTF auto message.
 `$justask`
 When someone asks to ask a question or asks if someone is online.
 
+`$howtoask`
+LO video on how to ask a question..
+
 **Also Every command a Member can use**
 
 """
