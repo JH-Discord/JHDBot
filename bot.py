@@ -62,9 +62,9 @@ async def on_message(message):
     elif 'https://' in message.content.lower() or 'http://' in message.content.lower() or 'ftp://' in message.content.lower():
         if str(message.channel)=="resources":
             with open('/home/ubuntu/JHD_Resources/botfile.md','a+') as fa:
-                fa.write("# "+str(message.author.name)+"\n")
-                fa.write("-----\n")
+                fa.write("## "+str(message.author.name)+"\n")
                 fa.write("Message : "+str(message.content)+"\n\n")
+                fa.write("-----\n")
         else:
             await bot.process_commands(message)
             return
