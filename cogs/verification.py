@@ -111,7 +111,8 @@ class VerifyCog(commands.Cog):
             else:
                 await ctx.send("Command only works in #welcome channel : )")
         except:
-            ctx.send(f"Hey {ctx.message.author}, are you sure you have message from server member `on`, in your privacy settings because I am unable to DM you.")
+            await ctx.send(f"Hey {ctx.message.author}, are you sure you have message from server member `on`, in your privacy settings because I am unable to DM you.")
+
 
 def setup(bot):
     bot.add_cog(VerifyCog(bot))
