@@ -49,18 +49,15 @@ async def on_command_error(ctx, error):
 
 @bot.event
 async def on_message(message):
-    if ('broken' in message.content.lower() and 'bot' in message.content.lower()):
-        if str(message.channel=="welcome"):
-            await message.channel.send(f"Well at least I properly read the welcome message and #obligatory-rules, {message.author.mention}")
-    elif 'https://' in message.content.lower() or 'http://' in message.content.lower() or 'ftp://' in message.content.lower():
+    if 'https://' in message.content.lower() or 'http://' in message.content.lower() or 'ftp://' in message.content.lower():
         if str(message.channel)=="resources":
             with open('/home/ubuntu/JHD_Resources/botfile.md','a+') as fa:
                 fa.write("## "+str(message.author.name)+"\n")
                 fa.write("Message : "+str(message.content)+"\n\n")
                 fa.write("-----\n")
-        else:
-            await bot.process_commands(message)
-            return
+    else:
+        await bot.process_commands(message)
+        return
     await bot.process_commands(message)
 
 ################################################################################################################################################  
