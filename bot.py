@@ -38,6 +38,8 @@ async def on_member_join(member):   #a function which works when any member join
     if (str(member.name)=="username123"):
         channel = discord.utils.get(member.guild.channels, name="moderators")
         await channel.send(f"Warning : {member.mention} arrived in the server !!!")
+        channel2 = discord.utils.get(member.guild.channels, name="veteran-chat")
+        await channel2.send(f"Warning : {member.mention} arrived in the server !!!")
     channel = discord.utils.get(member.guild.channels, name="welcome")
     rchannel = discord.utils.get(member.guild.channels, name="obligatory-rules")
     await channel.send(f'***Hi there, {member.mention} Welcome to JHDiscord!***\n\nTo gain access to the rest of the server. please read the {rchannel.mention} and then verify yourself.\nTo Verify yourself, Please use command `$verify` and complete the **true or false quiz** that follows based off the obligatory rules.\n**Don\'t worry, If in case verification fails, our moderation team will be notified and will assist you.**\nThere is no need to ping us but you can still tell us if you face a problem in this channel\n\nAlso the JHD_Bot will send you a DM, so please make sure you have DM\'s from server members `on` in `privacy settings` before you use `$verify` command, thanks')
