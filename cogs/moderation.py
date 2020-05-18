@@ -84,8 +84,10 @@ class ModeratorCog(commands.Cog):
                 await ctx.send(f"Sorry, can't kick {user} because of perms : (") 
             elif ctx.message.author.guild_permissions.kick_members:                     #checks if user who send the kick command is authorized to do it.
                 await user.send("You were kicked from JHDiscord :"+reason)
+                await user.send("https://tenor.com/view/anime-kick-go-out-gif-14290462")
                 await ctx.guild.kick(user=user, reason=reason)                          #kicks that user
                 await ctx.send(f'{user} has been kicked out from the server')
+                await ctx.send("https://tenor.com/view/anime-kick-go-out-gif-14290462")
             else:
                 await ctx.send("Sorry, it seems like you are not authorized to do it")
             await asyncio.sleep(5)
@@ -102,8 +104,10 @@ class ModeratorCog(commands.Cog):
                 await ctx.send(f"Sorry, can't ban {user} because of perms : (") 
             elif ctx.message.author.guild_permissions.ban_members: #checks if user who send the ban command is authorized to do it.
                 await user.send("You were banned from JHDiscord :"+reason)
+                await user.send("https://tenor.com/view/blob-banned-ban-hammer-blob-ban-emoji-gif-16021044")
                 await ctx.guild.ban(user=user, reason=reason)  #bans that user
                 await ctx.send(f'{user} has been banned from the server')
+                await ctx.send("https://tenor.com/view/blob-banned-ban-hammer-blob-ban-emoji-gif-16021044")
             else:
                 await ctx.send("Sorry, it seems like you are not authorized to do it")
             await asyncio.sleep(5)
