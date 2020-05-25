@@ -34,7 +34,7 @@ class GeneralCog(commands.Cog):
             await ctx.send("Please use this command in `#bot-commands`")
 
     # Report bot command
-    @commands.command()
+    @commands.command(aliases=['reportbot'])
     async def report_bot(self, ctx, *, reason=None):
         coolpeople = discord.utils.get(ctx.author.roles, name="Cool People")
         if (str(

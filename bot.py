@@ -120,7 +120,7 @@ async def faq(ctx):
 
 
 # Channel desc message
-@bot.command(aliases=['chdesc'])
+@bot.command(aliases=['chdesc', 'channeldesc'])
 async def channel_desc(ctx):
     role = discord.utils.get(ctx.author.roles, name='Veteran')
     coolpeople = discord.utils.get(ctx.author.roles, name='Cool People')

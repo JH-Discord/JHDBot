@@ -48,7 +48,10 @@ What is CTF auto message.
 When someone asks to ask a question or asks if someone is online.
 
 `$howtoask`
-LO video on how to ask a question..
+LO video on how to ask a question.
+
+`$lmgtfy <query>`
+Let me google that for you.
 
 **Also Every command a Member can use**
 
@@ -102,7 +105,7 @@ link - https://github.com/Fumenoid/JHD_Resources
 NO !! That channel is only for tech memes and SFW image posting, we have marked that channel NSFW because some meme contains explicit language.
 
 **How did you guys build the JHD_bot ? resources ?**
-Really thankfull for a guy named `jared`, his youtube tutorials & Discord, `Drillenissen` too, it's a indirect shoutout to them, they don't know about it : P
+Really thankfull for a guy named `jared`, his youtube tutorials & Discord, `Drillenissen` and `tsu_katana` too, it's a indirect shoutout to them, they don't know about it : P
 also `Nullpxl's bot - NullCTF`, I have read it's source code like thrice, it's super cool !
 """
 

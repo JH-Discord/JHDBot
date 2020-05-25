@@ -145,7 +145,7 @@ class VerifyCog(commands.Cog):
                     await ctx.send("Command only works in #welcome channel : )")
             except:
                 await ctx.send(
-                    f'Hey {ctx.message.author}, are you sure you have message from server member `on`, in your '
+                    f'Hey {ctx.message.author.mention}, are you sure you have message from server member `on`, in your '
                     f'privacy settings because I am unable to DM you.')
 
 
