@@ -54,7 +54,7 @@ LO video on how to ask a question..
 
 """
 
-moderatorhelplist = """
+moderator_help_list = """
 **Moderation commands**
 
 **`$clear`**
@@ -75,8 +75,6 @@ Bans a specified user. $ban [user mention or id] [reason]
 **Also Every command a Veteran|Member can use**
 
 """
-
-
 
 faq = """
 ***FREQUENTLY ASKED QUESTIONS***
@@ -201,24 +199,24 @@ Discuss and coordinate work on Katana Modules here.
 """
 
 legends = [
-'legend says, Nightwolf can decrypt morse code without any tool',
-'legend says, Nightwolf has been coding since last 500 years',
-'legend says, No one who has seen Nightwolf mad has seen the next day in his life',
-'legend says, Nightwolf has been to Moon',
-'legend says, Nightwolf hacks 1000 computers per day',
-'legend says, Once Nightwolf taught a dragon, how to code',
-'legend says, NSA asks tips from Nightwolf',
-'legend says, Nightwolf can shoot lazer from his eyes, and you thought superman was op, huh',
-'legend says, Nightwolf can travel back and forth in time',
-'legend says, Nightwolf can crack password without any tools',
-'legend says, Nightwolf was a discord admin even before discord was created',
-'legend says, Nightwolf uses 100 percent of his brain',
-'legend says, Nightwolf reads everything in binary',
-'legend says, Nightwolf hacked Nasa thrice in a min',
-'legend says, Nightwolf has dual weilding skill in minecraft',
-'legend says, Nightwolf has swam all the oceans',
-'legend says, Nightwolf can jump higher than Mt. Everest',
-'legend says, Nightwolf can defeat goku and saitama, even when they double team on him',
-'legend says, Nightwolf is not scared of SinisterMatrix',
-'legend says, Nightwolf is a shield agent.'
+    'legend says, Nightwolf can decrypt morse code without any tool',
+    'legend says, Nightwolf has been coding since last 500 years',
+    'legend says, No one who has seen Nightwolf mad has seen the next day in his life',
+    'legend says, Nightwolf has been to Moon',
+    'legend says, Nightwolf hacks 1000 computers per day',
+    'legend says, Once Nightwolf taught a dragon, how to code',
+    'legend says, NSA asks tips from Nightwolf',
+    'legend says, Nightwolf can shoot lazer from his eyes, and you thought superman was op, huh',
+    'legend says, Nightwolf can travel back and forth in time',
+    'legend says, Nightwolf can crack password without any tools',
+    'legend says, Nightwolf was a discord admin even before discord was created',
+    'legend says, Nightwolf uses 100 percent of his brain',
+    'legend says, Nightwolf reads everything in binary',
+    'legend says, Nightwolf hacked Nasa thrice in a min',
+    'legend says, Nightwolf has dual weilding skill in minecraft',
+    'legend says, Nightwolf has swam all the oceans',
+    'legend says, Nightwolf can jump higher than Mt. Everest',
+    'legend says, Nightwolf can defeat goku and saitama, even when they double team on him',
+    'legend says, Nightwolf is not scared of SinisterMatrix',
+    'legend says, Nightwolf is a shield agent.'
 ]
