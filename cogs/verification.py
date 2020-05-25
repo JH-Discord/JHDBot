@@ -25,7 +25,7 @@ class VerifyCog(commands.Cog):
                     'You should totally dump all your flags here?',
                     'You should not link to graphic, illegal or NSFW content?',
                     'you should keep HTB nudges to Direct Messages?',
-                    'You should report any broken rules with `$report [user mention] [reason]`.',
+                    'You should report any broken rules or server member, with `$report [user mention] [reason]`.',
                     'Flag and hint sharing is not permitted on private CTFs?',
                     'Advertisement without permission is fine?',
                     'This is the right place to try out your new IP grabber or virus?',
