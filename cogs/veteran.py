@@ -30,7 +30,7 @@ class VeteranCog(commands.Cog):
                 f'platform focusing on learning how to hack in more real world situations than CTFs. There are '
                 f'"rooms" for all levels and walkthroughs are available if necessary. Questions can be asked in '
                 f'{thm.mention} also here is a guide, if you are starting with THM (https://blog.tryhackme.com/going-from-zero-to-hero/)\n\n'
-                f'V. Hack the Box (www.hackthebox.eu) Is a platform to learn and grow your pentesting skills.'
+                f'V. Hack the Box (https://www.hackthebox.eu/) Is a platform to learn and grow your pentesting skills.'
                 f' Boxes range from "easy" to "insane" and cover a broad range of topics.'
                 f' Walkthroughs can not be posted but "Starting point" will point you in the general direction.'
                 f' Questions can also be asked in the {htb.mention} channel.\n\n'
