@@ -40,7 +40,7 @@ class VerifyCog(commands.Cog):
                     'When asking for help on a challenge you should specify where it comes from?',
                     'You get five warnings before being banned.',
                     'We can help you recover your Facebook account.',
-                    'We can help you get your Roblox account back.',
+                    'We cannot help you get your Roblox account back.',
                     'We cannot help you crack applications.',
                     'Self Advertising includes posting Discord invite links.',
                     'Flag sharing is allowed.',
