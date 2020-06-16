@@ -15,8 +15,11 @@ class ModeratorCog(commands.Cog):
                     amount=2):  # amount=2 sets the default value to 2 basically command + the text above that
         try:
             if ctx.message.author.guild_permissions.manage_messages:
-                await ctx.channel.purge(limit=amount + 1)  # limit= number of messages going to be deleted !
-                msg = await ctx.channel.send(f'Deleted {amount} messages D:')
+                if(amount<=20):
+                    await ctx.channel.purge(limit=amount + 1)  # limit= number of messages going to be deleted !
+                    msg = await ctx.channel.send(f'Deleted {amount} messages D:')
+                else:
+                    await ctx.channel.send('Sorry, max 20 messages can be deleted at a time')
             else:
                 msg = await ctx.send('Sorry, it seems like you are not authorized to do it')
             await asyncio.sleep(5)
