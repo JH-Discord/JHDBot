@@ -1,5 +1,4 @@
 ## Hey there fellow contributer !
----
 
 #### Alright here are the things you should keep in mind before contributing to the bot.
 
