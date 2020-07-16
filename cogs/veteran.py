@@ -12,7 +12,7 @@ class VeteranCog(commands.Cog):
     # beginner command
     @commands.command(aliases=['bgn'])  # creating Commands ctx is something like context, send automatically
     async def beginner(self, ctx):
-        cool_people = discord.utils.get(ctx.author.roles, name='Cool People')
+        cool_people = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
         otw = discord.utils.get(ctx.guild.channels, name='over-the-wire')
         ctf = discord.utils.get(ctx.guild.channels, name='capture-the-flag')
         thm = discord.utils.get(ctx.guild.channels, name='tryhackme')
@@ -43,7 +43,7 @@ class VeteranCog(commands.Cog):
     # nypa command
     @commands.command(aliases=['nypa'])  # creating Commands ctx is something like context, send automatically
     async def not_your_personal_avengers(self, ctx):
-        cool_people = discord.utils.get(ctx.author.roles, name="Cool People")
+        cool_people = discord.utils.get(ctx.author.roles, name="Moderator Emeritus")
         role = discord.utils.get(ctx.author.roles, name="Veteran")
         if role is not None or cool_people is not None or ctx.message.author.guild_permissions.manage_messages:
             await ctx.send(
@@ -58,7 +58,7 @@ class VeteranCog(commands.Cog):
     @commands.command(aliases=['bt','blackhat'])  # creating Commands ctx is something like context, send automatically
     async def black_hat(self, ctx):
         role = discord.utils.get(ctx.author.roles, name='Veteran')
-        cool_people = discord.utils.get(ctx.author.roles, name='Cool People')
+        cool_people = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
         channel = discord.utils.get(ctx.guild.channels, name='obligatory-rules')
         if role is not None or cool_people is not None or ctx.message.author.guild_permissions.manage_messages:
             await ctx.send(
@@ -74,7 +74,7 @@ class VeteranCog(commands.Cog):
     @commands.command(aliases=['at'])  # creating Commands ctx is something like context, send automatically
     async def account(self, ctx):
         role = discord.utils.get(ctx.author.roles, name='Veteran')
-        cool_people = discord.utils.get(ctx.author.roles, name='Cool People')
+        cool_people = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
         if role is not None or cool_people is not None or ctx.message.author.guild_permissions.manage_messages:
             await ctx.send(
                 'Sorry. We can\'t help with account recovery. Your only path for that is to contact support for the '
@@ -88,7 +88,7 @@ class VeteranCog(commands.Cog):
     @commands.command(aliases=['ja', 'justask'])  # creating Commands ctx is something like context, send automatically
     async def just_ask(self, ctx):
         role = discord.utils.get(ctx.author.roles, name='Veteran')
-        cool_people = discord.utils.get(ctx.author.roles, name='Cool People')
+        cool_people = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
         if role is not None or cool_people is not None or ctx.message.author.guild_permissions.manage_messages:
             await ctx.send(
                 'Please don\'t ask to ask a question, ask if anyone is on, or ask for an expert. Just ask your '
@@ -102,7 +102,7 @@ class VeteranCog(commands.Cog):
     @commands.command(aliases=['ct', 'ctfwhat'])  # creating Commands ctx is something like context, send automatically
     async def ctf_what(self, ctx):
         role = discord.utils.get(ctx.author.roles, name='Veteran')
-        cool_people = discord.utils.get(ctx.author.roles, name='Cool People')
+        cool_people = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
         if role is not None or cool_people is not None or ctx.message.author.guild_permissions.manage_messages:
             await ctx.send(
                 'CTF\'s are competitions you can participate into to practice and learn cybersecurity skills in a '
@@ -118,7 +118,7 @@ class VeteranCog(commands.Cog):
     @commands.command(aliases=['hk', 'howtoask'])  # creating Commands ctx is something like context, send automatically
     async def how_to_ask(self, ctx):
         role = discord.utils.get(ctx.author.roles, name='Veteran')
-        cool_people = discord.utils.get(ctx.author.roles, name='Cool People')
+        cool_people = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
         if role is not None or cool_people is not None or ctx.message.author.guild_permissions.manage_messages:
             await ctx.send(
                 'Hey there, if you ask the question like this, it might help us, to help you - '
@@ -131,7 +131,7 @@ class VeteranCog(commands.Cog):
     @commands.command(aliases=['lmgtfy'])
     async def _lmgtfy(self, ctx, *, input):
         role = discord.utils.get(ctx.author.roles, name='Veteran')
-        cool_people = discord.utils.get(ctx.author.roles, name='Cool People')
+        cool_people = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
         if role is not None or cool_people is not None or ctx.message.author.guild_permissions.manage_messages:
             lmgtfyurl = 'https://lmgtfy.com/?q='
             fullyurl = lmgtfyurl + urllib.parse.quote_plus(input, safe='')

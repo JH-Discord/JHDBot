@@ -6,11 +6,11 @@ import sys
 import os
 import random
 import helpembed
-import configfile
+#import configfile
 
 load_dotenv()
 
-bot = commands.Bot(command_prefix=configfile.command_prefix, case_insensitive=True)  # bot command prefix
+bot = commands.Bot(command_prefix=str(os.environ.get('command_prefix')), case_insensitive=True)  # bot command prefix
 bot.remove_command('help')
 # Loading Cogs
 
@@ -83,7 +83,7 @@ async def on_message(message):
 @bot.command(name="help")  # alias of command name
 async def _help(ctx, helprole=None):  # role-vise help section
     role = discord.utils.get(ctx.author.roles, name='Veteran')
-    cool_people = discord.utils.get(ctx.author.roles, name='Cool People')
+    cool_people = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
     if (str(
             ctx.message.channel) == 'bot-commands' or role is not None or cool_people is not None
             or ctx.message.author.guild_permissions.manage_messages):
@@ -108,7 +108,7 @@ async def _help(ctx, helprole=None):  # role-vise help section
 @bot.command(aliases=['qna'])
 async def faq(ctx):
     role = discord.utils.get(ctx.author.roles, name='Veteran')
-    coolpeople = discord.utils.get(ctx.author.roles, name='Cool People')
+    coolpeople = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
     if (str(
             ctx.message.channel) == 'bot-commands' or role is not None or coolpeople is not None
             or ctx.message.author.guild_permissions.manage_messages):
@@ -123,7 +123,7 @@ async def faq(ctx):
 @bot.command(aliases=['chdesc', 'channeldesc'])
 async def channel_desc(ctx):
     role = discord.utils.get(ctx.author.roles, name='Veteran')
-    coolpeople = discord.utils.get(ctx.author.roles, name='Cool People')
+    coolpeople = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
     if (str(
             ctx.message.channel) == 'bot-commands' or role is not None or coolpeople is not None
             or ctx.message.author.guild_permissions.manage_messages):
@@ -145,5 +145,5 @@ async def attach_embed_info(ctx=None, embed=None):
     return embed
 
 # Token
-#bot.run(str(os.environ.get('bot_token')))  # token
-bot.run(configfile.bot_token)
+bot.run(str(os.environ.get('bot_token')))  # token
+#bot.run(configfile.bot_token)
