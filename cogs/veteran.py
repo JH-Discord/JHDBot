@@ -18,6 +18,7 @@ class VeteranCog(commands.Cog):
         thm = discord.utils.get(ctx.guild.channels, name='tryhackme')
         big = discord.utils.get(ctx.guild.channels, name='beginners')
         htb = discord.utils.get(ctx.guild.channels, name='hackthebox')
+        pro = discord.utils.get(ctx.guild.channels, name='programming')
         role = discord.utils.get(ctx.author.roles, name='Veteran')
         if role is not None or cool_people is not None or ctx.message.author.guild_permissions.manage_messages:
             await ctx.send(
@@ -34,6 +35,9 @@ class VeteranCog(commands.Cog):
                 f' Boxes range from "easy" to "insane" and cover a broad range of topics.'
                 f' Walkthroughs can not be posted but "Starting point" will point you in the general direction.'
                 f' Questions can also be asked in the {htb.mention} channel.\n\n'
+                f'VI. Codecademy (https://www.codecademy.com) An interactive website for learning how to code. '
+                f'This website teaches a variety of languages ranging from C++, to JavaScript in a very intuitive way. '
+                f'Questions can be asked in the {pro.mention} channel.\n\n'
                 f'For any additional questions or concerns, please consult the {big.mention} channel')
         else:
             await ctx.send('Seems like you are not authorized to use this command.')
