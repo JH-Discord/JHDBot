@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  jhd-bot:
+    build: JHDBot/.
+    environment:
+      - bot_token=${DISCORD_API_TOKEN}
+  webapp:
+    build: verify-web/.
+    links:
+      - "jhd-bot:jhd-bot"
+    depends_on:
+      - "jhd-bot"
+    ports:
+      - "5000:5000"
+    environment:
+      - RECAPTCHA_PUBLIC_KEY=${RECAPTCHA_PUBLIC_KEY}
+      - RECAPTCHA_PRIVATE_KEY=${RECAPTCHA_PRIVATE_KEY}

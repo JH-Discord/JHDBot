@@ -7,6 +7,7 @@ RUN apk add gcc python3-dev musl-dev
 
 COPY bot.py .
 COPY cogs .
+COPY helpembed.py .
 COPY Pipfile .
 COPY Pipfile.lock .
 

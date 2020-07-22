@@ -145,5 +145,5 @@ async def attach_embed_info(ctx=None, embed=None):
     return embed
 
 # Token
-bot.run(str(os.environ.get('bot_token')))  # token
+bot.run(str(os.environ.get("bot_token")))  # token
 #bot.run(configfile.bot_token)
