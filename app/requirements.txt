@@ -1,2 +1,3 @@
-Flask_WTF==0.14.3
+requests==2.23.0
 Flask==1.1.2
+Flask_WTF==0.14.3

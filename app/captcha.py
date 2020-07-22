@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from flask_wtf import FlaskForm, RecaptchaField
+import requests
 
 class VerificationForm(FlaskForm):   
       recaptcha = RecaptchaField()
@@ -17,11 +18,10 @@ def verify():
     form = VerificationForm()
 
     if form.validate_on_submit():
-        print("it's working")
-        return "DONE :D"
-        #do your thing from here fume
+        link = requests.get("http://localhost:3452").text
+        return redirect(link)
 
     return render_template("login.html", form=form)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=False)
+    app.run(debug=True)
