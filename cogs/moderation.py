@@ -142,6 +142,50 @@ class ModeratorCog(commands.Cog):
         except:
             await ctx.sent('The bot is unauthorized to ban members.')
 
+    # MultiKick Member Command..
+    @commands.command()  # a function to multikick members
+    async def multikick(self, ctx, *, users):  # gets user ids in string.
+        try:
+            if ctx.message.author.guild_permissions.kick_members:
+                listofusers = users.split()
+                reason = 'Kicked during a multikick process, Most probably we suspect you to be a bot if you are not please rejoin later.'
+                for i in listofusers:
+                    user = await self.bot.fetch_user(i[3:-1])
+                    try:
+                        await user.send(f'You were kicked from JHDiscord : {reason}')
+                        await ctx.guild.kick(user=user, reason=reason)  # kicks that user
+                        await ctx.send(f'{user} has been kicked out from the server')
+                    except:
+                        await ctx.send(f'Can\'t kick the user because of his permission, though he|she might have got a kick message.')
+            else:
+                await ctx.send('Sorry, it seems like you are not authorized to do it')
+            await asyncio.sleep(5)
+            await ctx.message.delete()
+        except:
+            await ctx.send('The bot is unauthorized to kick members.')
+
+
+    # Multiban Member Command..
+    @commands.command()  # a function to multiban members
+    async def multiban(self, ctx, *, users):  # gets user id in string.
+        try:
+            if ctx.message.author.guild_permissions.kick_members:
+                listofusers = users.split()
+                reason = 'Banned during a multiban process, Most probably we are sure you to be a bot if you are not reach to our staff on other servers, like THM, HTB, yada yada.'
+                for i in listofusers:
+                    user = await self.bot.fetch_user(i[3:-1])
+                    try:
+                        await user.send(f'You were banned from JHDiscord : {reason}')
+                        await ctx.guild.ban(user=user, reason=reason)  # bans that user
+                        await ctx.send(f'{user} has been banned out from the server')
+                    except:
+                        await ctx.send(f'Can\'t ban the user because of his permission, though he|she might have got a ban message.')
+            else:
+                await ctx.send('Sorry, it seems like you are not authorized to do it')
+            await asyncio.sleep(5)
+            await ctx.message.delete()
+        except:
+            await ctx.send('The bot is unauthorized to ban members.')
 
 def setup(bot):
     bot.add_cog(ModeratorCog(bot))
