@@ -12,7 +12,8 @@ services:
     depends_on:
       - "jhd-bot"
     ports:
-      - "5000:5000"
+      - "8080:8080"
     environment:
       - RECAPTCHA_PUBLIC_KEY=${RECAPTCHA_PUBLIC_KEY}
       - RECAPTCHA_PRIVATE_KEY=${RECAPTCHA_PRIVATE_KEY}
+      - CSRF_SECRET_KEY=${CSRF_SECRET_KEY}
