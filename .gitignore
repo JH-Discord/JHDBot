@@ -205,3 +205,4 @@ $RECYCLE.BIN/
 .env
 configfile.py 
 *__pycache__
+*.pyc
