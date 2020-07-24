@@ -8,7 +8,7 @@ class VerificationForm(FlaskForm):
       recaptcha = RecaptchaField()
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = os.environ.get('CSRF_SECRET_KEY')
+app.config['SECRET_KEY'] = os.environ.get('CSRF_SECRET_KEY', str(os.urandom(32)))
 app.config['RECAPTCHA_USE_SSL']= False
 app.config['RECAPTCHA_PUBLIC_KEY']= os.environ.get('RECAPTCHA_PUBLIC_KEY')
 app.config['RECAPTCHA_PRIVATE_KEY']= os.environ.get('RECAPTCHA_PRIVATE_KEY')
@@ -30,6 +30,4 @@ def verify():
     return render_template("verify.html", form=form)
 
 if __name__ == "__main__":
-    if app.config['SECRET_KEY'] == '':
-        app.config['SECRET_KEY'] == str(os.urandom(32))
     app.run(host='0.0.0.0', debug=False)
