@@ -17,7 +17,7 @@ services:
     restart: "unless-stopped"
     environment:
       - DISCORD_API_TOKEN=${DISCORD_API_TOKEN}
-      - BOT_PREFIX_KEY=${BOT_PREFIX_KEY}
+      - BOT_PREFIX_CHARACTER=${BOT_PREFIX_CHARACTER}
 
   webapp:
     build: verify-web/.
