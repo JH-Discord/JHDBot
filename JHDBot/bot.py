@@ -147,4 +147,5 @@ async def attach_embed_info(ctx=None, embed=None):
 # Token
 TOKEN = os.getenv("DISCORD_API_TOKEN")
 bot.run(TOKEN)  # token
+print("Bot started press ctrl+c to exit....")
 #bot.run(configfile.bot_token)
