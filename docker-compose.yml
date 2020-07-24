@@ -2,27 +2,27 @@ version: '3'
 
 services:
   nginx:
-    image: nginx:latest
+    build: .
     container_name: nginx
     restart: "always"
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/verify-app.conf
+    privileged: true
     links:
       - "webapp:verify-app"
     ports:
-      - "8000:8000"
+      - "80:80"
 
   jhd-bot:
     build: JHDBot/.
     container_name: jhd-bot
-    restart: "no"
+    restart: "unless-stopped"
     environment:
-      - bot_token=${DISCORD_API_TOKEN}
+      - DISCORD_API_TOKEN=${DISCORD_API_TOKEN}
+      - BOT_PREFIX_KEY=${BOT_PREFIX_KEY}
 
   webapp:
     build: verify-web/.
     container_name: verify-app
-    restart: "unless-stopped"
+    restart: "always"
     environment:
       - RECAPTCHA_PUBLIC_KEY=${RECAPTCHA_PUBLIC_KEY}
       - RECAPTCHA_PRIVATE_KEY=${RECAPTCHA_PRIVATE_KEY}

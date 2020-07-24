@@ -8,10 +8,8 @@ RUN apk add gcc python3-dev musl-dev
 COPY bot.py .
 COPY cogs .
 COPY helpembed.py .
-COPY Pipfile .
-COPY Pipfile.lock .
+COPY requirements.txt .
 
-RUN pip install pipenv
-RUN pipenv install
+RUN pip install -r requirements.txt
 
-CMD ["pipenv", "run", "python", "bot.py"]
+CMD ["python", "bot.py"]
