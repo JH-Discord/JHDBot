@@ -30,4 +30,6 @@ def verify():
     return render_template("verify.html", form=form)
 
 if __name__ == "__main__":
+    if app.config['SECRET_KEY'] == '':
+        app.config['SECRET_KEY'] == str(os.urandom(32))
     app.run(host='0.0.0.0', debug=False)
