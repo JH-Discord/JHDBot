@@ -111,7 +111,7 @@ async def on_guild_channel_create(channel):  # channel create logs
 @bot.event
 async def on_message_delete(message):  # message deletion logs
     logchannel = discord.utils.get(channel.guild.channels, name='message-logs')
-    emb = discord.Embed(description=f'**#{message.content} from {message.author} deleted in `{message.channel.name}`**', colour=0xC70600)
+    emb = discord.Embed(description=f'**{message.content} from {message.author} deleted in `{message.channel.name}`**', colour=0xC70600)
     emb.set_author(name=f'{message.channel.guild}', icon_url=f"{message.channel.guild.icon_url}")
     emb.set_footer(text=f'Message Log')
     await logchannel.send(embed=emb)
