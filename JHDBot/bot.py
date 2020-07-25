@@ -10,7 +10,7 @@ import helpembed
 
 load_dotenv()
 
-bot = commands.Bot(command_prefix=str(os.environ.get('command_prefix')), case_insensitive=True)  # bot command prefix
+bot = commands.Bot(command_prefix=str(os.environ.get('BOT_PREFIX_CHARACTER')), case_insensitive=True)  # bot command prefix
 bot.remove_command('help')
 # Loading Cogs
 
@@ -145,5 +145,7 @@ async def attach_embed_info(ctx=None, embed=None):
     return embed
 
 # Token
-bot.run(str(os.environ.get('bot_token')))  # token
+TOKEN = os.getenv("DISCORD_API_TOKEN")
+bot.run(TOKEN)  # token
+print("Bot started press ctrl+c to exit....")
 #bot.run(configfile.bot_token)

@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  nginx:
+    build: .
+    container_name: nginx
+    restart: "always"
+    privileged: true
+    links:
+      - "webapp1:verify-app1"
+      - "webapp2:verify-app2"
+    ports:
+      - "80:80"
+
+  jhd-bot:
+    build: JHDBot/.
+    container_name: jhd-bot
+    restart: "unless-stopped"
+    environment:
+      - DISCORD_API_TOKEN=${DISCORD_API_TOKEN}
+      - BOT_PREFIX_CHARACTER=${BOT_PREFIX_CHARACTER}
+
+  webapp1:
+    build: verify-web/.
+    container_name: verify-app1
+    restart: "always"
+    environment:
+      - RECAPTCHA_PUBLIC_KEY=${RECAPTCHA_PUBLIC_KEY}
+      - RECAPTCHA_PRIVATE_KEY=${RECAPTCHA_PRIVATE_KEY}
+      - CSRF_SECRET_KEY=${CSRF_SECRET_KEY}
+      - DISCORD_API_TOKEN=${DISCORD_API_TOKEN}
+      - DISCORD_SERVER_CHANNEL_ID=${DISCORD_SERVER_CHANNEL_ID}
+
+  webapp2:
+    build: verify-web/.
+    container_name: verify-app2
+    restart: "always"
+    environment:
+      - RECAPTCHA_PUBLIC_KEY=${RECAPTCHA_PUBLIC_KEY}
+      - RECAPTCHA_PRIVATE_KEY=${RECAPTCHA_PRIVATE_KEY}
+      - CSRF_SECRET_KEY=${CSRF_SECRET_KEY}
+      - DISCORD_API_TOKEN=${DISCORD_API_TOKEN}
+      - DISCORD_SERVER_CHANNEL_ID=${DISCORD_SERVER_CHANNEL_ID}

@@ -1,16 +1,9 @@
-FROM python:3.7.8-alpine
+FROM nginx:latest
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+WORKDIR /etc/nginx/
 
-RUN apk add gcc python3-dev musl-dev
+RUN rm /etc/nginx/conf.d/default.conf
 
-COPY bot.py .
-COPY cogs .
-COPY Pipfile .
-COPY Pipfile.lock .
+COPY nginx.conf .
 
-RUN pip install pipenv
-RUN pipenv install
-
-CMD ["pipenv", "run", "python", "bot.py"]
+EXPOSE 80
