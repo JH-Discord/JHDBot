@@ -108,6 +108,22 @@ async def on_guild_channel_create(channel):  # channel create logs
     emb.set_footer(text=f'Maintenance Log')
     await logchannel.send(embed=emb)
 
+@bot.event
+async def on_member_join(member):  # member join/leave logs
+    logchannel = discord.utils.get(channel.guild.channels, name='join-leave')
+    emb = discord.Embed(description=f'**{member.nick} joined**', colour=0x21B73C)
+    emb.set_author(name=f'{member.guild}', icon_url=f"{member.guild.icon_url}")
+    emb.set_footer(text=f'Join-Leave Log')
+    await logchannel.send(embed=emb)
+
+@bot.event
+async def on_member_leave(member):  # member join/leave logs
+    logchannel = discord.utils.get(channel.guild.channels, name='join-leave')
+    emb = discord.Embed(description=f'**{member.nick} left**', colour=0xBC1E23)
+    emb.set_author(name=f'{member.guild}', icon_url=f"{member.guild.icon_url}")
+    emb.set_footer(text=f'Join-Leave Log')
+    await logchannel.send(embed=emb)
+
 # On error Event
 @bot.event
 async def on_command_error(ctx, error):
