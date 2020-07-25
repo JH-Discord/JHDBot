@@ -91,6 +91,23 @@ async def on_voice_state_update(member, before, after):
     except Exception as e:
         print(f'some weird exception bot gets mad about {e}')
 
+#maintenance logs
+@bot.event
+async def on_guild_channel_delete(channel):  # channel delete logs
+    logchannel = discord.utils.get(channel.guild.channels, name='maintenance')
+    emb = discord.Embed(description=f'**#{channel.name} deleted in `{channel.category}`**', colour=0xC70600)
+    emb.set_author(name=f'{channel.guild}', icon_url=f"{channel.guild.icon_url}")
+    emb.set_footer(text=f'Maintenance Log')
+    await logchannel.send(embed=emb)
+
+@bot.event
+async def on_guild_channel_create(channel):  # channel create logs
+    logchannel = discord.utils.get(channel.guild.channels, name='maintenance')
+    emb = discord.Embed(description=f'**#{channel.name} created in `{channel.category}`**', colour=0xC70600)
+    emb.set_author(name=f'{channel.guild}', icon_url=f"{channel.guild.icon_url}")
+    emb.set_footer(text=f'Maintenance Log')
+    await logchannel.send(embed=emb)
+
 # On error Event
 @bot.event
 async def on_command_error(ctx, error):
