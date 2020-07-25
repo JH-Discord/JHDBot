@@ -53,7 +53,43 @@ async def on_member_join(member):  # a function which works when any member join
         f'need to ping us but you can still tell us if you face a problem in this channel\n\nAlso the JHD_Bot will '
         f'send you a DM, so please make sure you have DM\'s from server members `on` in `privacy settings` before you '
         f'use `$verify` command, thanks')
+    logchannel = discord.utils.get(member.guild.channels, name='join-leave')
+    emb = discord.Embed(description=f'User - {member.mention}\nId - {member.id}\n', colour=0x3CFF4C)
+    emb.set_author(name='Member Joined', icon_url=f"{member.avatar_url}")
+    emb.set_footer(text=f'Join Log')
+    await logchannel.send(embed=emb)
 
+#on member leave logs
+@bot.event
+async def on_member_remove(member):  #a function which works when any member lefts,need param `member`
+    logchannel = discord.utils.get(member.guild.channels, name='join-leave')
+    emb = discord.Embed(description=f'User - {member.mention}\nId - {member.id}\n', colour=0xFF693C)
+    emb.set_author(name='Member Left', icon_url=f"{member.avatar_url}")
+    emb.set_footer(text=f'Leave Log')
+    await logchannel.send(embed=emb)
+
+#Voice channel logs
+@bot.event
+async def on_voice_state_update(member, before, after):
+    logchannel = discord.utils.get(member.guild.channels, name='voice-channel')
+    try:
+        if(before.channel==None):
+            emb = discord.Embed(description=f'{member.mention}** joined voice channel **{after.channel.mention}', colour=0x00DAB4)
+            emb.set_author(name=f'{member}', icon_url=f"{member.avatar_url}")
+            emb.set_footer(text=f'Voice Channel Log')
+            await logchannel.send(embed=emb)
+        elif(after.channel==None):
+            emb = discord.Embed(description=f'{member.mention}** left voice channel **{before.channel.mention}', colour=0x00DAB4)
+            emb.set_author(name=f'{member}', icon_url=f"{member.avatar_url}")
+            emb.set_footer(text=f'Voice Channel Log')
+            await logchannel.send(embed=emb)
+        else:
+            emb = discord.Embed(description=f'{member.mention}** changed voice from **{before.channel.mention}** to** {after.channel.mention}', colour=0x00DAB4)
+            emb.set_author(name=f'{member}', icon_url=f"{member.avatar_url}")
+            emb.set_footer(text=f'Voice Channel Log')
+            await logchannel.send(embed=emb)
+    except Exception as e:
+        print(f'some weird exception bot gets mad about {e}')
 
 # On error Event
 @bot.event
