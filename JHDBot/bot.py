@@ -110,16 +110,16 @@ async def on_guild_channel_create(channel):  # channel create logs
 
 @bot.event
 async def on_message_edit(before, after):
-    logchannel = discord.utils.get(after.guild.channels, name='message-logs')
+    logchannel = discord.utils.get(before.guild.channels, name='message-logs')
 
-    description  = f"Message in #{after.channel.name} got changed\n"
+    description  = f"Message in #{before.channel.name} got changed\n"
     description += "**Before**\n"
     description += f"{before.content}\n"
     description += "**After**\n"
     description += f"{after.content}"
 
     emb = discord.Embed(description=description, colour=0xC70600)
-    emb.set_author(name=f'{after.channel.guild}', icon_url=f"{after.channel.guild.icon_url}")
+    emb.set_author(name=f'{before.channel.guild}', icon_url=f"{before.channel.guild.icon_url}")
     emb.set_footer(text=f'Message Log')
     await logchannel.send(embed=emb)
 
