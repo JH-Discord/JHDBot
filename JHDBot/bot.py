@@ -123,6 +123,16 @@ async def on_message_edit(before, after):
     emb.set_footer(text=f'Message Log')
     await logchannel.send(embed=emb)
 
+async def on_message_delete(message):  # message deletion logs
+    logchannel = discord.utils.get(message.guild.channels, name='message-logs')
+    description  = "Message:```"
+    description += f"{message.content}"
+    description += f"``` was deleted in `{message.channel.name}`"
+    emb = discord.Embed(description=description, colour=0xC70600)
+    emb.set_author(name=f'{message.channel.guild}', icon_url=f"{message.channel.guild.icon_url}")
+    emb.set_footer(text=f'Message Log')
+    await logchannel.send(embed=emb)
+
 # On error Event
 @bot.event
 async def on_command_error(ctx, error):
