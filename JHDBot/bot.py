@@ -110,7 +110,7 @@ async def on_guild_channel_create(channel):  # channel create logs
 
 @bot.event
 async def on_message_edit(before, after):
-    logchannel = discord.utils.get(channel.guild.channels, name='message-logs')
+    logchannel = discord.utils.get(after.guild.channels, name='message-logs')
 
     description  = f"Message in #{after.channel.name} got changed\n"
     description += "**Before**\n"
