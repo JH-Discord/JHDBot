@@ -108,7 +108,8 @@ async def on_guild_channel_create(channel):  # channel create logs
     emb.set_footer(text=f'Maintenance Log')
     await logchannel.send(embed=emb)
 
-@bot.event
+#comments
+@bot.event # comment added
 async def on_message_delete(message):  # message deletion logs
     logchannel = discord.utils.get(message.guild.channels, name='message-logs')
     description  = "Message:```"
