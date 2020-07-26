@@ -17,7 +17,7 @@ class GeneralCog(commands.Cog):
         if (str(
                 ctx.message.channel) == "bot-commands" or role is not None or cool_people is not None
                 or ctx.message.author.guild_permissions.manage_messages):
-            await ctx.send(f'Ping - {round(self.bot.latency * 1000)}ms')
+            await ctx.send(f'Ping! - {round(self.bot.latency * 1000)}ms')
         else:
             await ctx.send('Please use this command in `#bot-commands`')
 
