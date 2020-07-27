@@ -72,7 +72,7 @@ async def on_member_remove(member):  #a function which works when any member lef
 @bot.event
 async def on_member_join(member):
     logchannel = discord.utils.get(member.guild.channels, name='join-leave')
-    emb = discord.Embed(description=f'User - {member.mention}\nId - {member.id}\n with {member.fetch_invite()} invite', colour=0xFF693C)
+    emb = discord.Embed(description=f'User - {member.mention}\nId - {member.id}\n with {member.guild.VANITY_URL} invite', colour=0xFF693C)
     emb.set_author(name=f'Member Join', icon_url=f"{member.avatar_url}")
     emb.set_footer(text=f'Join Log')
     await logchannel.send(embed=emb)
