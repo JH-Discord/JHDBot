@@ -1,129 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verification page</title>
-    <style>
-        @import url(https://fonts.googleapis.com/css?family=Roboto:300);
-
-.login-page {
-  width: 52em;
-  padding: 8% 0 0;
-  margin: auto;
-}
-.form {
-  position: relative;
-  z-index: 1;
-  background: -o-linear-gradient(right,  #42275a, #734b6d);
-  max-width: 400px;
-  margin: 0 auto 100px;
-  padding: 45px;
-  text-align: center;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-  
-}
-.form #texta {
-  font-family: "Roboto", sans-serif;
-  outline: 0;
-  color: whitesmoke;
-  width: 100%;
-  border: 0;
-  margin: 0 0 15px;
-  padding: 15px;
-  box-sizing: border-box;
-  font-size: 14px;
-}
-iframe {
-  padding-left: 2.5em;
-  padding-top: 1em;
-}
-.form button {
-  margin-top: 6em;
-  font-family: "Roboto", sans-serif;
-  text-transform: uppercase;
-  outline: 0;
-  background: rgb(86, 51, 116);
-  width: 100%;
-  border: 0;
-  padding: 15px;
-  color: #FFFFFF;
-  font-size: 14px;
-  -webkit-transition: all 0.3 ease;
-  transition: all 0.3 ease;
-  cursor: pointer;
-}
-.form button:hover,.form button:active,.form button:focus {
-  background: rgb(192, 13, 156);
-}
-.form .message {
-  margin: 15px 0 0;
-  color: rgb(23, 157, 235);
-  font-size: 12px;
-}
-.form .message a {
-  color: rgb(23, 157, 235);
-  text-decoration: none;
-}
-.form .register-form {
-  display: none;
-}
-.container {
-  position: relative;
-  z-index: 1;
-  max-width: 300px;
-  margin: 0 auto;
-}
-.container:before, .container:after {
-  content: "";
-  display: block;
-  clear: both;
-}
-.container .info {
-  margin: 50px auto;
-  text-align: center;
-}
-.container .info h1 {
-  margin: 0 0 15px;
-  padding: 0;
-  font-size: 36px;
-  font-weight: 300;
-  color: #1a1a1a;
-}
-.container .info span {
-  color: #4d4d4d;
-  font-size: 12px;
-}
-.container .info span a {
-  color: #000000;
-  text-decoration: none;
-}
-.container .info span .fa {
-  color: #EF3B3A;
-}
-body {
-  background: #2a4869; /* fallback for old browsers */
-  background: -webkit-linear-gradient(right, #42275a, #734b6d);
-  background: -moz-linear-gradient(right,  #42275a, #734b6d);
-  background: -o-linear-gradient(right,  #42275a, #734b6d);
-  background: linear-gradient(to left,  #42275a, #734b6d);
-  font-family: "Roboto", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;      
-}
-    </style>
-</head>
-<body>
-    <div class="login-page">
-        <div class="form">
-          <p id="texta">Pass this captcha to get your one time invite link</p>
-          <form action="{{ url_for('verify') }}" method="POST">
-            {{ form.csrf_token }}
-            {{ form.recaptcha }}
-            <button type="submit">Get invite link</button>
-          </form>
+ <title>Verification page</title>
+    <div id="app" :style="{background: gradient}">
+        <div class="container">
+          <div class="form">
+            <p id="texta">Pass this captcha to get your one time invite link</p>
+            <form action="{{ url_for('verify') }}" method="POST">
+              {{ form.csrf_token }}
+              {{ form.recaptcha }}
+              <button type="submit">Get invite link</button>
+            </form>
+          </div>
         </div>
-      </div>
-</body>
+    </div>
 <!-- made by pop_eax with love -->
-</html>
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.js"></script>
+<script src="./static/script.js"></script>
+<link href="./static/style.css" rel="stylesheet" />

@@ -1,0 +1,18 @@
+<div id="app" :style="{background: gradient}">
+	<div class="container">
+		<div class="form">
+			<p id="texta">Pass this captcha to get your one time invite link</p>
+			<form action="{{ url_for('verify') }}" method="POST">
+					
+			  <button type="submit">Get invite link</button>
+			</form>
+		  </div>
+	</div>
+</div>
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.js"></script>
+<script src="./static/script.js"></script>
+<link href="./static/style.css" rel="stylesheet" />
