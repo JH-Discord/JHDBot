@@ -48,7 +48,6 @@ class GeneralCog(commands.Cog):
     # Suggestion command
     @commands.command()
     async def suggest(self, ctx, *, sug=None):
-        cool_people = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
         if await self.isAuthorized(ctx, veteran=False):
             if sug:
                 suggestions_channel = discord.utils.get(ctx.message.author.guild.channels, name="suggestions")

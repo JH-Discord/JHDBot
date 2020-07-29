@@ -26,9 +26,9 @@ if __name__ == '__main__':
         except Exception as e:
             print(f'Failed to load cogs : {e}')
 
-# ==========================
-# ==========EVENTS==========
-# ==========================
+"""
+EVENTS
+"""
 
 # Event: when bot becomes ready.
 @bot.event  # event/function decorators
@@ -150,9 +150,9 @@ async def on_message(message):
                 fa.write("-----\n")
     await bot.process_commands(message)
 
-# ==========================
-# =========COMMANDS=========
-# ==========================
+"""
+COMMANDS
+"""
 
 # JHDbot help message
 @bot.command(name="help")  # alias of command name
@@ -193,9 +193,9 @@ async def channel_desc(ctx):
         await attach_embed_info(ctx, emb)
         await ctx.message.author.send(embed=emb)
 
-# ==========================
-# ========FUNCTIONS=========
-# ==========================
+"""
+FUNCTIONS
+"""
 
 async def attach_embed_info(ctx=None, embed=None):
     embed.set_author(name='JHDiscord Bot', icon_url=f'{ctx.guild.icon_url}')

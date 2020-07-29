@@ -103,11 +103,10 @@ class ModeratorCog(commands.Cog):
             elif ctx.message.author.guild_permissions.kick_members:
                 # checks if user who send the kick command is authorized to do it.
                 await user.send(f'You were kicked from JHDiscord : {reason}')
-                val = random.randint(0,2)
-                await user.send(list_of_kick_gif[val])
+                await user.send(random.choice(list_of_kick_gif))
                 await ctx.guild.kick(user=user, reason=reason)  # kicks that user
                 await ctx.send(f'{user} has been kicked out from the server')
-                await ctx.send(list_of_kick_gif[val])
+                await ctx.send(random.choice(list_of_kick_gif))
             else:
                 await ctx.send('Sorry, it seems like you are not authorized to do it')
             await asyncio.sleep(5)
@@ -130,11 +129,10 @@ class ModeratorCog(commands.Cog):
             elif ctx.message.author.guild_permissions.ban_members:
                 # checks if user who send the ban command is authorized to do it.
                 await user.send(f'You were kicked from JHDiscord : {reason}')
-                val = random.randint(0,2)
-                await user.send(list_of_ban_gif[val])
+                await user.send(random.choice(list_of_ban_gif))
                 await ctx.guild.ban(user=user, reason=reason)  # bans that user
                 await ctx.send(f'{user} has been banned from the server')
-                await ctx.send(list_of_ban_gif[val])
+                await ctx.send(random.choice(list_of_ban_gif))
             else:
                 await ctx.send('Sorry, it seems like you are not authorized to do it')
             await asyncio.sleep(5)
