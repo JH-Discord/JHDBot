@@ -10,12 +10,12 @@ services:
       - "webapp1:verify-app1"
       - "webapp2:verify-app2"
     ports:
-      - "80:80"
+      - "8080:80"
 
   jhd-bot:
     build: JHDBot/.
     container_name: jhd-bot
-    restart: "unless-stopped"
+    restart: "always"
     environment:
       - DISCORD_API_TOKEN=${DISCORD_API_TOKEN}
       - BOT_PREFIX_CHARACTER=${BOT_PREFIX_CHARACTER}
