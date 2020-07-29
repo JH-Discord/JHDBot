@@ -19,7 +19,7 @@ class VeteranCog(commands.Cog):
         htb = discord.utils.get(ctx.guild.channels, name='hackthebox')
         pro = discord.utils.get(ctx.guild.channels, name='programming')
 
-        if self.isAuthorized(ctx):
+        if await self.isAuthorized(ctx):
             await ctx.send(
                 f'I. Bandit OverTheWire: (https://overthewire.org/wargames/bandit/) A wargame focusing on basic Linux '
                 f'commands and privilege escalation. Questions can be asked in {otw.mention}\n\nII. Natas '
@@ -44,7 +44,7 @@ class VeteranCog(commands.Cog):
     # nypa command
     @commands.command(aliases=['nypa'])  # creating Commands ctx is something like context, send automatically
     async def not_your_personal_avengers(self, ctx):
-        if self.isAuthorized(ctx):
+        if await self.isAuthorized(ctx):
             await ctx.send(
                 'We aren\'t your personal Avengers. You are going to need to use other methods for that. Customer '
                 'support and local law enforcement are probably best depending on the circumstance.')
@@ -55,7 +55,7 @@ class VeteranCog(commands.Cog):
     @commands.command(aliases=['bt','blackhat'])  # creating Commands ctx is something like context, send automatically
     async def black_hat(self, ctx):
         rules_channel = discord.utils.get(ctx.guild.channels, name='obligatory-rules')
-        if self.isAuthorized(ctx):
+        if await self.isAuthorized(ctx):
             await ctx.send(
                 f'Unfortunately it seems as though you are discussing blackhat activities. The term Blackhat refers '
                 f'to hacking for personal gain or to be generally malicious. Please refer to {rules_channel.mention} . We '
@@ -68,7 +68,7 @@ class VeteranCog(commands.Cog):
     async def account(self, ctx):
         role = discord.utils.get(ctx.author.roles, name='Veteran')
         cool_people = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
-        if self.isAuthorized(ctx):
+        if await self.isAuthorized(ctx):
             await ctx.send(
                 'Sorry. We can\'t help with account recovery. Your only path for that is to contact support for the '
                 'respective service. "I forgot my password" is often a good place to start.')
@@ -78,7 +78,7 @@ class VeteranCog(commands.Cog):
     # just ask it mate
     @commands.command(aliases=['ja', 'justask'])  # creating Commands ctx is something like context, send automatically
     async def just_ask(self, ctx):
-        if self.isAuthorized(ctx):
+        if await self.isAuthorized(ctx):
             await ctx.send(
                 'Please don\'t ask to ask a question, ask if anyone is on, or ask for an expert. Just ask your '
                 'question. That is the only way to get an answer.')
@@ -89,7 +89,7 @@ class VeteranCog(commands.Cog):
     # ctfwhat command
     @commands.command(aliases=['ct', 'ctfwhat'])  # creating Commands ctx is something like context, send automatically
     async def ctf_what(self, ctx):
-        if self.isAuthorized(ctx):
+        if await self.isAuthorized(ctx):
             await ctx.send(
                 'CTF\'s are competitions you can participate into to practice and learn cybersecurity skills in a '
                 'legal way. Here is a pretty cool video that explains them. '
@@ -101,7 +101,7 @@ class VeteranCog(commands.Cog):
     # howtoask command
     @commands.command(aliases=['hk', 'howtoask'])  # creating Commands ctx is something like context, send automatically
     async def how_to_ask(self, ctx):
-        if self.isAuthorized(ctx):
+        if await self.isAuthorized(ctx):
             await ctx.send(
                 'Hey there, if you ask the question like this, it might help us, to help you - '
                 'https://www.youtube.com/watch?v=53zkBvL4ZB4 \n_LiveOverflow is dope_ : P')
@@ -110,7 +110,7 @@ class VeteranCog(commands.Cog):
 
     @commands.command(aliases=['lmgtfy'])
     async def _lmgtfy(self, ctx, *, input):
-        if self.isAuthorized(ctx):
+        if await self.isAuthorized(ctx):
             lmgtfyurl = 'https://lmgtfy.com/?q='
             fullyurl = lmgtfyurl + urllib.parse.quote_plus(input, safe='')
             await ctx.send(fullyurl)
