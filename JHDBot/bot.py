@@ -22,7 +22,7 @@ extensions = ['moderation', 'veteran', 'general', 'verification']
 if __name__ == '__main__':
     for extension in extensions:
         try:
-            bot.load_extension(f"cogs.{extension}")
+            bot.load_extension(extension)
         except Exception as e:
             print(f'Failed to load cogs : {e}')
 
