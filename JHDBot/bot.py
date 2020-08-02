@@ -54,13 +54,8 @@ async def on_member_join(member):  # a function which works when any member join
         f'send you a DM, so please make sure you have DM\'s from server members `on` in `privacy settings` before you '
         f'use `$verify` command, thanks')
     logchannel = discord.utils.get(member.guild.channels, name='join-leave')
-    emb = discord.Embed(description=f'User - {member.mention}\nId - {member.id}\n', colour=0x3CFF4C)
+    emb = discord.Embed(description=f'User - {member.mention}\nId - {member.id}\n with {member.guild.splash_url} invite', colour=0x3CFF4C)
     emb.set_author(name='Member Joined', icon_url=f"{member.avatar_url}")
-    emb.set_footer(text=f'Join Log')
-    await logchannel.send(embed=emb)
-    logchannel = discord.utils.get(member.guild.channels, name='join-leave')
-    emb = discord.Embed(description=f'User - {member.mention}\nId - {member.id}\n with {member.guild.splash_url} invite', colour=0xFF693C)
-    emb.set_author(name=f'Member Join', icon_url=f"{member.avatar_url}")
     emb.set_footer(text=f'Join Log')
     await logchannel.send(embed=emb)
 
