@@ -70,7 +70,7 @@ class GeneralCog(commands.Cog):
 
         user_roles = [discord.utils.get(ctx.author.roles, name=role) for role in authorized_roles]
         
-        if (str(ctx.message.channel) == 'bot-commands' or user_roles
+        if (str(ctx.message.channel) == 'bot-commands' or user_roles[0] or user_roles[1]
             or ctx.message.author.guild_permissions.manage_messages):
             return True
         

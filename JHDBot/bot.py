@@ -22,7 +22,7 @@ extensions = ['moderation', 'veteran', 'general', 'verification']
 if __name__ == '__main__':
     for extension in extensions:
         try:
-            bot.load_extension(extension)
+            bot.load_extension(f"cogs.{extension}")
         except Exception as e:
             print(f'Failed to load cogs : {e}')
 
@@ -211,7 +211,7 @@ async def isAuthorized(ctx, veteran=True, moderator=True):
 
     user_roles = [discord.utils.get(ctx.author.roles, name=role) for role in authorized_roles]
     
-    if (str(ctx.message.channel) == 'bot-commands' or user_roles
+    if (str(ctx.message.channel) == 'bot-commands' or user_roles[0] or user_roles[1]
         or ctx.message.author.guild_permissions.manage_messages):
         return True
     
