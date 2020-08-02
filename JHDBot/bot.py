@@ -58,6 +58,11 @@ async def on_member_join(member):  # a function which works when any member join
     emb.set_author(name='Member Joined', icon_url=f"{member.avatar_url}")
     emb.set_footer(text=f'Join Log')
     await logchannel.send(embed=emb)
+    logchannel = discord.utils.get(member.guild.channels, name='join-leave')
+    emb = discord.Embed(description=f'User - {member.mention}\nId - {member.id}\n with {member.guild.splash_url} invite', colour=0xFF693C)
+    emb.set_author(name=f'Member Join', icon_url=f"{member.avatar_url}")
+    emb.set_footer(text=f'Join Log')
+    await logchannel.send(embed=emb)
 
 #on member leave logs
 @bot.event
@@ -66,15 +71,6 @@ async def on_member_remove(member):  #a function which works when any member lef
     emb = discord.Embed(description=f'User - {member.mention}\nId - {member.id}\n', colour=0xFF693C)
     emb.set_author(name='Member Left', icon_url=f"{member.avatar_url}")
     emb.set_footer(text=f'Leave Log')
-    await logchannel.send(embed=emb)
-
-#on member join
-@bot.event
-async def on_member_join(member):
-    logchannel = discord.utils.get(member.guild.channels, name='join-leave')
-    emb = discord.Embed(description=f'User - {member.mention}\nId - {member.id}\n with {member.guild.splash_url} invite', colour=0xFF693C)
-    emb.set_author(name=f'Member Join', icon_url=f"{member.avatar_url}")
-    emb.set_footer(text=f'Join Log')
     await logchannel.send(embed=emb)
 
 #Voice channel logs
