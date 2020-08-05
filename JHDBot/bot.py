@@ -109,7 +109,7 @@ async def on_guild_channel_create(channel):  # channel create logs
     await logchannel.send(embed=emb)
 
 #on message edit
-@bot.event
+@bot.event #Working
 async def on_message_edit(before, after):
     logchannel = discord.utils.get(before.guild.channels, name='message-logs')
     if(before.content!=after.content):
@@ -119,11 +119,9 @@ async def on_message_edit(before, after):
         await logchannel.send(embed=emb)
 
 #on message delete
-@bot.event
+@bot.event  #Working
 async def on_message_delete(message):
     logchannel = discord.utils.get(message.guild.channels, name='message-logs')
-    print(dir(message))
-    print(message.edited_at)
     emb = discord.Embed(description=f'**Message deleted in {message.channel.mention}**\nMessage Content\n```{message.content}```\n', colour=0xFF2E4A)
     emb.set_author(name=f'{message.author}', icon_url=f"{message.author.avatar_url}")
     emb.set_footer(text=f'Message Delete Log')
