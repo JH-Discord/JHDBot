@@ -10,7 +10,7 @@ import helpembed
 
 load_dotenv()
 
-bot = commands.Bot(command_prefix=str(os.environ.get('command_prefix')), case_insensitive=True)  # bot command prefix
+bot = commands.Bot(command_prefix=str(os.environ.get('BOT_PREFIX_CHARACTER')), case_insensitive=True)  # bot command prefix
 bot.remove_command('help')
 # Loading Cogs
 
@@ -53,7 +53,79 @@ async def on_member_join(member):  # a function which works when any member join
         f'need to ping us but you can still tell us if you face a problem in this channel\n\nAlso the JHD_Bot will '
         f'send you a DM, so please make sure you have DM\'s from server members `on` in `privacy settings` before you '
         f'use `$verify` command, thanks')
+    logchannel = discord.utils.get(member.guild.channels, name='join-leave')
+    emb = discord.Embed(description=f'User - {member.mention}\nId - {member.id}', colour=0x3CFF4C)
+    emb.set_author(name='Member Joined', icon_url=f"{member.avatar_url}")
+    emb.set_footer(text=f'Join Log')
+    await logchannel.send(embed=emb)
 
+#on member leave logs
+@bot.event
+async def on_member_remove(member):  #a function which works when any member lefts,need param `member`
+    logchannel = discord.utils.get(member.guild.channels, name='join-leave')
+    emb = discord.Embed(description=f'User - {member.mention}\nId - {member.id}\n', colour=0xFF693C)
+    emb.set_author(name='Member Left', icon_url=f"{member.avatar_url}")
+    emb.set_footer(text=f'Leave Log')
+    await logchannel.send(embed=emb)
+
+#Voice channel logs
+@bot.event
+async def on_voice_state_update(member, before, after):
+    logchannel = discord.utils.get(member.guild.channels, name='voice-channel')
+    try:
+        if(before.channel==None):
+            emb = discord.Embed(description=f'{member.mention}** joined voice channel **{after.channel.mention}', colour=0x00DAB4)
+            emb.set_author(name=f'{member}', icon_url=f"{member.avatar_url}")
+            emb.set_footer(text=f'Voice Channel Log')
+            await logchannel.send(embed=emb)
+        elif(after.channel==None):
+            emb = discord.Embed(description=f'{member.mention}** left voice channel **{before.channel.mention}', colour=0x00DAB4)
+            emb.set_author(name=f'{member}', icon_url=f"{member.avatar_url}")
+            emb.set_footer(text=f'Voice Channel Log')
+            await logchannel.send(embed=emb)
+        else:
+            emb = discord.Embed(description=f'{member.mention}** changed voice from **{before.channel.mention}** to** {after.channel.mention}', colour=0x00DAB4)
+            emb.set_author(name=f'{member}', icon_url=f"{member.avatar_url}")
+            emb.set_footer(text=f'Voice Channel Log')
+            await logchannel.send(embed=emb)
+    except Exception as e:
+        print(f'some weird exception bot gets mad about {e}')
+
+#maintenance logs
+@bot.event
+async def on_guild_channel_delete(channel):  # channel delete logs
+    logchannel = discord.utils.get(channel.guild.channels, name='maintenance')
+    emb = discord.Embed(description=f'**#{channel.name} deleted in `{channel.category}`**', colour=0xC70600)
+    emb.set_author(name=f'{channel.guild}', icon_url=f"{channel.guild.icon_url}")
+    emb.set_footer(text=f'Maintenance Log')
+    await logchannel.send(embed=emb)
+
+@bot.event
+async def on_guild_channel_create(channel):  # channel create logs
+    logchannel = discord.utils.get(channel.guild.channels, name='maintenance')
+    emb = discord.Embed(description=f'**#{channel.name} created in `{channel.category}`**', colour=0xC70600)
+    emb.set_author(name=f'{channel.guild}', icon_url=f"{channel.guild.icon_url}")
+    emb.set_footer(text=f'Maintenance Log')
+    await logchannel.send(embed=emb)
+
+#on message edit
+@bot.event #Working
+async def on_message_edit(before, after):
+    logchannel = discord.utils.get(before.guild.channels, name='message-logs')
+    if(before.content!=after.content):
+        emb = discord.Embed(description=f'**Message edited in {before.channel.mention} at {after.edited_at}\n**\nMessage content Before\n```{before.content}```Message content After\n```{after.content}```[Jump to message]({after.jump_url})', colour=0xFF9C2E)
+        emb.set_author(name=f'{before.author}', icon_url=f"{before.author.avatar_url}")
+        emb.set_footer(text=f'Message Edit Log')
+        await logchannel.send(embed=emb)
+
+#on message delete
+@bot.event  #Working
+async def on_message_delete(message):
+    logchannel = discord.utils.get(message.guild.channels, name='message-logs')
+    emb = discord.Embed(description=f'**Message deleted in {message.channel.mention}**\nMessage Content\n```{message.content}```\n', colour=0xFF2E4A)
+    emb.set_author(name=f'{message.author}', icon_url=f"{message.author.avatar_url}")
+    emb.set_footer(text=f'Message Delete Log')
+    await logchannel.send(embed=emb)
 
 # On error Event
 @bot.event
@@ -145,5 +217,7 @@ async def attach_embed_info(ctx=None, embed=None):
     return embed
 
 # Token
-bot.run(str(os.environ.get('bot_token')))  # token
+TOKEN = os.getenv("DISCORD_API_TOKEN")
+bot.run(TOKEN)  # token
+print("Bot started press ctrl+c to exit....")
 #bot.run(configfile.bot_token)
