@@ -15,6 +15,7 @@ app.config["SECRET_KEY"] = str(os.urandom(32))
 app.config["RECAPTCHA_USE_SSL"] = False
 app.config["RECAPTCHA_PUBLIC_KEY"] = os.environ.get("RECAPTCHA_PUBLIC_KEY")
 app.config["RECAPTCHA_PRIVATE_KEY"] = os.environ.get("RECAPTCHA_PRIVATE_KEY")
+app.config['RECAPTCHA_DATA_ATTRS']= {'theme': 'dark'}
 BOT_TOKEN = os.environ.get("DISCORD_API_TOKEN")
 SERVER_ID = os.getenv("DISCORD_SERVER_CHANNEL_ID")
 
