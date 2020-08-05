@@ -37,10 +37,8 @@ def verify():
     if request.method == "POST":
         if form.validate_on_submit():
             return redirect(get_invite_link())
-        else:
-            return render_template("verify.html", form=form, fail=True)
 
-    return render_template("verify.html", form=form, fail=False)
+    return render_template("verify.html", form=form)
 
 
 if __name__ == "__main__":
