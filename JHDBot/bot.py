@@ -108,28 +108,25 @@ async def on_guild_channel_create(channel):  # channel create logs
     emb.set_footer(text=f'Maintenance Log')
     await logchannel.send(embed=emb)
 
-#edit message log
+#on message edit
 @bot.event
-async def on_message_edit(message_before, message_after):
-    logchannel = discord.utils.get(message_before.guild.channels, name='message-logs') 
-    description  = "Message:```"
-    description += f"{message_before.content}"
-    description += f" was edited to {message_after.content}``` in `{message_before.channel.name}`"
-    emb = discord.Embed(description=description, colour=0xC70600)
-    emb.set_author(name=f'{message_before.channel.guild}', icon_url=f"{message_before.channel.guild.icon_url}")
-    emb.set_footer(text=f'Message Log')
-    await logchannel.send(embed=emb)
+async def on_message_edit(before, after):
+    logchannel = discord.utils.get(before.guild.channels, name='message-logs')
+    if(before.content!=after.content):
+        emb = discord.Embed(description=f'**Message edited in {before.channel.mention} at {after.edited_at}\n**\nMessage content Before\n```{before.content}```Message content After\n```{after.content}```[Jump to message]({after.jump_url})', colour=0xFF9C2E)
+        emb.set_author(name=f'{before.author}', icon_url=f"{before.author.avatar_url}")
+        emb.set_footer(text=f'Message Edit Log')
+        await logchannel.send(embed=emb)
 
-#comments
-@bot.event # comment added
-async def on_message_delete(message):  # message deletion logs
+#on message delete
+@bot.event
+async def on_message_delete(message):
     logchannel = discord.utils.get(message.guild.channels, name='message-logs')
-    description  = "Message:```"
-    description += f"{message.content}"
-    description += f"``` was deleted in `{message.channel.name}`"
-    emb = discord.Embed(description=description, colour=0xC70600)
-    emb.set_author(name=f'{message.channel.guild}', icon_url=f"{message.channel.guild.icon_url}")
-    emb.set_footer(text=f'Message Log')
+    print(dir(message))
+    print(message.edited_at)
+    emb = discord.Embed(description=f'**Message deleted in {message.channel.mention}**\nMessage Content\n```{message.content}```\n', colour=0xFF2E4A)
+    emb.set_author(name=f'{message.author}', icon_url=f"{message.author.avatar_url}")
+    emb.set_footer(text=f'Message Delete Log')
     await logchannel.send(embed=emb)
 
 # On error Event
