@@ -33,10 +33,14 @@ def get_invite_link():
 @app.route("/verify", methods=["GET", "POST"])
 def verify():
     form = VerificationForm()
-    if form.validate_on_submit():
-        return redirect(get_invite_link())
 
-    return render_template("verify.html", form=form)
+    if request.method == "POST":
+        if form.validate_on_submit():
+            return redirect(get_invite_link())
+        else:
+            return render_template("verify.html", form=form, fail=True)
+
+    return render_template("verify.html", form=form, fail=False)
 
 
 if __name__ == "__main__":
