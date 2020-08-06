@@ -17,7 +17,7 @@ app.config["RECAPTCHA_PUBLIC_KEY"] = os.environ.get("RECAPTCHA_PUBLIC_KEY")
 app.config["RECAPTCHA_PRIVATE_KEY"] = os.environ.get("RECAPTCHA_PRIVATE_KEY")
 BOT_TOKEN = os.environ.get("DISCORD_API_TOKEN")
 SERVER_ID = os.getenv("DISCORD_SERVER_CHANNEL_ID")
-
+app.config['RECAPTCHA_DATA_ATTRS']= {'theme': 'dark'}
 
 def get_invite_link():
     data = b'{"max_age":3600,"max_uses":1,"target_user_id":null,"target_user_type":null,"temporary":true}'
@@ -33,14 +33,9 @@ def get_invite_link():
 @app.route("/verify", methods=["GET", "POST"])
 def verify():
     form = VerificationForm()
-
-    if request.method == "POST":
-        if form.validate_on_submit():
-            return redirect(get_invite_link())
-        else:
-            return render_template("verify.html", form=form, fail=True)
-
-    return render_template("verify.html", form=form, fail=False)
+    if form.validate_on_submit():
+        return redirect(get_invite_link())
+    return render_template("verify.html", form=form)
 
 
 if __name__ == "__main__":
