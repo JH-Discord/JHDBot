@@ -6,7 +6,9 @@ RUN apk add --update --no-cache \
     linux-headers \
     python3 \
     python3-dev \
-    py3-pip
+    py3-pip \
+    libffi-dev \
+    build-base
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
@@ -14,7 +16,7 @@ WORKDIR /usr/src/app
 COPY . .
 
 RUN pip3 install -r requirements.txt
-RUN pip3 install gunicorn
+RUN pip3 install gunicorn gevent
 
 RUN adduser -D gunicorn
 USER gunicorn
