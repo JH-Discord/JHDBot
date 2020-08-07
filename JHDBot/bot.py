@@ -18,6 +18,16 @@ bot.remove_command('help')
 
 extensions = ['moderation', 'veteran', 'general', 'verification']
 
+logger = logging.getLogger('Bot')
+logger.setLevel(logging.INFO)
+hookToken = os.getenv("LOGGING_WEBHOOK_TOKEN")
+hookChannel = os.getenv("LOGGING_WEBHOOK_CHANNEL")
+discordHandler = DiscordHandler(f'https://discordapp.com/api/webhooks/{hookChannel}/{hookToken}')
+discordHandler.setLevel(logging.INFO)
+formatter = logging.Formatter('[%(name)s] (%(levelname)s): %(message)s')
+discordHandler.setFormatter(formatter)
+logger.addHandler(discordHandler)
+
 if __name__ == '__main__':
     sys.path.insert(1, os.getcwd() + '/cogs/')
     for extension in extensions:
@@ -32,6 +42,7 @@ if __name__ == '__main__':
 # Event: when bot becomes ready.
 @bot.event  # event/function decorators
 async def on_ready():
+    logger.info("Bot Ready")
     print('Bot is ready')  # message which bot sends when it is ready
 
 
@@ -135,6 +146,7 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         await ctx.send('Invalid command. Please use `$help` to know list current valid commands.')
     else:
+        logger.warning("Invalid command detected resulting in error")
         await ctx.send(
             f'An error occurred. Please use `{bot.command_prefix}reportbot <Error>`')
 
@@ -219,20 +231,7 @@ async def attach_embed_info(ctx=None, embed=None):
     return embed
 
 if __name__ == '__main__':
-    logger = logging.getLogger('Bot')
-    logger.setLevel(logging.INFO)
 
-    hookToken = os.getenv("LOGGING_WEBHOOK_TOKEN")
-    hookChannel = os.getenv("LOGGING_WEBHOOK_CHANNEL")
-    discordHandler = DiscordHandler(f'https://discordapp.com/api/webhooks/{hookChannel}/{hookToken}')
-    discordHandler.setLevel(logging.INFO)
-
-    formatter = logging.Formatter('[%(name)s] (%(levelname)s): %(message)s')
-    discordHandler.setFormatter(formatter)
-
-    logger.addHandler(discordHandler)
-
-    logger.info("Bot Started")
 
     TOKEN = os.getenv("DISCORD_API_TOKEN")
 
