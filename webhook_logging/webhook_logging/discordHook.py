@@ -3,7 +3,6 @@ import logging
 import requests
 import json
 
-
 class DiscordHandler(logging.Handler):
     '''
     Class for sending logging records to discord webhooks.
@@ -26,7 +25,7 @@ class DiscordHandler(logging.Handler):
     def mapLogRecord(self, record):
         return self.format(record)
 
-    def emit(self, record):
+    def emit(self, record) -> None:
         """
         Emit a record.
 
