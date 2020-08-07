@@ -6,6 +6,8 @@ import sys
 import os
 import random
 import helpembed
+import logging
+from webhook_logging.discordHook import DiscordHandler
 #import configfile
 
 load_dotenv()
@@ -216,8 +218,22 @@ async def attach_embed_info(ctx=None, embed=None):
     embed.set_footer(text='by: JHD Moderation team ')
     return embed
 
-# Token
-TOKEN = os.getenv("DISCORD_API_TOKEN")
-bot.run(TOKEN)  # token
-print("Bot started press ctrl+c to exit....")
-#bot.run(configfile.bot_token)
+if __name__ == '__main__':
+    logger = logging.getLogger('Bot')
+    logger.setLevel(logging.INFO)
+
+    hookToken = os.getenv("LOGGING_WEBHOOK_TOKEN")
+    hookChannel = os.getenv("LOGGING_WEBHOOK_CHANNEL")
+    discordHandler = DiscordHandler(f'https://discordapp.com/api/webhooks/{hookChannel}/{hookToken}')
+    discordHandler.setLevel(logging.INFO)
+
+    formatter = logging.Formatter('[%(name)s] (%(levelname)s): %(message)s')
+    discordHandler.setFormatter(formatter)
+
+    logger.addHandler(discordHandler)
+
+    logger.info("Bot Started")
+
+    TOKEN = os.getenv("DISCORD_API_TOKEN")
+
+    bot.run(TOKEN)  # token

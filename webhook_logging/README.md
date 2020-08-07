@@ -9,5 +9,5 @@ Will eventually get uploaded to pypi but as of now requires a local install.
 
 Use:
 ```python
-import discord-webhooks
+import discord-logging
 ```
