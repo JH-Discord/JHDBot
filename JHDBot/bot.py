@@ -7,7 +7,7 @@ import os
 import random
 import helpembed
 import logging
-from webhook_logging.discordHook import DiscordHandler
+from webhook_loghandlers.handlers import DiscordHandler
 #import configfile
 
 load_dotenv()

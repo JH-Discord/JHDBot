@@ -17,7 +17,6 @@ COPY . .
 
 RUN pip3 install -r requirements.txt
 RUN pip3 install gunicorn gevent
-RUN pip3 install webhook_logging/.
 
 RUN adduser -D gunicorn
 USER gunicorn
