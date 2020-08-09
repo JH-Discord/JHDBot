@@ -39,12 +39,16 @@ def get_invite_link():
         headers=headers,
         data=data,
     )
+
+    invite_code = k.json()['code']
     if k.status_code != 200:
         logger.error(f"API request for discord invite returned a {k.status_code}")
-    return f"https://discord.gg/{k.json()['code']}"
+        return "/discord"
+    else:
+        return f"https://discord.gg/{invite_code}"
 
 
-@app.route("/verify", methods=["GET", "POST"])
+@app.route("/discord", methods=["GET", "POST"])
 def verify():
     form = VerificationForm()
     if form.validate_on_submit():
