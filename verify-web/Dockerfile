@@ -6,9 +6,7 @@ RUN apk add --update --no-cache \
     linux-headers \
     python3 \
     python3-dev \
-    py3-pip \
-    libffi-dev \
-    build-base
+    py3-pip
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
