@@ -22,4 +22,4 @@ RUN adduser -D gunicorn
 USER gunicorn
 
 EXPOSE 8080
-CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--access-logfile", "-", "captcha:app", "-k", "gevent", "--worker-connections", "1000"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--access-logfile", "-", "captcha:app"]

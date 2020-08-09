@@ -27,7 +27,11 @@ def get_invite_link():
         headers=headers,
         data=data,
     )
-    return f"https://discord.gg/{k.json()['code']}"
+    invite_code = k.json()['code']
+    if invite_code != "0":
+        return f"https://discord.gg/{invite_code}"
+    else:
+        return redirect("/verify")
 
 
 @app.route("/verify", methods=["GET", "POST"])
