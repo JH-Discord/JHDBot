@@ -31,10 +31,10 @@ def get_invite_link():
     if invite_code != "0":
         return f"https://discord.gg/{invite_code}"
     else:
-        return redirect("/verify")
+        return redirect("/discord")
 
 
-@app.route("/verify", methods=["GET", "POST"])
+@app.route("/discord", methods=["GET", "POST"])
 def verify():
     form = VerificationForm()
     if form.validate_on_submit():
