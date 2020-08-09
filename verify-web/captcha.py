@@ -40,13 +40,14 @@ def get_invite_link():
         data=data,
     )
     if k.status_code != 200:
-        logger.warning(f"API request for discord invite returned a {k.status_code}")
+        logger.error(f"API request for discord invite returned a {k.status_code}")
     return f"https://discord.gg/{k.json()['code']}"
 
 
 @app.route("/verify", methods=["GET", "POST"])
 def verify():
     form = VerificationForm()
+    app.logger.error('test')
     if form.validate_on_submit():
         return redirect(get_invite_link())
     return render_template("verify.html", form=form)
