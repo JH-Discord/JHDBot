@@ -1,4 +1,5 @@
 # JHDBot
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 The bot of John Hammond discord using discord.py
 
