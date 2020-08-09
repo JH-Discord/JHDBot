@@ -47,7 +47,6 @@ def get_invite_link():
 @app.route("/verify", methods=["GET", "POST"])
 def verify():
     form = VerificationForm()
-    app.logger.error('test')
     if form.validate_on_submit():
         return redirect(get_invite_link())
     return render_template("verify.html", form=form)
