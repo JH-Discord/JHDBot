@@ -31,7 +31,7 @@ def get_invite_link():
     if invite_code != "0":
         return f"https://discord.gg/{invite_code}"
     else:
-        return redirect("/discord")
+        return "/discord"
 
 
 @app.route("/discord", methods=["GET", "POST"])
