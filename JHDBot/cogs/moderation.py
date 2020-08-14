@@ -144,9 +144,12 @@ class ModeratorCog(commands.Cog):
 
     # MultiKick Member Command..
     @commands.command()  # a function to multikick members
-    async def multikick(self, ctx, *, users):  # gets user ids in string.
+    async def multikick(self, ctx, *, users=None):  # gets user ids in string.
         try:
             if ctx.message.author.guild_permissions.kick_members:
+                if users==None:
+                    await ctx.send('Please insert the ids of members to be kicked')
+                    return
                 listofusers = users.split()
                 reason = 'Kicked during a multikick process, Most probably we suspect you to be a bot if you are not please rejoin later.'
                 for i in listofusers:
@@ -167,9 +170,12 @@ class ModeratorCog(commands.Cog):
 
     # Multiban Member Command..
     @commands.command()  # a function to multiban members
-    async def multiban(self, ctx, *, users):  # gets user id in string.
+    async def multiban(self, ctx, *, users=None):  # gets user id in string.
         try:
             if ctx.message.author.guild_permissions.kick_members:
+                if users==None:
+                    await ctx.send('Please insert the ids of members to be banned')
+                    return
                 listofusers = users.split()
                 reason = 'Banned during a multiban process, Most probably we are sure you to be a bot if you are not reach to our staff on other servers, like THM, HTB, yada yada.'
                 for i in listofusers:
