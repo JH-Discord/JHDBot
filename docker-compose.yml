@@ -1,5 +1,8 @@
 version: '3'
 
+volumes:
+  databases:
+
 services:
   nginx:
     build: .
@@ -21,6 +24,17 @@ services:
       - BOT_PREFIX_CHARACTER=${BOT_PREFIX_CHARACTER}
       - LOGGING_WEBHOOK_CHANNEL=${LOGGING_WEBHOOK_CHANNEL}
       - LOGGING_WEBHOOK_TOKEN=${LOGGING_WEBHOOK_TOKEN}
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    volumes:
+      - databases:/var/lib/mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
 
   webapp1:
     build: verify-web/.
