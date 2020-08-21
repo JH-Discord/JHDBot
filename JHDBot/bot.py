@@ -145,7 +145,6 @@ async def on_message_edit(before, after):
                 message_content_after = message_content_after.replace(x, x.replace("!", ""))
             message_content_after = message_content_after.replace(i.mention, "@" + i.display_name)
 
-        message_content_after = after.content
         for i in after.channel_mentions:
             for x in re.findall(r'<@#\d+>', message_content_after):
                 message_content_after = message_content_after.replace(x, x.replace("#", ""))
