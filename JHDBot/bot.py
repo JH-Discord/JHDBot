@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import asyncio
 import sys
 import os
+import re
 import random
 import helpembed
 import logging
@@ -127,7 +128,30 @@ async def on_guild_channel_create(channel):  # channel create logs
 async def on_message_edit(before, after):
     logchannel = discord.utils.get(before.guild.channels, name='message-logs')
     if(before.content!=after.content):
-        emb = discord.Embed(description=f'**Message edited in {before.channel.mention} at {after.edited_at}\n**\nMessage content Before\n```{before.content}```Message content After\n```{after.content}```[Jump to message]({after.jump_url})', colour=0xFF9C2E)
+        message_content_before = before.content
+        for i in before.mentions:
+            for x in re.findall(r'<@!\d+>', message_content_before):
+                message_content_before = message_content_before.replace(x, x.replace("!", ""))
+            message_content_before = message_content_before.replace(i.mention, "@" + i.display_name)
+
+        for i in before.channel_mentions:
+            for x in re.findall(r'<@#\d+>', message_content_before):
+                message_content_before = message_content_before.replace(x, x.replace("#", ""))
+            message_content_before = message_content_before.replace(i.mention, "#" + i.name)
+
+        message_content_after = after.content
+        for i in after.mentions:
+            for x in re.findall(r'<@!\d+>', message_content_after):
+                message_content_after = message_content_after.replace(x, x.replace("!", ""))
+            message_content_after = message_content_after.replace(i.mention, "@" + i.display_name)
+
+        message_content_after = after.content
+        for i in after.channel_mentions:
+            for x in re.findall(r'<@#\d+>', message_content_after):
+                message_content_after = message_content_after.replace(x, x.replace("#", ""))
+            message_content_after = message_content_after.replace(i.mention, "#" + i.name)
+
+        emb = discord.Embed(description=f'**Message edited in {before.channel.mention} at {after.edited_at}\n**\nMessage content Before\n```{message_content_before}```Message content After\n```{message_content_after}```[Jump to message]({after.jump_url})', colour=0xFF9C2E)
         emb.set_author(name=f'{before.author}', icon_url=f"{before.author.avatar_url}")
         emb.set_footer(text=f'Message Edit Log')
         await logchannel.send(embed=emb)
@@ -136,7 +160,19 @@ async def on_message_edit(before, after):
 @bot.event  #Working
 async def on_message_delete(message):
     logchannel = discord.utils.get(message.guild.channels, name='message-logs')
-    emb = discord.Embed(description=f'**Message deleted in {message.channel.mention}**\nMessage Content\n```{message.content}```\n', colour=0xFF2E4A)
+
+    content = message.content
+    for i in message.mentions:
+        for x in re.findall(r'<@!\d+>', content):
+            content = content.replace(x, x.replace("!", ""))
+        content = content.replace(i.mention, "@" + i.display_name)
+
+    for i in message.channel_mentions:
+        for x in re.findall(r'<@#\d+>', content):
+            content = content.replace(x, x.replace("#", ""))
+        content = content.replace(i.mention, "#" + i.name)
+
+    emb = discord.Embed(description=f'**Message deleted in {message.channel.mention}**\nMessage Content\n```{content}```\n', colour=0xFF2E4A)
     emb.set_author(name=f'{message.author}', icon_url=f"{message.author.avatar_url}")
     emb.set_footer(text=f'Message Delete Log')
     await logchannel.send(embed=emb)
