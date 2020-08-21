@@ -21,16 +21,6 @@ BOT_TOKEN = os.environ.get("DISCORD_API_TOKEN")
 SERVER_ID = os.getenv("DISCORD_SERVER_CHANNEL_ID")
 app.config['RECAPTCHA_DATA_ATTRS']= {'theme': 'dark'}
 
-logger = logging.getLogger('Web')
-logger.setLevel(logging.INFO)
-hookToken = os.getenv("LOGGING_WEBHOOK_TOKEN")
-hookChannel = os.getenv("LOGGING_WEBHOOK_CHANNEL")
-discordHandler = DiscordHandler(f'https://discordapp.com/api/webhooks/{hookChannel}/{hookToken}')
-discordHandler.setLevel(logging.INFO)
-formatter = logging.Formatter('[%(name)s] (%(levelname)s): %(message)s')
-discordHandler.setFormatter(formatter)
-logger.addHandler(discordHandler)
-
 def get_invite_link():
     data = b'{"max_age":3600,"max_uses":1,"target_user_id":null,"target_user_type":null,"temporary":true}'
     headers = {"content-type": "application/json", "Authorization": f"Bot {BOT_TOKEN}"}
@@ -42,7 +32,6 @@ def get_invite_link():
 
     invite_code = k.json()['code']
     if k.status_code != 200:
-        logger.error(f"API request for discord invite returned a {k.status_code}")
         return "/discord"
     else:
         return f"https://discord.gg/{invite_code}"
