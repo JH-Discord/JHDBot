@@ -52,22 +52,12 @@ async def on_ready():
 @bot.event
 async def on_member_join(member):  # a function which works when any member joins,need param `member`
     print(f'{member} has joined the server :)')
-    if str(member.name) == 'username123':
-        channel = discord.utils.get(member.guild.channels, name='moderators')
-        await channel.send(f'Warning : {member.mention} arrived in the server!')
-        channel2 = discord.utils.get(member.guild.channels, name="veteran-chat")
-        await channel2.send(f'Warning : {member.mention} arrived in the server!')
     channel = discord.utils.get(member.guild.channels, name='welcome')
     rules_channel = discord.utils.get(member.guild.channels, name='obligatory-rules')
     await channel.send(
-        f'***Hi there, {member.mention} Welcome to JHDiscord!***\n\nTo gain access to the rest of the server. please '
-        f'read the {rules_channel.mention} and then verify yourself.\nTo Verify yourself, Please use command '
-        f'`$verify` and '
-        f'complete the **true or false quiz** that follows based off the obligatory rules.\n**Don\'t worry, '
-        f'If in case verification fails, our moderation team will be notified and will assist you.**\nThere is no '
-        f'need to ping us but you can still tell us if you face a problem in this channel\n\nAlso the JHD_Bot will '
-        f'send you a DM, so please make sure you have DM\'s from server members `on` in `privacy settings` before you '
-        f'use `$verify` command, thanks')
+        f'**Hi there, {member.mention} Welcome to JHDiscord!**\n\nTo gain access to the rest of the server. please '
+        f'read the {rules_channel.mention} and then verify yourself by using `$verify` command.\n\n'
+        f'Use `$verify announcement` if you would like to receive the announcements role as well.')
     logchannel = discord.utils.get(member.guild.channels, name='join-leave')
     emb = discord.Embed(description=f'User - {member.mention}\nId - {member.id}', colour=0x3CFF4C)
     emb.set_author(name='Member Joined', icon_url=f"{member.avatar_url}")
