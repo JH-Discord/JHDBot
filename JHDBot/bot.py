@@ -167,14 +167,14 @@ async def on_message_delete(message):
     await logchannel.send(embed=emb)
 
 # On error Event
-@bot.event
-async def on_command_error(ctx, error):
-    if isinstance(error, commands.CommandNotFound):
-        await ctx.send('Invalid command. Please use `$help` to know list current valid commands.')
-    else:
-        logger.info(f"Error parsing bot command in channel: <#{ctx.message.channel.id}>\n```\nAuthor: {ctx.message.author}\nMessage: {ctx.message.content}\n```")
-        await ctx.send(
-            f'An error occurred. Please use `{bot.command_prefix}reportbot <Error>`')
+#@bot.event
+#async def on_command_error(ctx, error):
+#    if isinstance(error, commands.CommandNotFound):
+#        await ctx.send('Invalid command. Please use `$help` to know list current valid commands.')
+#    else:
+#        logger.info(f"Error parsing bot command in channel: <#{ctx.message.channel.id}>\n```\nAuthor: {ctx.message.author}\nMessage: {ctx.message.content}\n```")
+#        await ctx.send(
+#            f'An error occurred. Please use `{bot.command_prefix}reportbot <Error>`')
 
 
 @bot.event
