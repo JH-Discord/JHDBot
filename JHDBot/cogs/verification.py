@@ -13,12 +13,12 @@ class VerifyCog(commands.Cog):
     # Current Verification method
     @commands.command(aliases=['verification'])
     async def verify(self, ctx, announcement_role=None):
-        #try:
+        try:
             if str(ctx.message.channel) == 'welcome':
                 role = discord.utils.get(ctx.guild.roles, name='Member')
                 await ctx.message.author.add_roles(role)
                 flag=0
-                if(announcement_role.lower()=="announcement"):
+                if(announcement_role=="announcement"):
                     role = discord.utils.get(ctx.guild.roles, name='Announcements')
                     await ctx.message.author.add_roles(role)
                     flag+=1
@@ -26,14 +26,12 @@ class VerifyCog(commands.Cog):
                 channel = discord.utils.get(ctx.message.author.guild.channels, name='verifications-help')
                 if(flag==1):
                     await channel.send(f'{ctx.message.author.mention} successfuly verified, Roles given `Member` and `Announcement`.')
-                elif(flag==0):
-                    await channel.send(f'{ctx.message.author.mention} successfuly verified, Roles given `Member`.')
                 else:
-                    await channel.send(f'Some Error happened while executing the command, please reach out to moderators/admins.')
+                    await channel.send(f'{ctx.message.author.mention} successfuly verified, Roles given `Member`.')
             else:
                 await ctx.send("Command only works in #welcome channel : )")
-        #except:
-        #    await ctx.send(f'Some Error happened while executing the command, please reach out to moderators/admins.')
+        except:
+            await ctx.send(f'Some Error happened while executing the command, please reach out to moderators/admins.')
 
 
 def setup(bot):
