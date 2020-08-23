@@ -13,7 +13,7 @@ class VerifyCog(commands.Cog):
     # Current Verification method
     @commands.command(aliases=['verification'])
     async def verify(self, ctx, announcement_role=None):
-        try:
+        #try:
             if str(ctx.message.channel) == 'welcome':
                 role = discord.utils.get(ctx.guild.roles, name='Member')
                 await ctx.message.author.add_roles(role)
@@ -32,8 +32,8 @@ class VerifyCog(commands.Cog):
                     await channel.send(f'Some Error happened while executing the command, please reach out to moderators/admins.')
             else:
                 await ctx.send("Command only works in #welcome channel : )")
-        except:
-            await ctx.send(f'Some Error happened while executing the command, please reach out to moderators/admins.')
+        #except:
+        #    await ctx.send(f'Some Error happened while executing the command, please reach out to moderators/admins.')
 
 
 def setup(bot):
