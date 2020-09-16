@@ -30,6 +30,8 @@ class VerifyCog(commands.Cog):
                     await channel.send(f'{ctx.message.author.mention} successfuly verified, Roles given `Member`.')
             else:
                 await ctx.send("Command only works in #welcome channel : )")
+            await asyncio.sleep(3)
+            await ctx.message.delete()
         except:
             await ctx.send(f'Some Error happened while executing the command, please reach out to moderators/admins.')
 
