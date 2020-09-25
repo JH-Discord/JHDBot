@@ -153,27 +153,9 @@ class VeteranCog(commands.Cog):
         role = discord.utils.get(ctx.author.roles, name='Veteran')
         cool_people = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
         if role is not None or cool_people is not None or ctx.message.author.guild_permissions.manage_messages:
-            session=HTMLSession()
-            url="https://www.google.com/search?safe=active&q="+input          #added the safe filter for sanity.
-            r=session.get(url)
-            try:
-                if r.status_code==200:
-                    match = r.html.find('#result-stats', first=True)
-                    await ctx.send("**Fetched - "+ str((match.text)[:-14])+"**")
-                    await ctx.send("Here are the top 5 results for you..")
-                    results = r.html.find('div.g')
-                    for i in range(6):           # Iterating over the divisions that contain results and printing href from them.
-                        if i==1:
-                            continue
-                        itter=i+1
-                        if(i>=1):
-                            itter=itter-1
-                        link = results[i].find('a', first=True)
-                        await ctx.send("**"+str(itter)+". link - **"+link.attrs['href'])        
-                else:
-                    await ctx.send("Sorry, unable to fetch results")
-            except:
-                await ctx.send("Sorry, unable to fetch results")
+            googleurl = 'https://www.google.com/search?safe=active&q='
+            fullurl = googleurl + urllib.parse.quote_plus(input, safe='')
+            await ctx.send(fullurl)
         else:
             await ctx.send('Seems like you are not authorized to use this command D:')
         await asyncio.sleep(5)
