@@ -1,8 +1,10 @@
 import discord
 from discord.ext import commands
 import asyncio
-import urllib
-
+import urllib.request
+from requests_html import HTML, HTMLSession
+import requests
+import re
 
 class VeteranCog(commands.Cog):
 
