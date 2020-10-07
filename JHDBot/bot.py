@@ -7,6 +7,7 @@ import os
 import re
 import random
 import helpembed
+import traceback
 import logging
 from webhook_loghandlers.handlers import DiscordHandler
 #import configfile
@@ -171,7 +172,21 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         await ctx.send('Invalid command. Please use `$help` to know list current valid commands.')
     else:
-        logger.info(f"Error parsing bot command in channel: <#{ctx.message.channel.id}>\n```\nAuthor: {ctx.message.author}\nMessage: {ctx.message.content}\n```")
+        logchannel = discord.utils.get(ctx.guild.channels, name='maintenance')
+        exception_text = ''.join(traceback.format_exception(error, error, error.__traceback__))
+        exception_text = exception_text[0:exception_text.find('The above exception was')].strip()
+
+        embed = discord.Embed(title='Unhandled Exception Thrown', color=0xFF0000)
+        embed.add_field(name='Error Details:', value=f'```Channel: #{ctx.channel.name}\nAuthor: {ctx.message.author}\nMessage: {ctx.message.content}\n```')
+        field_len = 1000
+        fields = [exception_text[i:i+field_len] for i in range(0, len(exception_text), field_len)]
+
+        for i, field in enumerate(fields):
+            f_name = 'Traceback:' if i == 0 else 'Continued:'
+            embed.add_field(name=f_name, value=f'```{field}```', inline=False)
+
+        await logchannel.send(embed=embed)
+
         await ctx.send(
             f'An error occurred. Please use `{bot.command_prefix}reportbot <Error>`')
 
