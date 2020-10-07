@@ -177,7 +177,15 @@ async def on_command_error(ctx, error):
         exception_text = exception_text[0:exception_text.find('The above exception was')].strip()
 
         embed = discord.Embed(title='Unhandled Exception Thrown', color=0xFF0000)
-        embed.add_field(name='Error Details:', value=f'```Channel: #{ctx.channel.name}\nAuthor: {ctx.message.author}\nMessage: {ctx.message.content}\n```')
+
+        name = 'Message Details:'
+        value = f'[Jump to message]({ctx.message.jump_url})'
+        value += f'```\nChannel: #{ctx.channel.name}\n'
+        value += f'Author: {ctx.message.author}\n'
+        value += f'Message: {ctx.message.content}\n```'
+
+        embed.add_field(name=name, value=value, inline=False)
+
         field_len = 1000
         fields = [exception_text[i:i+field_len] for i in range(0, len(exception_text), field_len)]
 
