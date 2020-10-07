@@ -3,11 +3,15 @@ FROM python:3.7.8-alpine
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-RUN apk add gcc \
+RUN apk add --update --no-cache \
+            gcc \
             python3-dev \
+            libc-dev \
             musl-dev \
             libxml2-dev \
-            libxslt-dev
+            libxml2 \
+            libxslt-dev \
+            libxslt
 
 COPY bot.py .
 COPY cogs .
