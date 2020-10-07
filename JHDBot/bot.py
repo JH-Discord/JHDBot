@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 import asyncio
+import aiohttp
 import sys
 import os
 import re
@@ -172,15 +173,21 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         await ctx.send('Invalid command. Please use `$help` to know list current valid commands.')
     else:
-        logchannel = discord.utils.get(ctx.guild.channels, name='maintenance')
+        embed = discord.Embed(title='Unhandled Exception Thrown', color=0xFF0000)
+
         exception_text = ''.join(traceback.format_exception(error, error, error.__traceback__))
         exception_text = exception_text[0:exception_text.find('The above exception was')].strip()
 
-        embed = discord.Embed(title='Unhandled Exception Thrown', color=0xFF0000)
+        print(exception_text, file=sys.stderr)
+
+        try:
+            chan_name = ctx.channel.name
+        except:
+            chan_name = 'DMChannel'
 
         name = 'Message Details:'
         value = f'[Jump to message]({ctx.message.jump_url})'
-        value += f'```\nChannel: #{ctx.channel.name}\n'
+        value += f'```\nChannel: #{chan_name}\n'
         value += f'Author: {ctx.message.author}\n'
         value += f'Message: {ctx.message.content}\n```'
 
@@ -193,10 +200,14 @@ async def on_command_error(ctx, error):
             f_name = 'Traceback:' if i == 0 else 'Continued:'
             embed.add_field(name=f_name, value=f'```{field}```', inline=False)
 
-        await logchannel.send(embed=embed)
+        async with aiohttp.ClientSession() as s:
+            webhook = discord.Webhook.from_url(f'https://discordapp.com/api/webhooks/{hookChannel}/{hookToken}',
+                                        adapter=discord.AsyncWebhookAdapter(s))
+            await webhook.send(embed=embed)
 
         await ctx.send(
             f'An error occurred. Please use `{bot.command_prefix}reportbot <Error>`')
+
 
 
 @bot.event
@@ -280,7 +291,5 @@ async def attach_embed_info(ctx=None, embed=None):
 
 if __name__ == '__main__':
 
-
     TOKEN = os.getenv("DISCORD_API_TOKEN")
-
     bot.run(TOKEN)  # token
