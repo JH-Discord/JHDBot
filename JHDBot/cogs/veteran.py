@@ -1,8 +1,10 @@
 import discord
 from discord.ext import commands
 import asyncio
-import urllib
-
+import urllib.request
+from requests_html import HTML, HTMLSession
+import requests
+import re
 
 class VeteranCog(commands.Cog):
 
@@ -140,6 +142,20 @@ class VeteranCog(commands.Cog):
             lmgtfyurl = 'https://lmgtfy.com/?q='
             fullyurl = lmgtfyurl + urllib.parse.quote_plus(input, safe='')
             await ctx.send(fullyurl)
+        else:
+            await ctx.send('Seems like you are not authorized to use this command D:')
+        await asyncio.sleep(5)
+        await ctx.message.delete()
+
+    #google command
+    @commands.command(aliases=['gs'])
+    async def google(self, ctx, *, input):
+        role = discord.utils.get(ctx.author.roles, name='Veteran')
+        cool_people = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
+        if role is not None or cool_people is not None or ctx.message.author.guild_permissions.manage_messages:
+            googleurl = 'https://www.google.com/search?safe=active&q='
+            fullurl = googleurl + urllib.parse.quote_plus(input, safe='')
+            await ctx.send(fullurl)
         else:
             await ctx.send('Seems like you are not authorized to use this command D:')
         await asyncio.sleep(5)
