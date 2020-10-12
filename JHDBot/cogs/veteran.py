@@ -11,18 +11,30 @@ class VeteranCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    async def check_perms(self, ctx) -> bool:
+        '''
+        Check permissions to make sure the user is allowed to issue commands
+        '''
+        cool_people = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
+        role = discord.utils.get(ctx.author.roles, name='Veteran')
+        if role is not None or cool_people is not None or ctx.message.author.guild_permissions.manage_messages:
+            return True
+        else:
+            await ctx.send('Seems like you are not authorized to use this command D:')
+            await asyncio.sleep(5)
+            await ctx.message.delete()
+            return False
+
     # beginner command
     @commands.command(aliases=['bgn'])  # creating Commands ctx is something like context, send automatically
     async def beginner(self, ctx):
-        cool_people = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
         otw = discord.utils.get(ctx.guild.channels, name='over-the-wire')
         ctf = discord.utils.get(ctx.guild.channels, name='capture-the-flag')
         thm = discord.utils.get(ctx.guild.channels, name='tryhackme')
         big = discord.utils.get(ctx.guild.channels, name='beginners')
         htb = discord.utils.get(ctx.guild.channels, name='hackthebox')
         pro = discord.utils.get(ctx.guild.channels, name='programming')
-        role = discord.utils.get(ctx.author.roles, name='Veteran')
-        if role is not None or cool_people is not None or ctx.message.author.guild_permissions.manage_messages:
+        if await self.check_perms(ctx):
             await ctx.send(
                 f'I. Bandit OverTheWire: (https://overthewire.org/wargames/bandit/) A wargame focusing on basic Linux '
                 f'commands and privilege escalation. Questions can be asked in {otw.mention}\n\nII. Natas '
@@ -41,125 +53,115 @@ class VeteranCog(commands.Cog):
                 f'This website teaches a variety of languages ranging from C++, to JavaScript in a very intuitive way. '
                 f'Questions can be asked in the {pro.mention} channel.\n\n'
                 f'For any additional questions or concerns, please consult the {big.mention} channel')
+            await asyncio.sleep(5)
+            await ctx.message.delete()
         else:
-            await ctx.send('Seems like you are not authorized to use this command.')
-        await asyncio.sleep(5)
-        await ctx.message.delete()
+            return
 
     # nypa command
     @commands.command(aliases=['nypa'])  # creating Commands ctx is something like context, send automatically
     async def not_your_personal_avengers(self, ctx):
-        cool_people = discord.utils.get(ctx.author.roles, name="Moderator Emeritus")
-        role = discord.utils.get(ctx.author.roles, name="Veteran")
-        if role is not None or cool_people is not None or ctx.message.author.guild_permissions.manage_messages:
+        if await self.check_perms(ctx):
             await ctx.send(
                 'We aren\'t your personal Avengers. You are going to need to use other methods for that. Customer '
                 'support and local law enforcement are probably best depending on the circumstance.')
+            await asyncio.sleep(5)
+            await ctx.message.delete()
         else:
-            await ctx.send('Seems like you are not authorized to use this command D:')
-        await asyncio.sleep(5)
-        await ctx.message.delete()
+            return
 
     # blackhat command
     @commands.command(aliases=['bt','blackhat'])  # creating Commands ctx is something like context, send automatically
     async def black_hat(self, ctx):
-        role = discord.utils.get(ctx.author.roles, name='Veteran')
-        cool_people = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
-        channel = discord.utils.get(ctx.guild.channels, name='obligatory-rules')
-        if role is not None or cool_people is not None or ctx.message.author.guild_permissions.manage_messages:
+        if await self.check_perms(ctx):
+            channel = discord.utils.get(ctx.guild.channels, name='obligatory-rules')
             await ctx.send(
                 f'Unfortunately it seems as though you are discussing blackhat activities. The term Blackhat refers '
                 f'to hacking for personal gain or to be generally malicious. Please refer to {channel.mention} . We '
                 f'do not and cannot support illegal or immoral activities as mentioned above.')
+            await asyncio.sleep(5)
+            await ctx.message.delete()
         else:
-            await ctx.send('Seems like you are not authorized to use this command.')
-        await asyncio.sleep(5)
-        await ctx.message.delete()
+            return
 
     # account command
     @commands.command(aliases=['at'])  # creating Commands ctx is something like context, send automatically
     async def account(self, ctx):
-        role = discord.utils.get(ctx.author.roles, name='Veteran')
-        cool_people = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
-        if role is not None or cool_people is not None or ctx.message.author.guild_permissions.manage_messages:
+        if await self.check_perms(ctx):
             await ctx.send(
                 'Sorry. We can\'t help with account recovery. Your only path for that is to contact support for the '
                 'respective service. "I forgot my password" is often a good place to start.')
+            await asyncio.sleep(5)
+            await ctx.message.delete()
         else:
-            await ctx.send('Seems like you are not authorized to use this command D:')
-        await asyncio.sleep(5)
-        await ctx.message.delete()
+            return
 
     # just ask it mate
     @commands.command(aliases=['ja', 'justask'])  # creating Commands ctx is something like context, send automatically
     async def just_ask(self, ctx):
-        role = discord.utils.get(ctx.author.roles, name='Veteran')
-        cool_people = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
-        if role is not None or cool_people is not None or ctx.message.author.guild_permissions.manage_messages:
+        if await self.check_perms(ctx):
             await ctx.send(
                 'Please don\'t ask to ask a question, ask if anyone is on, or ask for an expert. Just ask your '
                 'question. That is the only way to get an answer.')
+            await asyncio.sleep(5)
+            await ctx.message.delete()
         else:
-            await ctx.send('Seems like you are not authorized to use this command D:')
-        await asyncio.sleep(5)
-        await ctx.message.delete()
+            return
 
     # ctfwhat command
-    @commands.command(aliases=['ct', 'ctfwhat'])  # creating Commands ctx is something like context, send automatically
+    @commands.command(aliases=['ctf', 'ctfwhat'])  # creating Commands ctx is something like context, send automatically
     async def ctf_what(self, ctx):
-        role = discord.utils.get(ctx.author.roles, name='Veteran')
-        cool_people = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
-        if role is not None or cool_people is not None or ctx.message.author.guild_permissions.manage_messages:
+        if await self.check_perms(ctx):
             await ctx.send(
                 'CTF\'s are competitions you can participate into to practice and learn cybersecurity skills in a '
                 'legal way. Here is a pretty cool video that explains them. '
                 'https://www.youtube.com/watch?v=8ev9ZX9J45A&t=2s \n\nWargames are similar but run all the time where '
                 'as CTFs tend to just run for a few days.')
+            await asyncio.sleep(5)
+            await ctx.message.delete()
         else:
-            await ctx.send('Seems like you are not authorized to use this command D:')
-        await asyncio.sleep(5)
-        await ctx.message.delete()
+            return
 
     # howtoask command
     @commands.command(aliases=['hk', 'howtoask'])  # creating Commands ctx is something like context, send automatically
     async def how_to_ask(self, ctx):
-        role = discord.utils.get(ctx.author.roles, name='Veteran')
-        cool_people = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
-        if role is not None or cool_people is not None or ctx.message.author.guild_permissions.manage_messages:
+        if await self.check_perms(ctx):
             await ctx.send(
-                'Hey there, if you ask the question like this, it might help us, to help you - '
-                'https://www.youtube.com/watch?v=53zkBvL4ZB4 \n_LiveOverflow is dope_ : P')
+                    'Hey there, if you ask the question like this, it might help us, to help you - '
+                    'https://www.youtube.com/watch?v=53zkBvL4ZB4 \n_LiveOverflow is dope_ : P')
+            await asyncio.sleep(5)
+            await ctx.message.delete()
         else:
-            await ctx.send('Seems like you are not authorized to use this command D:')
-        await asyncio.sleep(5)
-        await ctx.message.delete()
+            return
 
     @commands.command(aliases=['lmgtfy'])
-    async def _lmgtfy(self, ctx, *, input):
-        role = discord.utils.get(ctx.author.roles, name='Veteran')
-        cool_people = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
-        if role is not None or cool_people is not None or ctx.message.author.guild_permissions.manage_messages:
-            lmgtfyurl = 'https://lmgtfy.com/?q='
-            fullyurl = lmgtfyurl + urllib.parse.quote_plus(input, safe='')
-            await ctx.send(fullyurl)
+    async def _lmgtfy(self, ctx, *, query = None):
+        if await self.check_perms(ctx):
+            if query == None:
+                await ctx.send(f'Query not provided: `{self.bot.command_prefix}lmgtfy <query>`')
+            else:
+                lmgtfyurl = 'https://lmgtfy.com/?q='
+                fullyurl = lmgtfyurl + urllib.parse.quote_plus(query, safe='')
+                await ctx.send(fullyurl)
+            await asyncio.sleep(5)
+            await ctx.message.delete()
         else:
-            await ctx.send('Seems like you are not authorized to use this command D:')
-        await asyncio.sleep(5)
-        await ctx.message.delete()
+            return
 
     #google command
     @commands.command(aliases=['gs'])
-    async def google(self, ctx, *, input):
-        role = discord.utils.get(ctx.author.roles, name='Veteran')
-        cool_people = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
-        if role is not None or cool_people is not None or ctx.message.author.guild_permissions.manage_messages:
-            googleurl = 'https://www.google.com/search?safe=active&q='
-            fullurl = googleurl + urllib.parse.quote_plus(input, safe='')
-            await ctx.send(fullurl)
+    async def google(self, ctx, *, query = None):
+        if await self.check_perms(ctx):
+            if query == None:
+                await ctx.send(f'Query not provided: `{self.bot.command_prefix}gs <query>`')
+            else:
+                googleurl = 'https://www.google.com/search?safe=active&q='
+                fullurl = googleurl + urllib.parse.quote_plus(query, safe='')
+                await ctx.send(fullurl)
+            await asyncio.sleep(5)
+            await ctx.message.delete()
         else:
-            await ctx.send('Seems like you are not authorized to use this command D:')
-        await asyncio.sleep(5)
-        await ctx.message.delete()
+            return
 
 def setup(bot):
     bot.add_cog(VeteranCog(bot))
