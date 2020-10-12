@@ -117,6 +117,8 @@ async def on_guild_channel_create(channel):  # channel create logs
 #on message edit
 @bot.event #Working
 async def on_message_edit(before, after):
+    if type(before.channel) == discord.channel.DMChannel or type(after.channel) == discord.channel.DMChannel:
+        return
     logchannel = discord.utils.get(before.guild.channels, name='message-logs')
     if(before.content!=after.content):
         message_content_before = before.content
@@ -149,6 +151,8 @@ async def on_message_edit(before, after):
 #on message delete
 @bot.event  #Working
 async def on_message_delete(message):
+    if type(before.channel) == discord.channel.DMChannel or type(after.channel) == discord.channel.DMChannel:
+        return
     logchannel = discord.utils.get(message.guild.channels, name='message-logs')
 
     content = message.content
@@ -171,7 +175,7 @@ async def on_message_delete(message):
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
-        await ctx.send('Invalid command. Please use `$help` to know list current valid commands.')
+        await ctx.send(f'Invalid command. Please use `{bot.command_prefix}help` to know list current valid commands.')
     else:
         embed = discord.Embed(title='Unhandled Exception Thrown', color=0xFF0000)
 
@@ -223,64 +227,70 @@ async def on_message(message):
         return
     await bot.process_commands(message)
 
+def poll_commands(cog: commands.Cog) -> str:
+    '''
+    Private function only to be called by the help command.
+    Pulls the command info from cogs
+    '''
+    commands = ''
+    for cmd in cog.get_commands():
+        if cmd.hidden:
+            continue
+        args = '' if not cmd.usage else f' {cmd.usage}'
+        commands += f'`{bot.command_prefix}{cmd.name}{args}`'
+        for alias in cmd.aliases:
+            commands += f' | `{bot.command_prefix}{alias}{args}`'
+        commands += f'\n{cmd.help}'.rstrip('\n')
+        commands += '\n\n'
+    return commands
 
 # JHDbot help message
 @bot.command(name="help")  # alias of command name
 async def _help(ctx, helprole=None):  # role-vise help section
-    role = discord.utils.get(ctx.author.roles, name='Veteran')
-    cool_people = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
     if (str(
             ctx.message.channel) == 'bot-commands' or role is not None or cool_people is not None
             or ctx.message.author.guild_permissions.manage_messages):
-        help_roles = ['Veteran', 'veteran', 'Moderator', 'moderator']
-        if helprole in help_roles:
-            if helprole == 'Veteran' or helprole == 'veteran':
-                emb = discord.Embed(description=helpembed.veteranhelplist, colour=0xff002a)
-            elif helprole == 'Moderator' or helprole == 'moderator':
-                emb = discord.Embed(description=helpembed.moderator_help_list, colour=0xff002a)
-            await attach_embed_info(ctx, emb)
-            await ctx.send(embed=emb)
+
+        header = ''
+        footer = ''
+
+        if not helprole:
+            header = f"""
+                Welcome to John hammond discord !\nHope you all have a fun time here, if you have some trouble reach out to our Admins or Moderators!
+                **For moderators|veterans - {bot.command_prefix}help (moderator|veteran)**
+
+                **General commands**
+            """
+            footer = 'also feel free to drop a DM to any of our moderators/admins.'
+
+            cog = bot.cogs['GeneralCog']
+            commands = poll_commands(cog)
+
+        elif helprole.lower() == 'veteran':
+            header = '**Veteran Commands**\n\n'
+            footer = '**Also Every command a Member can use**'
+
+            cog = bot.cogs['VeteranCog']
+            commands = poll_commands(cog)
+
+        elif helprole.lower() == 'moderator':
+            header = '**Moderation Commands**\n\n'
+            footer = '**Also every command a Veteran|Member can use**'
+
+            cog = bot.cogs['ModeratorCog']
+            commands = poll_commands(cog)
+
         else:
-            emb = discord.Embed(title='John Hammond Discord', url='https://www.youtube.com/user/RootOfTheNull',
-                                description=helpembed.memberhelplist, color=0xff002a)
-            await attach_embed_info(ctx, emb)
-            await ctx.send(embed=emb)
+            await ctx.send(f'`{helprole}` is not a valid option for `{bot.command_prefix}help`')
+            return
+
+        embed = discord.Embed(description=header + commands + footer, colour=0xff002a)
+        await attach_embed_info(ctx, embed)
+        await ctx.send(embed=embed)
+
     else:
-        await ctx.send('Please use this command in `#bot-commands`')
-
-
-# FAQ message
-@bot.command(aliases=['qna'])
-async def faq(ctx):
-    role = discord.utils.get(ctx.author.roles, name='Veteran')
-    coolpeople = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
-    if (str(
-            ctx.message.channel) == 'bot-commands' or role is not None or coolpeople is not None
-            or ctx.message.author.guild_permissions.manage_messages):
-        emb = discord.Embed(description=helpembed.faq, colour=0xff002a)
-        await attach_embed_info(ctx, emb)
-        await ctx.send(embed=emb)
-    else:
-        await ctx.send('Please use this command in `#bot-commands`')
-
-
-# Channel desc message
-@bot.command(aliases=['chdesc', 'channeldesc'])
-async def channel_desc(ctx):
-    role = discord.utils.get(ctx.author.roles, name='Veteran')
-    coolpeople = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
-    if (str(
-            ctx.message.channel) == 'bot-commands' or role is not None or coolpeople is not None
-            or ctx.message.author.guild_permissions.manage_messages):
-
-        emb = discord.Embed(description=helpembed.channels, colour=0xff002a)
-        await attach_embed_info(ctx, emb)
-        await ctx.message.author.send(embed=emb)
-        emb = discord.Embed(description=helpembed.channels2, colour=0xff002a)
-        await attach_embed_info(ctx, emb)
-        await ctx.message.author.send(embed=emb)
-    else:
-        await ctx.send('Please use this command in `#bot-commands`')
+        bot_commands = discord.utils.get(ctx.guild.channels, name='bot-commands')
+        await ctx.send(f'Please use this command in {bot_commands.mention}')
 
 
 async def attach_embed_info(ctx=None, embed=None):

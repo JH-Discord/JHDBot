@@ -9,6 +9,7 @@ import re
 class VeteranCog(commands.Cog):
 
     def __init__(self, bot):
+        self.name = 'veteran'
         self.bot = bot
 
     async def check_perms(self, ctx) -> bool:
@@ -26,7 +27,9 @@ class VeteranCog(commands.Cog):
             return False
 
     # beginner command
-    @commands.command(aliases=['bgn'])  # creating Commands ctx is something like context, send automatically
+    @commands.command(name    = 'beginner',
+                      aliases = ['bgn'],
+                      help    = 'Beginner help message.')  # creating Commands ctx is something like context, send automatically
     async def beginner(self, ctx):
         otw = discord.utils.get(ctx.guild.channels, name='over-the-wire')
         ctf = discord.utils.get(ctx.guild.channels, name='capture-the-flag')
@@ -59,7 +62,8 @@ class VeteranCog(commands.Cog):
             return
 
     # nypa command
-    @commands.command(aliases=['nypa'])  # creating Commands ctx is something like context, send automatically
+    @commands.command(name = 'nypa',
+                      help = '(Grey|Black) hat OSint auto message.')  # creating Commands ctx is something like context, send automatically
     async def not_your_personal_avengers(self, ctx):
         if await self.check_perms(ctx):
             await ctx.send(
@@ -71,7 +75,9 @@ class VeteranCog(commands.Cog):
             return
 
     # blackhat command
-    @commands.command(aliases=['bt','blackhat'])  # creating Commands ctx is something like context, send automatically
+    @commands.command(name    = 'blackhat',
+                      aliases = ['bt'],
+                      help    = 'No blackhat auto message.')  # creating Commands ctx is something like context, send automatically
     async def black_hat(self, ctx):
         if await self.check_perms(ctx):
             channel = discord.utils.get(ctx.guild.channels, name='obligatory-rules')
@@ -85,7 +91,9 @@ class VeteranCog(commands.Cog):
             return
 
     # account command
-    @commands.command(aliases=['at'])  # creating Commands ctx is something like context, send automatically
+    @commands.command(name    = 'account',
+                      aliases = ['at'],
+                      help    = 'Account recovery auto message.')  # creating Commands ctx is something like context, send automatically
     async def account(self, ctx):
         if await self.check_perms(ctx):
             await ctx.send(
@@ -97,7 +105,9 @@ class VeteranCog(commands.Cog):
             return
 
     # just ask it mate
-    @commands.command(aliases=['ja', 'justask'])  # creating Commands ctx is something like context, send automatically
+    @commands.command(name    = 'justask',
+                      aliases =['ja'],
+                      help    = 'When someone asks to ask a question or asks if someone is online.')  # creating Commands ctx is something like context, send automatically
     async def just_ask(self, ctx):
         if await self.check_perms(ctx):
             await ctx.send(
@@ -109,7 +119,9 @@ class VeteranCog(commands.Cog):
             return
 
     # ctfwhat command
-    @commands.command(aliases=['ctf', 'ctfwhat'])  # creating Commands ctx is something like context, send automatically
+    @commands.command(name    = 'ctfwhat',
+                      aliases = ['ctf'],
+                      help    = 'What is CTF auto message.')  # creating Commands ctx is something like context, send automatically
     async def ctf_what(self, ctx):
         if await self.check_perms(ctx):
             await ctx.send(
@@ -123,7 +135,9 @@ class VeteranCog(commands.Cog):
             return
 
     # howtoask command
-    @commands.command(aliases=['hk', 'howtoask'])  # creating Commands ctx is something like context, send automatically
+    @commands.command(name    = 'howtoask',
+                      aliases =['hk'],
+                      help    = 'LO video on how to ask a question.')  # creating Commands ctx is something like context, send automatically
     async def how_to_ask(self, ctx):
         if await self.check_perms(ctx):
             await ctx.send(
@@ -134,7 +148,9 @@ class VeteranCog(commands.Cog):
         else:
             return
 
-    @commands.command(aliases=['lmgtfy'])
+    @commands.command(name  = 'lmgtfy',
+                      help  = 'Let me google that for you.',
+                      usage = '<query>')
     async def _lmgtfy(self, ctx, *, query = None):
         if await self.check_perms(ctx):
             if query == None:
@@ -149,7 +165,10 @@ class VeteranCog(commands.Cog):
             return
 
     #google command
-    @commands.command(aliases=['gs'])
+    @commands.command(name    = 'google',
+                      aliases =['gs'],
+                      help    = 'Google something.',
+                      usage   = '<query>')
     async def google(self, ctx, *, query = None):
         if await self.check_perms(ctx):
             if query == None:

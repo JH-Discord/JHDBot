@@ -1,4 +1,5 @@
 import discord
+import strings
 from discord.ext import commands
 import asyncio
 
@@ -6,10 +7,11 @@ import asyncio
 class GeneralCog(commands.Cog):
 
     def __init__(self, bot):
+        self.name = 'general'
         self.bot = bot
 
     # Ping Command to check if server is up or not
-    @commands.command()
+    @commands.command(name = 'ping', help = 'Command to check if bot is online and latency.')
     # creating Commands ctx is something like context, send automatically
     async def ping(self, ctx):
         role = discord.utils.get(ctx.author.roles, name='Veteran')
@@ -22,7 +24,7 @@ class GeneralCog(commands.Cog):
             await ctx.send('Please use this command in `#bot-commands`')
 
     # For Likt
-    @commands.command()
+    @commands.command(name = 'solve', hidden = True)
     async def solve(self, ctx, *, input=None):
         role = discord.utils.get(ctx.author.roles, name='Veteran')
         cool_people = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
@@ -34,7 +36,9 @@ class GeneralCog(commands.Cog):
             await ctx.send("Please use this command in `#bot-commands`")
 
     # Report bot command
-    @commands.command(aliases=['reportbot'])
+    @commands.command(name  = 'reportbot',
+                      help  = 'You can use this command to report any issue with JHD_Bot or new suggestions.',
+                      usage = '<issue>')
     async def report_bot(self, ctx, *, reason=None):
         coolpeople = discord.utils.get(ctx.author.roles, name="Moderator Emeritus")
         if (str(
@@ -49,7 +53,9 @@ class GeneralCog(commands.Cog):
             await ctx.send("Please use this command in `#bot-commands`")
 
     # reporting users
-    @commands.command()
+    @commands.command(name  = 'report',
+                      help  = "You can use this command to report against a user, you need to tag user and give the reason, please don't use this command as some play thing.",
+                      usage = '[user] [reason]')
     async def report(self, ctx, user=None, *, reason=None):
         cool_people = discord.utils.get(ctx.author.roles, name="Moderator Emeritus")
         if (str(
@@ -66,7 +72,9 @@ class GeneralCog(commands.Cog):
             await ctx.send('Please use this command in `#bot-commands`')
 
     # Suggestion command
-    @commands.command()
+    @commands.command(name  = 'suggest',
+                      help  = 'To submit a suggestion for JHD server.',
+                      usage = '<suggestion>')
     async def suggest(self, ctx, *, sug=None):
         cool_people = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
         if (str(
@@ -86,6 +94,48 @@ class GeneralCog(commands.Cog):
                 await ctx.send(f'Your suggestion has been added in {channel.mention}')
         else:
             await ctx.send('Please use this command in `#bot-commands`')
+
+    # Channel desc message
+    @commands.command(name    = 'chdesc',
+                      aliases = ['channeldesc'],
+                      help    = 'Give the description of all channels.')
+    async def channel_desc(self, ctx):
+        role = discord.utils.get(ctx.author.roles, name='Veteran')
+        coolpeople = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
+        if (str(
+                ctx.message.channel) == 'bot-commands' or role is not None or coolpeople is not None
+                or ctx.message.author.guild_permissions.manage_messages):
+
+            emb = discord.Embed(description=strings.channels, colour=0xff002a)
+            await self.attach_embed_info(ctx, emb)
+            await ctx.message.author.send(embed=emb)
+            emb = discord.Embed(description=strings.channels2, colour=0xff002a)
+            await self.attach_embed_info(ctx, emb)
+            await ctx.message.author.send(embed=emb)
+        else:
+            await ctx.send('Please use this command in `#bot-commands`')
+
+    # FAQ message
+    @commands.command(name    = 'FAQ',
+                      aliases = ['qna'],
+                      help    = 'The list of frequently asked questions.')
+    async def faq(self, ctx):
+        role = discord.utils.get(ctx.author.roles, name='Veteran')
+        coolpeople = discord.utils.get(ctx.author.roles, name='Moderator Emeritus')
+        if (str(
+                ctx.message.channel) == 'bot-commands' or role is not None or coolpeople is not None
+                or ctx.message.author.guild_permissions.manage_messages):
+            emb = discord.Embed(description=strings.faq, colour=0xff002a)
+            await self.attach_embed_info(ctx, emb)
+            await ctx.send(embed=emb)
+        else:
+            await ctx.send('Please use this command in `#bot-commands`')
+
+    async def attach_embed_info(self, ctx=None, embed=None):
+        embed.set_author(name='JHDiscord Bot', icon_url=f'{ctx.guild.icon_url}')
+        embed.set_thumbnail(url=f'{ctx.guild.icon_url}')
+        embed.set_footer(text='by: JHD Moderation team ')
+        return embed
 
 
 def setup(bot):

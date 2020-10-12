@@ -10,7 +10,9 @@ class ModeratorCog(commands.Cog):
         self.bot = bot
 
     # Clear Message Command..
-    @commands.command()  # a function to clear messages, if bot has perms to do that...
+    @commands.command(name  = 'clear',
+                      help  = 'Deletes messages',
+                      usage = '[number of messages to delete]')  # a function to clear messages, if bot has perms to do that...
     async def clear(self, ctx,
                     amount=2):  # amount=2 sets the default value to 2 basically command + the text above that
         try:
@@ -28,7 +30,9 @@ class ModeratorCog(commands.Cog):
             await ctx.send('The bot is unauthorized to delete messages D:')
 
     # Mute Command..
-    @commands.command()  # a function to mute members
+    @commands.command(name  = 'mute',
+                      help  = 'Mutes a specified user for some time.',
+                      usage = '[user mention or id] [time in seconds]')  # a function to mute members
     async def mute(self, ctx, user: discord.Member,
                    seconds=None):  # gets context user and time(in seconds), default being None
         try:
@@ -64,7 +68,9 @@ class ModeratorCog(commands.Cog):
             await ctx.send('Seems like the Bot is not authorized to run this command')
 
     # unmute command..
-    @commands.command()
+    @commands.command(name  = 'unmute',
+                      help  = 'Unmutes a specified user.',
+                      usage = '[user mention or id]')
     async def unmute(self, ctx, user: discord.Member):
         try:
             if ctx.message.author.guild_permissions.kick_members:
@@ -89,7 +95,9 @@ class ModeratorCog(commands.Cog):
 
             # Kick Member Command..
 
-    @commands.command()  # a function to kick members
+    @commands.command(name = 'kick',
+                      help = 'Kicks a specified user.',
+                      usage = '[user mention or id] [reason]')  # a function to kick members
     async def kick(self, ctx, user: discord.Member, *, reason=None):  # gets context user and reason, default being None
         try:
             list_of_kick_gif = [
@@ -116,7 +124,9 @@ class ModeratorCog(commands.Cog):
             await ctx.send('The bot is unauthorized to kick members.')
 
     # Ban Member Command..
-    @commands.command()  # a function to ban members
+    @commands.command(name  = 'ban',
+                      help  = 'Bans a specified user.',
+                      usage = '[user mention or id] [reason]')  # a function to ban members
     async def ban(self, ctx, user: discord.Member, *, reason=None):  # gets context user and reason, default being None
         try:
             list_of_ban_gif = [
@@ -143,7 +153,7 @@ class ModeratorCog(commands.Cog):
             await ctx.sent('The bot is unauthorized to ban members.')
 
     # MultiKick Member Command..
-    @commands.command()  # a function to multikick members
+    @commands.command(name = 'multikick', hidden = True)  # a function to multikick members
     async def multikick(self, ctx, *, users):  # gets user ids in string.
         try:
             if ctx.message.author.guild_permissions.kick_members:
@@ -166,7 +176,7 @@ class ModeratorCog(commands.Cog):
 
 
     # Multiban Member Command..
-    @commands.command()  # a function to multiban members
+    @commands.command(name = 'multiban', hidden = True)  # a function to multiban members
     async def multiban(self, ctx, *, users):  # gets user id in string.
         try:
             if ctx.message.author.guild_permissions.kick_members:
