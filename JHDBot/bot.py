@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
+import datetime
 import asyncio
 import aiohttp
 import sys
@@ -143,7 +144,9 @@ async def on_message_edit(before, after):
                 message_content_after = message_content_after.replace(x, x.replace("#", ""))
             message_content_after = message_content_after.replace(i.mention, "#" + i.name)
 
-        emb = discord.Embed(description=f'**Message edited in {before.channel.mention} at {after.edited_at}\n**\nMessage content Before\n```{message_content_before}```Message content After\n```{message_content_after}```[Jump to message]({after.jump_url})', colour=0xFF9C2E)
+        emb = discord.Embed(description=f'**Message edited in {before.channel.mention} at {after.edited_at}\n**\nMessage content Before\n```{message_content_before}```Message content After\n```{message_content_after}```[Jump to message]({after.jump_url})',
+                colour=0xFF9C2E,
+                timestamp=datetime.datetime.now(datetime.timezone.utc))
         emb.set_author(name=f'{before.author}', icon_url=f"{before.author.avatar_url}")
         emb.set_footer(text=f'Message Edit Log')
         await logchannel.send(embed=emb)
@@ -166,7 +169,9 @@ async def on_message_delete(message):
             content = content.replace(x, x.replace("#", ""))
         content = content.replace(i.mention, "#" + i.name)
 
-    emb = discord.Embed(description=f'**Message deleted in {message.channel.mention}**\nMessage Content\n```{content}```\n', colour=0xFF2E4A)
+    emb = discord.Embed(description=f'**Message deleted in {message.channel.mention}**\nMessage Content\n```{content}```\n',
+            colour=0xFF2E4A,
+            timestamp=datetime.datetime.now(datetime.timezone.utc))
     emb.set_author(name=f'{message.author}', icon_url=f"{message.author.avatar_url}")
     emb.set_footer(text=f'Message Delete Log')
     await logchannel.send(embed=emb)
@@ -177,7 +182,9 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         await ctx.send(f'Invalid command. Please use `{bot.command_prefix}help` to know list current valid commands.')
     else:
-        embed = discord.Embed(title='Unhandled Exception Thrown in Command Invocation', color=0xFF0000)
+        embed = discord.Embed(title='Unhandled Exception Thrown in Command Invocation',
+                              color=0xFF0000,
+                              timestamp=datetime.datetime.now(datetime.timezone.utc))
 
         exception_text = ''.join(traceback.format_exception(type(error), error, error.__traceback__))
         exception_text = exception_text[0:exception_text.find('The above exception was')].strip()
@@ -214,7 +221,9 @@ async def on_command_error(ctx, error):
 # On error Event
 @bot.event
 async def on_error(event, *args, **kwargs):
-        embed = discord.Embed(title='Unhandled Exception Thrown in Bot', color=0xFF0000)
+        embed = discord.Embed(title='Unhandled Exception Thrown in Bot',
+                              color=0xFF0000,
+                              timestamp=datetime.datetime.now(datetime.timezone.utc))
 
         exc_type, exc_value, exc_traceback = sys.exc_info()
         exception_text = ''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))
