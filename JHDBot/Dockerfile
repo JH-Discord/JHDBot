@@ -7,6 +7,7 @@ RUN apk add --update --no-cache \
             gcc \
             python3-dev \
             libc-dev \
+            linux-headers \
             musl-dev \
             libxml2-dev \
             libxml2 \

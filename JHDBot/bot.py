@@ -11,7 +11,6 @@ import random
 import helpembed
 import traceback
 import logging
-from webhook_loghandlers.handlers import DiscordHandler
 #import configfile
 
 load_dotenv()
@@ -22,15 +21,9 @@ bot.remove_command('help')
 
 extensions = ['moderation', 'veteran', 'general', 'verification']
 
-logger = logging.getLogger('Bot')
-logger.setLevel(logging.INFO)
 hookToken = os.getenv("LOGGING_WEBHOOK_TOKEN")
 hookChannel = os.getenv("LOGGING_WEBHOOK_CHANNEL")
-discordHandler = DiscordHandler(f'https://discordapp.com/api/webhooks/{hookChannel}/{hookToken}')
-discordHandler.setLevel(logging.INFO)
-formatter = logging.Formatter('[%(name)s] (%(levelname)s): %(message)s')
-discordHandler.setFormatter(formatter)
-logger.addHandler(discordHandler)
+
 
 if __name__ == '__main__':
     sys.path.insert(1, os.getcwd() + '/cogs/')
@@ -38,8 +31,26 @@ if __name__ == '__main__':
         try:
             bot.load_extension(extension)
         except Exception as e:
-            logger.critical(f'Failed to load cogs: {e}')
-            print(f'Failed to load cogs : {e}')
+            embed = discord.Embed(title='Failed To Load Cogs',
+                                  color=0xFF0000,
+                                  timestamp=datetime.datetime.now(datetime.timezone.utc))
+
+            exc_type, exc_value, exc_traceback = sys.exc_info()
+            exception_text = ''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))
+
+            print(exception_text, file=sys.stderr)
+
+            field_len = 1000
+            fields = [exception_text[i:i+field_len] for i in range(0, len(exception_text), field_len)]
+
+            for i, field in enumerate(fields):
+                f_name = 'Traceback:' if i == 0 else 'Continued:'
+                embed.add_field(name=f_name, value=f'```{field}```', inline=False)
+
+            webhook = discord.Webhook.from_url(f'https://discordapp.com/api/webhooks/{hookChannel}/{hookToken}',
+                                            adapter=discord.RequestsWebhookAdapter())
+            webhook.send(embed=embed)
+            print(f'Failed to load cogs : {e}', file=sys.stderr)
 
 
 # EVENTS
@@ -47,7 +58,15 @@ if __name__ == '__main__':
 # Event: when bot becomes ready.
 @bot.event  # event/function decorators
 async def on_ready():
-    logger.info("Bot Ready")
+    embed = discord.Embed(title=f'Bot Started At:\n{datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M")} UTC',
+                          color=0x00FF00,
+                          timestamp=datetime.datetime.now(datetime.timezone.utc))
+
+    async with aiohttp.ClientSession() as s:
+        webhook = discord.Webhook.from_url(f'https://discordapp.com/api/webhooks/{hookChannel}/{hookToken}',
+                                    adapter=discord.AsyncWebhookAdapter(s))
+        await webhook.send(embed=embed)
+
     print('Bot is ready')  # message which bot sends when it is ready
 
 
