@@ -206,16 +206,8 @@ async def on_message_delete(message):
         return
     logchannel = discord.utils.get(message.guild.channels, name="message-logs")
 
-    content = message.content
-    for i in message.mentions:
-        for x in re.findall(r"<@!\d+>", content):
-            content = content.replace(x, x.replace("!", ""))
-        content = content.replace(i.mention, "@" + i.display_name)
-
-    for i in message.channel_mentions:
-        for x in re.findall(r"<@#\d+>", content):
-            content = content.replace(x, x.replace("#", ""))
-        content = content.replace(i.mention, "#" + i.name)
+    content = message.clean_content
+    print(content)
 
     emb = discord.Embed(
         description=f"**Message deleted in {message.channel.mention}**\nMessage Content\n```{content}```\n",
