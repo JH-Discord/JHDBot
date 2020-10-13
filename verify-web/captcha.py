@@ -38,7 +38,7 @@ def get_invite_link():
 
 
 @app.route("/discord", methods=["GET", "POST"])
-def verify()
+def verify():
     form = VerificationForm()
     if form.validate_on_submit():
         return redirect(get_invite_link())
