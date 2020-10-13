@@ -12,6 +12,13 @@ class VeteranCog(commands.Cog):
         self.name = 'veteran'
         self.bot = bot
 
+    async def cog_after_invoke(self, ctx: commands.Context) -> None:
+        '''
+        Clean up messages that trigger the command after it's invoked
+        '''
+        await asyncio.sleep(5)
+        await ctx.message.delete()
+
     async def check_perms(self, ctx) -> bool:
         '''
         Check permissions to make sure the user is allowed to issue commands
@@ -56,8 +63,6 @@ class VeteranCog(commands.Cog):
                 f'This website teaches a variety of languages ranging from C++, to JavaScript in a very intuitive way. '
                 f'Questions can be asked in the {pro.mention} channel.\n\n'
                 f'For any additional questions or concerns, please consult the {big.mention} channel')
-            await asyncio.sleep(5)
-            await ctx.message.delete()
         else:
             return
 
@@ -69,8 +74,6 @@ class VeteranCog(commands.Cog):
             await ctx.send(
                 'We aren\'t your personal Avengers. You are going to need to use other methods for that. Customer '
                 'support and local law enforcement are probably best depending on the circumstance.')
-            await asyncio.sleep(5)
-            await ctx.message.delete()
         else:
             return
 
@@ -85,8 +88,6 @@ class VeteranCog(commands.Cog):
                 f'Unfortunately it seems as though you are discussing blackhat activities. The term Blackhat refers '
                 f'to hacking for personal gain or to be generally malicious. Please refer to {channel.mention} . We '
                 f'do not and cannot support illegal or immoral activities as mentioned above.')
-            await asyncio.sleep(5)
-            await ctx.message.delete()
         else:
             return
 
@@ -99,8 +100,6 @@ class VeteranCog(commands.Cog):
             await ctx.send(
                 'Sorry. We can\'t help with account recovery. Your only path for that is to contact support for the '
                 'respective service. "I forgot my password" is often a good place to start.')
-            await asyncio.sleep(5)
-            await ctx.message.delete()
         else:
             return
 
@@ -113,8 +112,6 @@ class VeteranCog(commands.Cog):
             await ctx.send(
                 'Please don\'t ask to ask a question, ask if anyone is on, or ask for an expert. Just ask your '
                 'question. That is the only way to get an answer.')
-            await asyncio.sleep(5)
-            await ctx.message.delete()
         else:
             return
 
@@ -129,8 +126,6 @@ class VeteranCog(commands.Cog):
                 'legal way. Here is a pretty cool video that explains them. '
                 'https://www.youtube.com/watch?v=8ev9ZX9J45A&t=2s \n\nWargames are similar but run all the time where '
                 'as CTFs tend to just run for a few days.')
-            await asyncio.sleep(5)
-            await ctx.message.delete()
         else:
             return
 
@@ -143,8 +138,6 @@ class VeteranCog(commands.Cog):
             await ctx.send(
                     'Hey there, if you ask the question like this, it might help us, to help you - '
                     'https://www.youtube.com/watch?v=53zkBvL4ZB4 \n_LiveOverflow is dope_ : P')
-            await asyncio.sleep(5)
-            await ctx.message.delete()
         else:
             return
 
@@ -159,8 +152,6 @@ class VeteranCog(commands.Cog):
                 lmgtfyurl = 'https://lmgtfy.com/?q='
                 fullyurl = lmgtfyurl + urllib.parse.quote_plus(query, safe='')
                 await ctx.send(fullyurl)
-            await asyncio.sleep(5)
-            await ctx.message.delete()
         else:
             return
 
@@ -177,8 +168,6 @@ class VeteranCog(commands.Cog):
                 googleurl = 'https://www.google.com/search?safe=active&q='
                 fullurl = googleurl + urllib.parse.quote_plus(query, safe='')
                 await ctx.send(fullurl)
-            await asyncio.sleep(5)
-            await ctx.message.delete()
         else:
             return
 
