@@ -35,7 +35,7 @@ jobs:
       working-directory: ${{env.working-dir}}
     - name: Lint with pylint
       run: |
-        find . -name "*.py" | xargs pylint -E
+        pylint -E ${{env.working-dir}}
       working-directory: ${{env.working-dir}}
   
   verify-app:
@@ -62,5 +62,5 @@ jobs:
       working-directory: ${{env.working-dir}}
     - name: Lint with pylint
       run: |
-        find . -name "*.py" | xargs pylint -E
+        pylint -E ${{env.working-dir}}
       working-directory: ${{env.working-dir}}
