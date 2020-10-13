@@ -36,7 +36,6 @@ jobs:
     - name: Lint with pylint
       run: |
         pylint -E ${{env.working-dir}}
-      working-directory: ${{env.working-dir}}
   
   verify-app:
     runs-on: ubuntu-latest
@@ -63,4 +62,3 @@ jobs:
     - name: Lint with pylint
       run: |
         pylint -E ${{env.working-dir}}
-      working-directory: ${{env.working-dir}}
