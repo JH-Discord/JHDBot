@@ -190,8 +190,7 @@ async def on_command_error(ctx, error):
             chan_name = 'DMChannel'
 
         name = 'Message Details:'
-        value = f'[Jump to message]({ctx.message.jump_url})'
-        value += f'```\nChannel: #{chan_name}\n'
+        value = f'```\nChannel: #{chan_name}\n'
         value += f'Author: {ctx.message.author}\n'
         value += f'Message: {ctx.message.content}\n```'
 
