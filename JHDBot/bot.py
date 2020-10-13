@@ -121,28 +121,9 @@ async def on_message_edit(before, after):
     if type(before.channel) == discord.channel.DMChannel or type(after.channel) == discord.channel.DMChannel:
         return
     logchannel = discord.utils.get(before.guild.channels, name='message-logs')
-    if(before.content!=after.content):
-        message_content_before = before.content
-        for i in before.mentions:
-            for x in re.findall(r'<@!\d+>', message_content_before):
-                message_content_before = message_content_before.replace(x, x.replace("!", ""))
-            message_content_before = message_content_before.replace(i.mention, "@" + i.display_name)
-
-        for i in before.channel_mentions:
-            for x in re.findall(r'<@#\d+>', message_content_before):
-                message_content_before = message_content_before.replace(x, x.replace("#", ""))
-            message_content_before = message_content_before.replace(i.mention, "#" + i.name)
-
-        message_content_after = after.content
-        for i in after.mentions:
-            for x in re.findall(r'<@!\d+>', message_content_after):
-                message_content_after = message_content_after.replace(x, x.replace("!", ""))
-            message_content_after = message_content_after.replace(i.mention, "@" + i.display_name)
-
-        for i in after.channel_mentions:
-            for x in re.findall(r'<@#\d+>', message_content_after):
-                message_content_after = message_content_after.replace(x, x.replace("#", ""))
-            message_content_after = message_content_after.replace(i.mention, "#" + i.name)
+    if(before.content != after.content):
+        message_content_before = before.clean_content
+        message_content_after = after.clean_content
 
         emb = discord.Embed(description=f'**Message edited in {before.channel.mention} at {after.edited_at}\n**\nMessage content Before\n```{message_content_before}```Message content After\n```{message_content_after}```[Jump to message]({after.jump_url})',
                 colour=0xFF9C2E,
@@ -150,6 +131,8 @@ async def on_message_edit(before, after):
         emb.set_author(name=f'{before.author}', icon_url=f"{before.author.avatar_url}")
         emb.set_footer(text=f'Message Edit Log')
         await logchannel.send(embed=emb)
+    else:
+        pass
 
 #on message delete
 @bot.event  #Working
