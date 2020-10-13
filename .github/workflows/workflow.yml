@@ -31,7 +31,6 @@ jobs:
     - name: Lint and check errors with pylint
       run: |
         pylint -E ${{env.working-dir}}
-        pylint --exit-zero ${{ env.working-dir }}
   
   verify-app-check:
     name: Check Verify App For Errors
@@ -59,7 +58,6 @@ jobs:
     - name: Lint and check errors with pylint
       run: |
         pylint -E ${{ env.working-dir }}
-        pylint --exit-zero ${{ env.working-dir }}
 
   jhd-bot-docker:
     name: Build and push JHDBot
