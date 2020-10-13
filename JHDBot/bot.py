@@ -151,7 +151,7 @@ async def on_message_edit(before, after):
 #on message delete
 @bot.event  #Working
 async def on_message_delete(message):
-    if type(before.channel) == discord.channel.DMChannel or type(after.channel) == discord.channel.DMChannel:
+    if type(message.channel) == discord.channel.DMChannel:
         return
     logchannel = discord.utils.get(message.guild.channels, name='message-logs')
 
@@ -177,9 +177,9 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         await ctx.send(f'Invalid command. Please use `{bot.command_prefix}help` to know list current valid commands.')
     else:
-        embed = discord.Embed(title='Unhandled Exception Thrown', color=0xFF0000)
+        embed = discord.Embed(title='Unhandled Exception Thrown in Command Invocation', color=0xFF0000)
 
-        exception_text = ''.join(traceback.format_exception(error, error, error.__traceback__))
+        exception_text = ''.join(traceback.format_exception(type(error), error, error.__traceback__))
         exception_text = exception_text[0:exception_text.find('The above exception was')].strip()
 
         print(exception_text, file=sys.stderr)
@@ -212,6 +212,27 @@ async def on_command_error(ctx, error):
         await ctx.send(
             f'An error occurred. Please use `{bot.command_prefix}reportbot <Error>`')
 
+# On error Event
+@bot.event
+async def on_error(event, *args, **kwargs):
+        embed = discord.Embed(title='Unhandled Exception Thrown in Bot', color=0xFF0000)
+
+        exc_type, exc_value, exc_traceback = sys.exc_info()
+        exception_text = ''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))
+
+        print(exception_text, file=sys.stderr)
+
+        field_len = 1000
+        fields = [exception_text[i:i+field_len] for i in range(0, len(exception_text), field_len)]
+
+        for i, field in enumerate(fields):
+            f_name = 'Traceback:' if i == 0 else 'Continued:'
+            embed.add_field(name=f_name, value=f'```{field}```', inline=False)
+
+        async with aiohttp.ClientSession() as s:
+            webhook = discord.Webhook.from_url(f'https://discordapp.com/api/webhooks/{hookChannel}/{hookToken}',
+                                        adapter=discord.AsyncWebhookAdapter(s))
+            await webhook.send(embed=embed)
 
 
 @bot.event
