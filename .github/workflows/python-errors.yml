@@ -1,16 +1,15 @@
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 
-name: Check Apps For Errors
+name: Check Apps For Errors And Build Docker Images
 
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 jobs:
-  jhd-bot:
+  jhdbot-check:
+    name: Check JHDBot For Errors
 
     runs-on: ubuntu-latest
     env:
@@ -27,17 +26,19 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pylint
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      working-directory: ${{env.working-dir}}
+      working-directory: ${{ env.working-dir }}
     - name: Check errors with flake8
       run: |
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-      working-directory: ${{env.working-dir}}
+      working-directory: ${{ env.working-dir }}
     - name: Lint and check errors with pylint
       run: |
         pylint -E ${{env.working-dir}}
-        pylint --exit-zero ${{env.working-dir}}
+        pylint --exit-zero ${{ env.working-dir }}
   
-  verify-app:
+  verify-app-check:
+    name: Check Verify App For Errors
+
     runs-on: ubuntu-latest
     env:
       working-dir: ./verify-web
@@ -53,12 +54,54 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pylint
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      working-directory: ${{env.working-dir}}
+      working-directory: ${{ env.working-dir }}
     - name: Check errors with flake8
       run: |
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-      working-directory: ${{env.working-dir}}
+      working-directory: ${{ env.working-dir }}
     - name: Lint and check errors with pylint
       run: |
-        pylint -E ${{env.working-dir}}
-        pylint --exit-zero ${{env.working-dir}}
+        pylint -E ${{ env.working-dir }}
+        pylint --exit-zero ${{ env.working-dir }}
+
+  jhd-bot-docker:
+    name: Build and push JHDBot
+    needs: jhdbot-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+          push: true
+          repository: mehrn00/jhd-bot-docker:latest
+
+  verify-app-docker:
+    name: Build and push Verify App
+    needs: verify-app-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build and push
+        uses: docker/build-push-actions@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+          push: true
+          repository: mehrn00/verify-app-docker:latest
+
+  nginx-docker:
+    name: Build and push nginx
+    needs: [jhdbot-check, verify-app-check]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+          push: true
+          repository: mehrn00/nginx-docker:latest
