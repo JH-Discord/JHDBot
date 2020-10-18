@@ -1,8 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from flask_wtf import FlaskForm, RecaptchaField
 from multiprocessing import cpu_count
-from webhook_loghandlers.handlers import DiscordHandler
-import logging
 import requests
 import os
 
