@@ -77,7 +77,7 @@ jobs:
           context: JHDBot
           file: ./JHDBot/Dockerfile
           push: true
-          tags: mehrn00/jhd-bot-docker:latest
+          tags: jhdiscord/jhd-bot-docker:latest
 
   verify-app-docker:
     name: Build and push Verify App
@@ -97,7 +97,7 @@ jobs:
           context: verify-web
           file: ./verify-web/Dockerfile
           push: true
-          tags: mehrn00/verify-app-docker:latest
+          tags: jhdiscord/verify-app-docker:latest
 
   nginx-docker:
     name: Build and push nginx
@@ -116,4 +116,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: mehrn00/nginx-docker:latest
+          tags: jhdiscord/nginx-docker:latest
