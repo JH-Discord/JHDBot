@@ -25,7 +25,7 @@ class VerifyCog(commands.Cog):
                 botchannel = discord.utils.get(ctx.message.author.guild.channels, name='bot-commands')
                 try:
                     await ctx.message.author.send(
-                        f'Welcome to the server {ctx.message.author},\n'
+                        f'Welcome to the server {ctx.message.author.mention},\n'
                         f'We are glad to have you here. If you wanna go through quick server description please go to {botchannel.mention} '
                         f'and enter command `$chdesc` to get a description of almost every channel and `$faq` to get frequently asked questions. '
                         f'We hope you enjoy your stay and contribute in our community : )\n'
