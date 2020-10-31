@@ -7,6 +7,7 @@ RUN apk add --update --no-cache \
             gcc \
             python3-dev \
             libc-dev \
+            linux-headers \
             musl-dev \
             libxml2-dev \
             libxml2 \
@@ -15,7 +16,6 @@ RUN apk add --update --no-cache \
 
 COPY bot.py .
 COPY cogs .
-COPY helpembed.py .
 COPY requirements.txt .
 
 RUN pip install -r requirements.txt

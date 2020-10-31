@@ -1,8 +1,8 @@
-from flask import Flask, render_template, request, redirect
-from flask_wtf import FlaskForm, RecaptchaField
-from multiprocessing import cpu_count
-import requests
+#!/usr/bin/env python3
 import os
+from flask import Flask, render_template, redirect
+from flask_wtf import FlaskForm, RecaptchaField
+import requests
 
 
 class VerificationForm(FlaskForm):
@@ -17,7 +17,8 @@ app.config["RECAPTCHA_PUBLIC_KEY"] = os.environ.get("RECAPTCHA_PUBLIC_KEY")
 app.config["RECAPTCHA_PRIVATE_KEY"] = os.environ.get("RECAPTCHA_PRIVATE_KEY")
 BOT_TOKEN = os.environ.get("DISCORD_API_TOKEN")
 SERVER_ID = os.getenv("DISCORD_SERVER_CHANNEL_ID")
-app.config['RECAPTCHA_DATA_ATTRS']= {'theme': 'dark'}
+app.config["RECAPTCHA_DATA_ATTRS"] = {"theme": "dark"}
+
 
 def get_invite_link():
     data = b'{"max_age":3600,"max_uses":1,"target_user_id":null,"target_user_type":null,"temporary":true}'
@@ -28,7 +29,7 @@ def get_invite_link():
         data=data,
     )
 
-    invite_code = k.json()['code']
+    invite_code = k.json()["code"]
     if k.status_code != 200:
         return "/discord"
     else:
