@@ -16,7 +16,6 @@ RUN apk add --update --no-cache \
 
 COPY bot.py .
 COPY cogs .
-COPY helpembed.py .
 COPY requirements.txt .
 
 RUN pip install -r requirements.txt

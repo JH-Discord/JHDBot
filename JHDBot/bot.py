@@ -6,13 +6,17 @@ import re
 import traceback
 import discord
 import aiohttp
+from discord import Intents
 from discord.ext import commands
 from dotenv import load_dotenv
 
 load_dotenv()
 
+intents = Intents.default()
+intents.members = True
+
 bot = commands.Bot(
-    command_prefix=str(os.environ.get("BOT_PREFIX_CHARACTER")), case_insensitive=True
+    command_prefix=str(os.environ.get("BOT_PREFIX_CHARACTER")), case_insensitive=True, intents=intents
 )  # bot command prefix
 bot.remove_command("help")
 # Loading Cogs
@@ -83,9 +87,7 @@ async def on_ready():
 
 # Event: when any member joins the server
 @bot.event
-async def on_member_join(
-    member,
-):  # a function which works when any member joins,need param `member`
+async def on_member_join(member):
     print(f"{member} has joined the server :)")
     channel = discord.utils.get(member.guild.channels, name="welcome")
     rules_channel = discord.utils.get(member.guild.channels, name="obligatory-rules")
@@ -101,9 +103,7 @@ async def on_member_join(
 
 # on member leave logs
 @bot.event
-async def on_member_remove(
-    member,
-):  # a function which works when any member lefts,need param `member`
+async def on_member_remove(member):
     logchannel = discord.utils.get(member.guild.channels, name="join-leave")
     emb = discord.Embed(
         description=f"User - {member.mention}\nId - {member.id}\n", colour=0xFF693C

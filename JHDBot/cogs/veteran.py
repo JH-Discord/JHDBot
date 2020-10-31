@@ -158,7 +158,7 @@ class VeteranCog(commands.Cog):
     )
     async def _lmgtfy(self, ctx, *, query=None):
         if await self.check_perms(ctx):
-            if query is not None:
+            if query is None:
                 await ctx.send(
                     f"Query not provided: `{self.bot.command_prefix}lmgtfy <query>`"
                 )
@@ -175,7 +175,7 @@ class VeteranCog(commands.Cog):
     )
     async def google(self, ctx, *, query=None):
         if await self.check_perms(ctx):
-            if query is not None:
+            if query is None:
                 await ctx.send(
                     f"Query not provided: `{self.bot.command_prefix}gs <query>`"
                 )
