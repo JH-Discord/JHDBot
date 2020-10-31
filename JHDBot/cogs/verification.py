@@ -20,16 +20,19 @@ class VerifyCog(commands.Cog):
                     role = discord.utils.get(ctx.guild.roles, name="Announcements")
                     await ctx.message.author.add_roles(role)
                     flag += 1
-                await ctx.send(
-                    f"Welcome to the server {ctx.message.author}, We are glad to have you here :D\n\n"
-                )
-                channel = discord.utils.get(
-                    ctx.message.author.guild.channels, name="verifications-help"
-                )
-                if flag == 1:
-                    await channel.send(
-                        f"{ctx.message.author.mention} successfuly verified, Roles given `Member` and `Announcement`."
-                    )
+                botchannel = discord.utils.get(ctx.message.author.guild.channels, name='bot-commands')
+                try:
+                    await ctx.message.author.send(
+                        f'Welcome to the server {ctx.message.author.mention},\n'
+                        f'We are glad to have you here. If you wanna go through quick server description please go to {botchannel.mention} '
+                        f'and enter command `$chdesc` to get a description of almost every channel and `$faq` to get frequently asked questions. '
+                        f'We hope you enjoy your stay and contribute in our community : )\n'
+                        )
+                except:
+                    await ctx.send(f'Welcome to the server {ctx.message.author}, We are glad to have you here :D\n\n')
+                channel = discord.utils.get(ctx.message.author.guild.channels, name='verifications-help')
+                if(flag==1):
+                    await channel.send(f'{ctx.message.author.mention} successfuly verified, Roles given `Member` and `Announcement`.')
                 else:
                     await channel.send(
                         f"{ctx.message.author.mention} successfuly verified, Roles given `Member`."

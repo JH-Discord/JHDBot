@@ -90,15 +90,12 @@ async def on_member_join(
     channel = discord.utils.get(member.guild.channels, name="welcome")
     rules_channel = discord.utils.get(member.guild.channels, name="obligatory-rules")
     await channel.send(
-        f"**Hi there, {member.mention} Welcome to JHDiscord!**\n\nTo gain access to the rest of the server. "
-        f"Please read the {rules_channel.mention} and then verify yourself to join the conversation."
-    )
-    logchannel = discord.utils.get(member.guild.channels, name="join-leave")
-    emb = discord.Embed(
-        description=f"User - {member.mention}\nId - {member.id}", colour=0x3CFF4C
-    )
-    emb.set_author(name="Member Joined", icon_url=f"{member.avatar_url}")
-    emb.set_footer(text="Join Log")
+        f'**Hi there, {member.mention} Welcome to JHDiscord!**\n\nTo gain access to the rest of the server. '
+        f'Please read the {rules_channel.mention} and then verify yourself to join the conversation.\n')
+    logchannel = discord.utils.get(member.guild.channels, name='join-leave')
+    emb = discord.Embed(description=f'User - {member.mention}\nId - {member.id}', colour=0x3CFF4C)
+    emb.set_author(name='Member Joined', icon_url=f"{member.avatar_url}")
+    emb.set_footer(text=f'Join Log')
     await logchannel.send(embed=emb)
 
 
