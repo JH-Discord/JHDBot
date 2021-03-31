@@ -204,6 +204,7 @@ async def on_message_edit(before, after):
         pass
 
 
+
 # on message delete
 @bot.event  # Working
 async def on_message_delete(message):

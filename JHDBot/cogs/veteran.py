@@ -28,7 +28,6 @@ class VeteranCog(commands.Cog):
             await ctx.send('Bot does not respond to commands in DMs. Send your commands in the `#bot-commands` channel in JHDiscord.')
             return
 
-
         cool_people = discord.utils.get(ctx.author.roles, name="Moderator Emeritus")
         role = discord.utils.get(ctx.author.roles, name="Veteran")
         if (
