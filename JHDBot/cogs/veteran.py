@@ -15,12 +15,20 @@ class VeteranCog(commands.Cog):
         Clean up messages that trigger the command after it's invoked
         """
         await asyncio.sleep(5)
-        await ctx.message.delete()
+        try:
+            await ctx.message.delete()
+        except:
+            pass
 
     async def check_perms(self, ctx) -> bool:
         """
         Check permissions to make sure the user is allowed to issue commands
         """
+        if type(ctx.channel) == discord.channel.DMChannel:
+            await ctx.send('Bot does not respond to commands in DMs. Send your commands in the `#bot-commands` channel in JHDiscord.')
+            return
+
+
         cool_people = discord.utils.get(ctx.author.roles, name="Moderator Emeritus")
         role = discord.utils.get(ctx.author.roles, name="Veteran")
         if (
@@ -40,13 +48,13 @@ class VeteranCog(commands.Cog):
         name="beginner", aliases=["bgn"], help="Beginner help message."
     )  # creating Commands ctx is something like context, send automatically
     async def beginner(self, ctx):
-        otw = discord.utils.get(ctx.guild.channels, name="over-the-wire")
-        ctf = discord.utils.get(ctx.guild.channels, name="capture-the-flag")
-        thm = discord.utils.get(ctx.guild.channels, name="tryhackme")
-        big = discord.utils.get(ctx.guild.channels, name="beginners")
-        htb = discord.utils.get(ctx.guild.channels, name="hackthebox")
-        pro = discord.utils.get(ctx.guild.channels, name="programming")
         if await self.check_perms(ctx):
+            otw = discord.utils.get(ctx.guild.channels, name="over-the-wire")
+            ctf = discord.utils.get(ctx.guild.channels, name="capture-the-flag")
+            thm = discord.utils.get(ctx.guild.channels, name="tryhackme")
+            big = discord.utils.get(ctx.guild.channels, name="beginners")
+            htb = discord.utils.get(ctx.guild.channels, name="hackthebox")
+            pro = discord.utils.get(ctx.guild.channels, name="programming")
             await ctx.send(
                 f"I. Bandit OverTheWire: (https://overthewire.org/wargames/bandit/) A wargame focusing on basic Linux "
                 f"commands and privilege escalation. Questions can be asked in {otw.mention}\n\nII. Natas "
@@ -96,6 +104,17 @@ class VeteranCog(commands.Cog):
             )
         else:
             return
+
+    # blackhat doge meme
+    @commands.command(
+        name="noblackhat", aliases=["nbt"], help="No blackhat but with a meme."
+    )
+    async def no_black_hat(self, ctx):
+        if await self.check_perms(ctx):
+            await ctx.send(
+                "https://cdn.discordapp.com/attachments/701793795749970042/824043387291828234/bt.jpg"
+            )
+        return
 
     # account command
     @commands.command(

@@ -88,7 +88,6 @@ async def on_ready():
 # Event: when any member joins the server
 @bot.event
 async def on_member_join(member):
-    print(f"{member} has joined the server :)")
     channel = discord.utils.get(member.guild.channels, name="welcome")
     rules_channel = discord.utils.get(member.guild.channels, name="obligatory-rules")
     await channel.send(
@@ -117,33 +116,30 @@ async def on_member_remove(member):
 @bot.event
 async def on_voice_state_update(member, before, after):
     logchannel = discord.utils.get(member.guild.channels, name="voice-channel")
-    try:
-        if before.channel == None:
-            emb = discord.Embed(
-                description=f"{member.mention}** joined voice channel **{after.channel.mention}",
-                colour=0x00DAB4,
-            )
-            emb.set_author(name=f"{member}", icon_url=f"{member.avatar_url}")
-            emb.set_footer(text="Voice Channel Log")
-            await logchannel.send(embed=emb)
-        elif after.channel == None:
-            emb = discord.Embed(
-                description=f"{member.mention}** left voice channel **{before.channel.mention}",
-                colour=0x00DAB4,
-            )
-            emb.set_author(name=f"{member}", icon_url=f"{member.avatar_url}")
-            emb.set_footer(text="Voice Channel Log")
-            await logchannel.send(embed=emb)
-        else:
-            emb = discord.Embed(
-                description=f"{member.mention}** changed voice from **{before.channel.mention}** to** {after.channel.mention}",
-                colour=0x00DAB4,
-            )
-            emb.set_author(name=f"{member}", icon_url=f"{member.avatar_url}")
-            emb.set_footer(text="Voice Channel Log")
-            await logchannel.send(embed=emb)
-    except Exception as e:
-        print(f"some weird exception bot gets mad about {e}")
+    if before.channel == None:
+        emb = discord.Embed(
+            description=f"{member.mention}** joined voice channel **{after.channel.mention}",
+            colour=0x00DAB4,
+        )
+        emb.set_author(name=f"{member}", icon_url=f"{member.avatar_url}")
+        emb.set_footer(text="Voice Channel Log")
+        await logchannel.send(embed=emb)
+    elif after.channel == None:
+        emb = discord.Embed(
+            description=f"{member.mention}** left voice channel **{before.channel.mention}",
+            colour=0x00DAB4,
+        )
+        emb.set_author(name=f"{member}", icon_url=f"{member.avatar_url}")
+        emb.set_footer(text="Voice Channel Log")
+        await logchannel.send(embed=emb)
+    else:
+        emb = discord.Embed(
+            description=f"{member.mention}** changed voice from **{before.channel.mention}** to** {after.channel.mention}",
+            colour=0x00DAB4,
+        )
+        emb.set_author(name=f"{member}", icon_url=f"{member.avatar_url}")
+        emb.set_footer(text="Voice Channel Log")
+        await logchannel.send(embed=emb)
 
 
 # maintenance logs
@@ -184,11 +180,23 @@ async def on_message_edit(before, after):
         message_content_before = before.clean_content
         message_content_after = after.clean_content
 
+        desc_before = message_content_before[:750]
+        desc_after = message_content_after[:750]
+
         emb = discord.Embed(
-            description=f"**Message edited in {before.channel.mention} at {after.edited_at}\n**\nMessage content Before\n```{message_content_before}```Message content After\n```{message_content_after}```[Jump to message]({after.jump_url})",
+            description=f"**Message edited in {before.channel.mention} at {after.edited_at}\n**\nMessage content Before\n```{desc_before}```Message content After\n```{desc_after}```[Jump to message]({after.jump_url})",
             colour=0xFF9C2E,
             timestamp=datetime.datetime.now(datetime.timezone.utc),
         )
+
+        if len(message_content_before) > 750:
+            emb.add_field(name='Message Content Before Continued',
+                    value=f"```{message_content_before[1000:]}```")
+
+        if len(message_content_after) > 750:
+            emb.add_field(name='Message Content After Continued',
+                    value=f"```{message_content_after[1000:]}```")
+
         emb.set_author(name=f"{before.author}", icon_url=f"{before.author.avatar_url}")
         emb.set_footer(text="Message Edit Log")
         await logchannel.send(embed=emb)
@@ -204,7 +212,6 @@ async def on_message_delete(message):
     logchannel = discord.utils.get(message.guild.channels, name="message-logs")
 
     content = message.clean_content
-    print(content)
 
     emb = discord.Embed(
         description=f"**Message deleted in {message.channel.mention}**\nMessage Content\n```{content}```\n",
@@ -309,19 +316,6 @@ async def on_error(event, *args, **kwargs):
 
 @bot.event
 async def on_message(message):
-    if (
-        "https://" in message.content.lower()
-        or "http://" in message.content.lower()
-        or "ftp://" in message.content.lower()
-    ):
-        if str(message.channel) == "resources":
-            with open("/home/ubuntu/JHD_Resources/botfile.md", "a+") as fa:
-                fa.write("## " + str(message.author.name) + "\n")
-                fa.write("Message : " + str(message.content) + "\n\n")
-                fa.write("-----\n")
-    else:
-        await bot.process_commands(message)
-        return
     await bot.process_commands(message)
 
 
@@ -346,6 +340,9 @@ def poll_commands(cog) -> str:
 # JHDbot help message
 @bot.command(name="help")  # alias of command name
 async def _help(ctx, helprole=None):  # role-vise help section
+    if type(ctx.channel) == discord.channel.DMChannel:
+        await ctx.send('Bot does not respond to commands in DMs. Send your commands in the `#bot-commands` channel in JHDiscord.')
+        return
     cool_people = discord.utils.get(ctx.author.roles, name="Moderator Emeritus")
     role = discord.utils.get(ctx.author.roles, name="Veteran")
 
