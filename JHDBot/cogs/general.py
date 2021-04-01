@@ -191,11 +191,11 @@ class GeneralCog(commands.Cog):
             else:
                 await ctx.send("Please use this command in `#bot-commands`")
 
-        async def attach_embed_info(self, ctx=None, embed=None):
-            embed.set_author(name="JHDiscord Bot", icon_url=f"{ctx.guild.icon_url}")
-            embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
-            embed.set_footer(text="by: JHD Moderation team ")
-            return embed
+    async def attach_embed_info(self, ctx=None, embed=None):
+        embed.set_author(name="JHDiscord Bot", icon_url=f"{ctx.guild.icon_url}")
+        embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
+        embed.set_footer(text="by: JHD Moderation team ")
+        return embed
 
 
 def setup(bot):
