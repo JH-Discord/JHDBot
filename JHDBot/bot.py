@@ -215,10 +215,12 @@ async def on_message_delete(message):
     content = message.clean_content
 
     emb = discord.Embed(
-        description=f"**Message deleted in {message.channel.mention}**\nMessage Content\n```{content}```\n",
+        description=f"**Message deleted in {message.channel.mention}**\n"
+        f"Message Content\n```{content}```\n",
         colour=0xFF2E4A,
         timestamp=datetime.datetime.now(datetime.timezone.utc),
     )
+    emb.add_field(name = "Message URL", value = f"{message.jump_url}", inline = False)
     emb.set_author(name=f"{message.author}", icon_url=f"{message.author.avatar_url}")
     emb.set_footer(text="Message Delete Log")
     await logchannel.send(embed=emb)
@@ -227,6 +229,18 @@ async def on_message_delete(message):
 # On error Event
 @bot.event
 async def on_command_error(ctx, error):
+    if isinstance(error, commands.errors.MissingRequiredArgument):
+        await ctx.send(f"Usage: `{bot.command_prefix}{ctx.command.name} {ctx.command.usage}`")
+        return
+
+    if isinstance(error, commands.errors.MissingAnyRole):
+        await ctx.send("User is not authorized to run this command.")
+        return
+
+    if isinstance(error, commands.errors.MemberNotFound):
+        await ctx.send(error.args[0])
+        return
+
     if isinstance(error, commands.CommandNotFound):
         await ctx.send(
             f"Invalid command. Please use `{bot.command_prefix}help` to know list current valid commands."
