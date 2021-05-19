@@ -171,7 +171,7 @@ class ModeratorCog(commands.Cog):
                 await user.send(gif)
                 await ctx.guild.ban(user=user, reason=reason)  # bans that user
                 await ctx.send(f"{user} has been banned from the server")
-                await ctx.send(list_of_ban_gif[val])
+                await ctx.send(gif)
             else:
                 await ctx.send("Sorry, it seems like you are not authorized to do it")
             await asyncio.sleep(5)
