@@ -55,20 +55,21 @@ class VeteranCog(commands.Cog):
             htb = discord.utils.get(ctx.guild.channels, name="hackthebox")
             pro = discord.utils.get(ctx.guild.channels, name="programming")
             await ctx.send(
-                f"I. Bandit OverTheWire: (https://overthewire.org/wargames/bandit/) A wargame focusing on basic Linux "
+                f"I. Bandit OverTheWire: (<https://overthewire.org/wargames/bandit/>) A wargame focusing on basic Linux "
                 f"commands and privilege escalation. Questions can be asked in {otw.mention}\n\nII. Natas "
-                f"OverTheWire: (https://overthewire.org/wargames/natas/) A wargame focusing on teaching the basics of "
+                f"OverTheWire: (<https://overthewire.org/wargames/natas/>) A wargame focusing on teaching the basics of "
                 f"server side web-security. Questions can also be asked in the {otw.mention} channel.\n\nIII. "
-                f"PicoCTF: (https://picoctf.com/) A very beginner CTF that is up year round for practice. Questions "
-                f"can be asked in {ctf.mention} \n\nIV. Try Hack Me: (https://tryhackme.com/) A beginner friendly "
+                f"PicoCTF: (<https://picoctf.com/>) A very beginner CTF that is up year round for practice. Questions "
+                f"can be asked in {ctf.mention} \n\nIV. Try Hack Me: (<https://tryhackme.com/>) A beginner friendly "
                 f"platform focusing on learning how to hack in more real world situations than CTFs. There are "
                 f'"rooms" for all levels and walkthroughs are available if necessary. Questions can be asked in '
-                f'{thm.mention} also here is a guide, if you are starting with THM (https://blog.tryhackme.com/free_path/)\n\n'
-                f'V. Hack the Box (https://www.hackthebox.eu/) Is a platform to learn and grow your pentesting skills.'
+                f'{thm.mention} also here is a guide, if you are starting with THM (<https://blog.tryhackme.com/free_path/>)\n\n'
+                f'V. Hack the Box (<https://www.hackthebox.eu/>) Is a platform to learn and grow your pentesting skills.'
                 f' Boxes range from "easy" to "insane" and cover a broad range of topics.'
-                f' Walkthroughs can not be posted but "Starting point" will point you in the general direction.'
+                f' Walkthroughs can not be posted but "Starting point" (<https://app.hackthebox.eu/starting-point>)'
+                f" will point you in the general direction. HTB Acadmey (<academy.hackthebox.eu/>) is another excellent resource"
                 f" Questions can also be asked in the {htb.mention} channel.\n\n"
-                f"VI. Codecademy (https://www.codecademy.com) An interactive website for learning how to code. "
+                f"VI. Codecademy (<https://www.codecademy.com>) An interactive website for learning how to code. "
                 f"This website teaches a variety of languages ranging from C++, to JavaScript in a very intuitive way. "
                 f"Questions can be asked in the {pro.mention} channel.\n\n"
                 f"For any additional questions or concerns, please consult the {big.mention} channel"
