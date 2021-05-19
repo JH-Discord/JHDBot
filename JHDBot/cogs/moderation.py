@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import asyncio
+import csv
 import random
 import discord
 from discord.ext import commands
@@ -12,7 +13,7 @@ class ModeratorCog(commands.Cog):
     # Clear Message Command..
     @commands.command(
         name="clear", help="Deletes messages", usage="[number of messages to delete]"
-    )  # a function to clear messages, if bot has perms to do that...
+    )
     async def clear(
         self, ctx, amount=2
     ):  # amount=2 sets the default value to 2 basically command + the text above that
@@ -111,41 +112,43 @@ class ModeratorCog(commands.Cog):
         except:
             await ctx.send("Seems like the Bot is not authorized to run this command")
 
-            # Kick Member Command..
 
     @commands.command(
         name="kick",
         help="Kicks a specified user.",
-        usage="[user mention or id] [reason]",
-    )  # a function to kick members
-    async def kick(
-        self, ctx, user: discord.Member, *, reason=None
-    ):  # gets context user and reason, default being None
+        usage="[user mention or id] [reason]"
+    )
+    @commands.has_permissions(kick_members=True)
+    @commands.has_any_role("Admin", "Moderator")
+    async def kick(self, ctx, user: discord.Member, *, reason=None):
+        if user is None or reason is None:
+            for c in self.get_commands():
+                if c.name == "kick":
+                    cmd = c
+                    break
+            await ctx.send(f"Usage: `{self.bot.command_prefix}{cmd.name} {cmd.usage}`")
+            return
+
+        if user.guild_permissions.kick_members:
+            await ctx.send(f"Can't kick {user} because of their current permissions.")
+            return
+
+        kick_gifs = []
+        with open("gifs/kick.csv", "r") as f:
+            kick_gifs = csv.reader(f)
+
+        gif = random.choice(kick_gifs)
         try:
-            list_of_kick_gif = [
-                "https://tenor.com/view/anime-kick-go-out-gif-14290462",
-                "https://tenor.com/view/kick-knock-out-hurt-ouch-gif-4799973",
-                "https://tenor.com/view/drop-kicked-watch-this-gif-12761359",
-            ]
-            if user.guild_permissions.manage_messages:
-                # check perms. if user has perms to manage message like if he mod he can't be kicked by the bot.
-                await ctx.send(
-                    f"Sorry, can't kick {user} because of their current permissions."
-                )
-            elif ctx.message.author.guild_permissions.kick_members:
-                # checks if user who send the kick command is authorized to do it.
-                await user.send(f"You were kicked from JHDiscord : {reason}")
-                val = random.randint(0, 2)
-                await user.send(list_of_kick_gif[val])
-                await ctx.guild.kick(user=user, reason=reason)  # kicks that user
-                await ctx.send(f"{user} has been kicked out from the server")
-                await ctx.send(list_of_kick_gif[val])
-            else:
-                await ctx.send("Sorry, it seems like you are not authorized to do it")
-            await asyncio.sleep(5)
-            await ctx.message.delete()
+            await user.send(f"You were kicked from JHDiscord : {reason}")
+            await user.send(gif)
         except:
-            await ctx.send("The bot is unauthorized to kick members.")
+            pass
+
+        await ctx.guild.kick(user=user, reason=reason)  # kicks that user
+        await ctx.send(f"{user} has been kicked out from the server")
+        await ctx.send(gif)
+        await asyncio.sleep(5)
+        await ctx.message.delete()
 
     # Ban Member Command..
     @commands.command(
@@ -155,11 +158,6 @@ class ModeratorCog(commands.Cog):
         self, ctx, user: discord.Member, *, reason=None
     ):  # gets context user and reason, default being None
         try:
-            list_of_ban_gif = [
-                "https://tenor.com/view/blob-banned-ban-hammer-blob-ban-emoji-gif-16021044",
-                "https://tenor.com/view/banned-thor-banned-thor-ban-thor-admin-gif-12850590",
-                "https://tenor.com/view/salt-bae-ban-banned-gif-10497201",
-            ]
             if user.guild_permissions.manage_messages:
                 # check perms. if user has perms to manage message like if he mod he can't be banned by the bot.
                 await ctx.send(f"Sorry, can't ban {user} because of perms : (")
@@ -230,6 +228,118 @@ class ModeratorCog(commands.Cog):
             await ctx.message.delete()
         except:
             await ctx.send("The bot is unauthorized to ban members.")
+
+    @commands.command(
+        name="addgif",
+        help="Adds a ban/kick gif",
+        usage="[kick/ban] [url to gif]"
+    )
+    @commands.has_permissions(kick_members=True)
+    @commands.has_any_role("Admin", "Moderator")
+    async def addgif(self, ctx, option, *, url: str = None):
+        if url is None:
+            await ctx.send(f"Usage: `{self.bot.command_prefix}{ctx.command.name} "
+                    f"{ctx.command.usage}`")
+            return
+
+        filename = ""
+        if option.lower() == "kick":
+            filename = "gifs/kick.csv"
+        elif option.lower() == "ban":
+            filename = "gifs/ban.csv"
+        else:
+            await ctx.send(f"Usage: `{self.bot.command_prefix}{ctx.command.name} "
+                    f"{ctx.command.usage}`")
+            return
+
+        url.strip('\n')
+        if url[-1] == '/':
+            url = url.rstrip('/')
+
+        with open(filename, "r") as f:
+            gifs = list(csv.reader(f))[0]
+            if url in gifs:
+                await ctx.send("Gif already added.")
+                return
+
+        gifs.append(url)
+        with open(filename, "w") as f:
+            writer = csv.writer(f)
+            writer.writerow(gifs)
+
+        await ctx.send(f"Gif: `{url}` added.")
+        return
+
+    @commands.command(
+        name="removegif",
+        aliases=["rmgif"],
+        help="Removes a ban/kick gif",
+        usage="[kick/ban] [url to gif]"
+    )
+    @commands.has_permissions(kick_members=True)
+    @commands.has_any_role("Admin", "Moderator")
+    async def removegif(self, ctx, option, *, url: str = None):
+        if url is None:
+            await ctx.send(f"Usage: `{self.bot.command_prefix}{ctx.command.name} "
+                    f"{ctx.command.usage}`")
+            return
+
+        filename = ""
+        if option.lower() == "kick":
+            filename = "gifs/kick.csv"
+        elif option.lower() == "ban":
+            filename = "gifs/ban.csv"
+        else:
+            await ctx.send(f"Usage: `{self.bot.command_prefix}{ctx.command.name} "
+                    f"{ctx.command.usage}`")
+            return
+
+        url.strip('\n')
+        if url[-1] == '/':
+            url = url.rstrip('/')
+
+        with open(filename, "r") as f:
+            gifs = list(csv.reader(f))[0]
+
+        if url not in gifs:
+            await ctx.send(f"Gif `{url}` not in `{option.lower()}` database.")
+            return
+
+        gifs.remove(url)
+
+        with open(filename, "w") as f:
+            writer = csv.writer(f)
+            writer.writerow(gifs)
+
+        await ctx.send(f"Gif: `{url}` removed.")
+        return
+
+    @commands.command(
+        name="listgifs",
+        aliases=["lsgifs"],
+        help="List gifs in database",
+        usage="[kick/ban]"
+    )
+    @commands.has_permissions(kick_members=True)
+    @commands.has_any_role("Admin", "Moderator")
+    async def listgifs(self, ctx, option):
+        filename = ""
+        if option.lower() == "kick":
+            filename = "gifs/kick.csv"
+        elif option.lower() == "ban":
+            filename = "gifs/ban.csv"
+        else:
+            await ctx.send(f"Usage: `{self.bot.command_prefix}{ctx.command.name} "
+                    f"{ctx.command.usage}`")
+            return
+
+        with open(filename, "r") as f:
+            gifs = list(csv.reader(f))[0]
+
+        gifs = '\n'.join(gifs)
+        await ctx.send(f"{option} gifs:\n```\n{gifs}\n```")
+        return
+
 
 
 def setup(bot):

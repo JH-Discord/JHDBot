@@ -1,6 +1,7 @@
 FROM python:3.7.8-alpine
 
 RUN mkdir -p /usr/src/app
+RUN mkdir /usr/src/app/gifs
 WORKDIR /usr/src/app
 
 RUN apk add --update --no-cache \

@@ -16,6 +16,8 @@ services:
     build: JHDBot/.
     container_name: jhd-bot
     restart: "always"
+    volumes:
+      - ./JHDBot/gifs:/usr/src/app/gifs:rw
     environment:
       - DISCORD_API_TOKEN=${DISCORD_API_TOKEN}
       - BOT_PREFIX_CHARACTER=${BOT_PREFIX_CHARACTER}
