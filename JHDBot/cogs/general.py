@@ -68,8 +68,10 @@ class GeneralCog(commands.Cog):
                 if reason is None:
                     await ctx.send("Invalid syntax, please add the issue you are facing.")
                 else:
-                    creator = await self.bot.fetch_user(554907015785218050)
-                    await creator.send(f"Reported by user {ctx.message.author} : " + reason)
+                    channel = discord.utils.get(
+                        ctx.message.author.guild.channels, name="dev-team"
+                    )
+                    await channel.send(f"Reported by user {ctx.message.author} : " + reason)
                     await ctx.send(
                         "Your report has been successfully forwarded to moderators"
                     )
