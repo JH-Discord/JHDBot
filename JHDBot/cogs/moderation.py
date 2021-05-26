@@ -135,7 +135,7 @@ class ModeratorCog(commands.Cog):
 
         kick_gifs = []
         with open("gifs/kick.csv", "r") as f:
-            kick_gifs = csv.reader(f)
+            kick_gifs = list(csv.reader(f))[0]
 
         gif = random.choice(kick_gifs)
         try:
@@ -164,9 +164,11 @@ class ModeratorCog(commands.Cog):
             elif ctx.message.author.guild_permissions.ban_members:
                 # checks if user who send the ban command is authorized to do it.
                 await user.send(f"You were banned from JHDiscord : {reason}")
+
                 ban_gifs = []
                 with open("gifs/ban.csv", "r") as f:
-                    ban_gifs = csv.reader(f)
+                    ban_gifs = list(csv.reader(f))[0]
+
                 gif = random.choice(ban_gifs)
                 await user.send(gif)
                 await ctx.guild.ban(user=user, reason=reason)  # bans that user
@@ -177,7 +179,7 @@ class ModeratorCog(commands.Cog):
             await asyncio.sleep(5)
             await ctx.message.delete()
         except:
-            await ctx.sent("The bot is unauthorized to ban members.")
+            await ctx.send("The bot is unauthorized to ban members.")
 
     # MultiKick Member Command..
     @commands.command(name="multikick", hidden=True)  # a function to multikick members
