@@ -163,7 +163,8 @@ class ModeratorCog(commands.Cog):
                 await ctx.send(f"Sorry, can't ban {user} because of perms : (")
             elif ctx.message.author.guild_permissions.ban_members:
                 # checks if user who send the ban command is authorized to do it.
-                await user.send(f"You were kicked from JHDiscord : {reason}")
+                await user.send(f"You were banned from JHDiscord : {reason}")
+
                 ban_gifs = []
                 with open("gifs/ban.csv", "r") as f:
                     ban_gifs = list(csv.reader(f))[0]
