@@ -116,6 +116,7 @@ async def on_member_remove(member):
 @bot.event
 async def on_voice_state_update(member, before, after):
     logchannel = discord.utils.get(member.guild.channels, name="voice-channel")
+    role = discord.utils.get(member.guild.roles, name="voice-text")
     if before.channel == None:
         emb = discord.Embed(
             description=f"{member.mention}** joined voice channel **{after.channel.mention}",
@@ -124,6 +125,7 @@ async def on_voice_state_update(member, before, after):
         emb.set_author(name=f"{member}", icon_url=f"{member.avatar_url}")
         emb.set_footer(text="Voice Channel Log")
         await logchannel.send(embed=emb)
+        await member.add_roles(role)
     elif after.channel == None:
         emb = discord.Embed(
             description=f"{member.mention}** left voice channel **{before.channel.mention}",
@@ -132,6 +134,7 @@ async def on_voice_state_update(member, before, after):
         emb.set_author(name=f"{member}", icon_url=f"{member.avatar_url}")
         emb.set_footer(text="Voice Channel Log")
         await logchannel.send(embed=emb)
+        await member.remove_roles(role)
     else:
         emb = discord.Embed(
             description=f"{member.mention}** changed voice from **{before.channel.mention}** to** {after.channel.mention}",
