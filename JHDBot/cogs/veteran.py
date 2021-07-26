@@ -62,17 +62,17 @@ class VeteranCog(commands.Cog):
                 f"PicoCTF: (<https://picoctf.com/>) A very beginner CTF that is up year round for practice. You can chat "
                 f"about PicoCTF in {ctf.mention} \n\nIV. Try Hack Me: (<https://tryhackme.com/>) A beginner friendly "
                 f"platform focusing on learning how to hack in more real world situations than CTFs. There are "
-                f'"rooms" for all levels and walkthroughs are available if necessary. Questions can be asked in '
+                f'"rooms" for all levels and walkthroughs available if necessary. Questions can be asked in '
                 f'{thm.mention} also here is a guide, if you are starting with THM (<https://blog.tryhackme.com/free_path/>)\n\n'
-                f'V. Hack the Box (<https://www.hackthebox.eu/>) Is a platform to learn and grow your pentesting skills.'
+                f'V. Hack the Box (<https://www.hackthebox.eu/>) is a platform to learn and grow your pentesting skills.'
                 f' Boxes range from "easy" to "insane" and cover a broad range of topics.'
                 f' Walkthroughs can not be posted but "Starting point" (<https://app.hackthebox.eu/starting-point>)'
-                f" will point you in the general direction. HTB Acadmey (<https://academy.hackthebox.eu/>) is another"
+                f" will point you in the general direction. HTB Academy (<https://academy.hackthebox.eu/>) is another"
                 f" excellent resource. The {htb.mention} channel is provided for discussion.\n\n"
                 f"VI. Codecademy (<https://www.codecademy.com>) An interactive website for learning how to code. "
                 f"This website teaches a variety of languages ranging from C++, to JavaScript in a very intuitive way. "
                 f"Questions can be asked in the {pro.mention} channel.\n\n"
-                f"For any additional questions or concerns, please consult the {big.mention} channel"
+                f"For any additional questions or concerns, please consult the {big.mention} channel."
             )
         else:
             return
@@ -92,7 +92,12 @@ class VeteranCog(commands.Cog):
 
     # blackhat command
     @commands.command(
-        name="blackhat", aliases=["bt"], help="No blackhat auto message."
+        name="blackhat",
+        aliases=[
+          "bt",
+          "bh"
+        ],
+        help="No blackhat auto message."
     )  # creating Commands ctx is something like context, send automatically
     async def black_hat(self, ctx):
         if await self.check_perms(ctx):
@@ -107,7 +112,12 @@ class VeteranCog(commands.Cog):
 
     # blackhat doge meme
     @commands.command(
-        name="noblackhat", aliases=["nbt"], help="No blackhat but with a meme."
+        name="noblackhat",
+        aliases=[
+          "nbt",
+          "nbh"
+        ],
+        help="No blackhat but with a meme."
     )
     async def no_black_hat(self, ctx):
         if await self.check_perms(ctx):
@@ -151,7 +161,7 @@ class VeteranCog(commands.Cog):
     async def ctf_what(self, ctx):
         if await self.check_perms(ctx):
             await ctx.send(
-                "CTF's are competitions you can participate into to practice and learn cybersecurity skills in a "
+                "CTFs are competitions you can participate in to practice and learn cybersecurity skills in a "
                 "legal way. Here is a pretty cool video that explains them. "
                 "https://www.youtube.com/watch?v=8ev9ZX9J45A&t=2s \n\nWargames are similar but run all the time where "
                 "as CTFs tend to just run for a few days."
