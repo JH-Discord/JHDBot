@@ -208,7 +208,8 @@ class GeneralCog(commands.Cog):
             if (
                 str(ctx.message.channel) == "bot-commands"
             ):
-                emb = discord.Embed(description=strings.url, colour=0xFF002A)
+                # 0x979C9F == light grey
+                emb = discord.Embed(description=strings.url, colour=0x979C9F)
                 await self.attach_embed_info(ctx, emb)
                 await ctx.send(embed=emb)
             else:
