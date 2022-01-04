@@ -170,6 +170,7 @@ class GeneralCog(commands.Cog):
                 emb = discord.Embed(description=strings.channels2, colour=0xFF002A)
                 await self.attach_embed_info(ctx, emb)
                 await ctx.message.author.send(embed=emb)
+                await ctx.send("Check your DMs! 📬")
             else:
                 await ctx.send("Please use this command in `#bot-commands`")
 
