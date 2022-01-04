@@ -206,8 +206,13 @@ class GeneralCog(commands.Cog):
     )
     async def source(self, ctx):
         if await self.pre_invoke(ctx):
+            role = discord.utils.get(ctx.author.roles, name="Veteran")
+            cool_people = discord.utils.get(ctx.author.roles, name="Moderator Emeritus")
             if (
                 str(ctx.message.channel) == "bot-commands"
+                or role is not None
+                or cool_people is not None
+                or ctx.message.author.guild_permissions.manage_messages
             ):
                 # 0x979C9F == light grey
                 emb = discord.Embed(description=strings.url, colour=0xff8000)
