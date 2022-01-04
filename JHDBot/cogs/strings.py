@@ -119,3 +119,7 @@ Discuss the certifications you have or want here. What they are. Which ones are 
 `#katana`
 Discuss and coordinate work on Katana Modules here.
 """
+
+url = """
+**https://github.com/Fumenoid/JHDBot**
+"""
