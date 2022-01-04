@@ -27,4 +27,4 @@
 
 #### Join bot's test server to ask any query
 
-> https://discord.gg/b3nh6uR
+> https://discord.gg/SpUvheg5A5
