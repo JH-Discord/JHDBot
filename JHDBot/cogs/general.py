@@ -170,6 +170,7 @@ class GeneralCog(commands.Cog):
                 emb = discord.Embed(description=strings.channels2, colour=0xFF002A)
                 await self.attach_embed_info(ctx, emb)
                 await ctx.message.author.send(embed=emb)
+                await ctx.send("Check your DMs! 📬")
             else:
                 await ctx.send("Please use this command in `#bot-commands`")
 
@@ -199,6 +200,21 @@ class GeneralCog(commands.Cog):
         embed.set_footer(text="by: JHD Moderation team ")
         return embed
 
+    # Send github link
+    @commands.command(
+        name="source", help="JHDBot github link."
+    )
+    async def source(self, ctx):
+        if await self.pre_invoke(ctx):
+            if (
+                str(ctx.message.channel) == "bot-commands"
+            ):
+                # 0x979C9F == light grey
+                emb = discord.Embed(description=strings.url, colour=0xff8000)
+                await self.attach_embed_info(ctx, emb)
+                await ctx.send(embed=emb)
+            else:
+                await ctx.send("Please use this command in `#bot-commands`")
 
 def setup(bot):
     bot.add_cog(GeneralCog(bot))

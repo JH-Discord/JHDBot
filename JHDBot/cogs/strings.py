@@ -40,17 +40,15 @@ Pick up optional swag roles here from a reaciton menu.
 `#suggestions`
 Channel where suggestions appear as polls! Cast your votes!
 
-`#tweets`
-Info Sec related twitter feed.
-
 **Hangout channels**
 `#general`
 Channel For Rational Conversation / Conversation about Infosec / Cyber Security / Computer Programming / Computers
 
 `#shiptoasting`
-Channel topic: Brought to you by skuxnet 
-The official discord channel of https://johnhammond.dev/ 
 Channel for memes and other such nonsense. Strictly no actual NSFW content. If you have to question if it's allowed, it's not.
+
+`#jh-memes`
+Memes about the man, the myth, the legend, John Hammond
 
 `#bot commands`
 Come one come all! This is the one and only place to use the bots! Please use all bot commands here unless otherwise specified.
@@ -67,11 +65,14 @@ List of ongong wargames and archived CTFS.
 
 `#ctf-writeups`
 Channel to post writeups for past ctfs. 
+
+`#community-content`
+Channel for the community to share their content related to cyber security: be it a blog post, videos or any other helpful resources.
 """
 
 channels2 = """
 ***Channels and their descriptions***
-**Training**
+**CTF/Wargames**
 `#capture-the-flag`
 A channel for discussing anything CTF that doesn't have a specific channel. PLEASE keep spoilers to DMs!
 
@@ -84,8 +85,14 @@ Channel for discussion of Try Hack Me http://tryhackme.com
 `#hackthebox`
 Request for help in DM, asking questions for HackTheBox, please do not post spoilers
 
+`#blueteamlabs`
+For discussion of the Blue Team Labs
+
 `#archived_ctfs`
 Archives of channels for past ctf competitions
+
+`#pwn-training`
+Challenges to practise your pwn skills on
 
 **Hacking/Security**
 `#beginners`
@@ -109,13 +116,29 @@ Blue teaming, incident response and forensics discussion all goes here.
 `#wireless-hacking`
 Discussion about Wifi, RFID, forms of wireless hacking.
 
+`#cryptography`
+Discussion of crypto and associated maths-y stuff.
+
+`#mobile-security`
+Meddling with phones, tablets and portable decvices can go here
+
+`#hardware-hacking`
+Stuff about attacking vulnerable physical hardware can go here
+
 **Development**
 `#programming`
 Channel for anything programming related questions. 
 
+`#webdev`
+Channel for anything webdev related questions. 
+
 `#certifications`
 Discuss the certifications you have or want here. What they are. Which ones are useful. How to get them. etc. Do NOT ask for copyrighted content. Obtain it from legal sources.
 
-`#katana`
-Discuss and coordinate work on Katana Modules here.
+`#katana-pwncat`
+Discuss and coordinate work on Katana Modules/Pwncat here.
+"""
+
+url = """
+**https://github.com/Fumenoid/JHDBot**
 """

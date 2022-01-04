@@ -3,7 +3,8 @@ import asyncio
 import urllib.request
 import discord
 from discord.ext import commands
-
+import aiohttp
+import json
 
 class VeteranCog(commands.Cog):
     def __init__(self, bot):
@@ -87,6 +88,23 @@ class VeteranCog(commands.Cog):
                 "We aren't your personal Avengers. You are going to need to use other methods for that. Customer "
                 "support and local law enforcement are probably best depending on the circumstance."
             )
+        else:
+            return
+
+    # Cat command - to embed wholesomeness in chat
+    @commands.command(
+        name="cat", 
+        help="Command to add wholesomeness to chat."
+    )
+    async def cat(self, ctx):
+        if await self.check_perms(ctx):
+            async with aiohttp.ClientSession() as session:
+                async with session.get('https://api.thecatapi.com/api/images/get?format=json') as response:
+                    html = json.loads(await response.text())
+                    emb = discord.Embed(description=f'Kato <3', colour=0x3CFF4C)
+                    emb.set_footer(text=f"Cute isn't it/kawai deso ?")
+                    emb.set_image(url=(html[0]["url"]))
+                    await ctx.send(embed=emb)
         else:
             return
 
