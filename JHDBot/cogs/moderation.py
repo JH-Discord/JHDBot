@@ -77,13 +77,13 @@ class ModeratorCog(commands.Cog):
                         await user.add_roles(muted_role)
                         await user.send(
                             "You were un-muted in JHDiscord, we hope you don't repeat the actions that lead the "
-                            "mods/admin to mute you."
+                            "mod/admin to mute you."
                         )
                         await ctx.send(f"{user} has been unmuted in JHD")
             else:
                 await ctx.send("Sorry, it seems like you are not authorized to do it")
         except:
-            await ctx.send("Seems like the Bot is not authorized to run this command")
+            await ctx.send("Seems like the bot is not authorized to run this command")
 
     # unmute command..
     @commands.command(
@@ -100,7 +100,7 @@ class ModeratorCog(commands.Cog):
                     await user.add_roles(mrole)
                     await user.send(
                         "You were un-muted in JHDiscord, we hope you don't repeat the actions that lead the "
-                        "mods/admin to mute you."
+                        "mod/admin to mute you."
                     )
                     await ctx.send(f"{user} has been unmuted in JHD")
                 else:
@@ -187,7 +187,7 @@ class ModeratorCog(commands.Cog):
         try:
             if ctx.message.author.guild_permissions.kick_members:
                 listofusers = users.split()
-                reason = "Kicked during a multikick process, Most probably we suspect you to be a bot if you are not please rejoin later."
+                reason = "Kicked during a multikick process. Most probably we suspect you to be a bot. If you are not please rejoin later."
                 for i in listofusers:
                     user = await self.bot.fetch_user(i[3:-1])
                     try:
@@ -198,7 +198,7 @@ class ModeratorCog(commands.Cog):
                         await ctx.send(f"{user} has been kicked out from the server")
                     except:
                         await ctx.send(
-                            "Can't kick the user because of his permission, though he|she might have got a kick message."
+                            "Can't kick the user because of their permissions, though they might have gotten a kick message."
                         )
             else:
                 await ctx.send("Sorry, it seems like you are not authorized to do it")
@@ -213,7 +213,7 @@ class ModeratorCog(commands.Cog):
         try:
             if ctx.message.author.guild_permissions.kick_members:
                 listofusers = users.split()
-                reason = "Banned during a multiban process, Most probably we are sure you to be a bot if you are not reach to our staff on other servers, like THM, HTB, yada yada."
+                reason = "Banned during a multiban process. Most probably we are sure that you are a bot. If you aren't: You'd make an excellent bot! :) Please reach out to our staff on other servers, like THM, HTB, yada yada."
                 for i in listofusers:
                     user = await self.bot.fetch_user(i[3:-1])
                     try:
@@ -222,7 +222,7 @@ class ModeratorCog(commands.Cog):
                         await ctx.send(f"{user} has been banned out from the server")
                     except:
                         await ctx.send(
-                            "Can't ban the user because of his permission, though he|she might have got a ban message."
+                            "Can't ban the user because of their permissions, though they might have gotten a ban message."
                         )
             else:
                 await ctx.send("Sorry, it seems like you are not authorized to do it")

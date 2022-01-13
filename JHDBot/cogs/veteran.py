@@ -26,7 +26,7 @@ class VeteranCog(commands.Cog):
         Check permissions to make sure the user is allowed to issue commands
         """
         if type(ctx.channel) == discord.channel.DMChannel:
-            await ctx.send('Bot does not respond to commands in DMs. Send your commands in the `#bot-commands` channel in JHDiscord.')
+            await ctx.send('The bot does not respond to commands in DMs. Send your commands in the `#bot-commands` channel in JHDiscord.')
             return
 
         cool_people = discord.utils.get(ctx.author.roles, name="Moderator Emeritus")
@@ -60,18 +60,18 @@ class VeteranCog(commands.Cog):
                 f"commands and privilege escalation.\n\nII. Natas OverTheWire: (<https://overthewire.org/wargames/natas/>)"
                 f" A wargame focusing on teaching the basics of server side web-security."
                 f" All OTW content can be discussed in {otw.mention} \n\nIII. "
-                f"PicoCTF: (<https://picoctf.com/>) A very beginner CTF that is up year round for practice. You can chat "
-                f"about PicoCTF in {ctf.mention} \n\nIV. Try Hack Me: (<https://tryhackme.com/>) A beginner friendly "
-                f"platform focusing on learning how to hack in more real world situations than CTFs. There are "
+                f"PicoCTF: (<https://picoctf.com/>) A super beginner-friendly CTF that is up year round for practice. You can chat "
+                f"about PicoCTF in {ctf.mention} \n\nIV. TryHackMe: (<https://tryhackme.com/>) A beginner friendly "
+                f"platform focusing on learning how to hack in more real-world situations than CTFs. There are so-called "
                 f'"rooms" for all levels and walkthroughs available if necessary. Questions can be asked in '
-                f'{thm.mention} also here is a guide, if you are starting with THM (<https://blog.tryhackme.com/free_path/>)\n\n'
+                f'{thm.mention}. Also here is a guide, if you are starting with THM (<https://blog.tryhackme.com/free_path/>)\n\n'
                 f'V. Hack the Box (<https://www.hackthebox.eu/>) is a platform to learn and grow your pentesting skills.'
                 f' Boxes range from "easy" to "insane" and cover a broad range of topics.'
-                f' Walkthroughs can not be posted but "Starting point" (<https://app.hackthebox.eu/starting-point>)'
+                f' Walkthroughs cannot be posted but "Starting point" (<https://app.hackthebox.eu/starting-point>)'
                 f" will point you in the general direction. HTB Academy (<https://academy.hackthebox.eu/>) is another"
                 f" excellent resource. The {htb.mention} channel is provided for discussion.\n\n"
-                f"VI. Codecademy (<https://www.codecademy.com>) An interactive website for learning how to code. "
-                f"This website teaches a variety of languages ranging from C++, to JavaScript in a very intuitive way. "
+                f"VI. Codecademy (<https://www.codecademy.com>): An interactive website for learning how to code. "
+                f"This website teaches a variety of languages ranging from C++ to JavaScript in a very intuitive way. "
                 f"Questions can be asked in the {pro.mention} channel.\n\n"
                 f"For any additional questions or concerns, please consult the {big.mention} channel."
             )
@@ -80,12 +80,12 @@ class VeteranCog(commands.Cog):
 
     # nypa command
     @commands.command(
-        name="nypa", help="(Grey|Black) hat OSint auto message."
+        name="nypa", help="(Grey|Black) hat OSINT auto message."
     )  # creating Commands ctx is something like context, send automatically
     async def not_your_personal_avengers(self, ctx):
         if await self.check_perms(ctx):
             await ctx.send(
-                "We aren't your personal Avengers. You are going to need to use other methods for that. Customer "
+                "We aren't your personal Avengers. You are going to need to use other methods for that: Customer "
                 "support and local law enforcement are probably best depending on the circumstance."
             )
         else:
@@ -151,7 +151,7 @@ class VeteranCog(commands.Cog):
     async def account(self, ctx):
         if await self.check_perms(ctx):
             await ctx.send(
-                "Sorry. We can't help with account recovery. Your only path for that is to contact support for the "
+                "Sorry. We can't help with account recovery. Your only option is to contact support for the "
                 'respective service. "I forgot my password" is often a good place to start.'
             )
         else:
@@ -194,7 +194,7 @@ class VeteranCog(commands.Cog):
     async def how_to_ask(self, ctx):
         if await self.check_perms(ctx):
             await ctx.send(
-                "Hey there, if you ask the question like this, it might help us, to help you - "
+                "Hey there, if you ask the question like this, it will help us helping you - "
                 "https://www.youtube.com/watch?v=53zkBvL4ZB4 \n_LiveOverflow is dope_ : P"
             )
         else:
