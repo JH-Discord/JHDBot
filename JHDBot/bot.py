@@ -252,7 +252,7 @@ async def on_message_delete(message):
             async with aiohttp.ClientSession() as session:
                 async with session.get(att.proxy_url) as resp:
                     if resp.status != 200:
-                        return await channel.send('Could not log file...')
+                        return await logchannel.send('Could not log file...')
                     data = io.BytesIO(await resp.read())
                     img = discord.File(data, filename="logimages.png")
                     emb.set_image(url="attachment://logimages.png")
