@@ -198,11 +198,11 @@ async def on_message_edit(before, after):
 
         if len(message_content_before) > 750:
             emb.add_field(name='Message Content Before Continued',
-                    value=f"```{message_content_before[1000:]}```")
+                    value=f"```{message_content_before[750:]}```")
 
         if len(message_content_after) > 750:
             emb.add_field(name='Message Content After Continued',
-                    value=f"```{message_content_after[1000:]}```")
+                    value=f"```{message_content_after[750:]}```")
 
         emb.set_author(name=f"{before.author}", icon_url=f"{before.author.avatar_url}")
         emb.set_footer(text="Message Edit Log")
