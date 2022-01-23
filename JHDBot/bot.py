@@ -180,8 +180,12 @@ async def on_message_edit(before, after):
         return
     logchannel = discord.utils.get(before.guild.channels, name="message-logs")
     if before.content != after.content:
-        message_content_before = before.clean_content
-        message_content_after = after.clean_content
+        message_content_before = discord.utils.escape_markdown(before.clean_content)
+        if message_content_before[-1]=='`':
+            message_content_before = message_content_before + "\\"
+        message_content_after = discord.utils.escape_markdown(after.clean_content)
+        if message_content_after[-1]=='`':
+            message_content_after = message_content_after + "\\"
 
         desc_before = message_content_before[:750]
         desc_after = message_content_after[:750]
@@ -215,7 +219,9 @@ async def on_message_delete(message):
         return
     logchannel = discord.utils.get(message.guild.channels, name="message-logs")
 
-    content = message.clean_content
+    content = discord.utils.escape_markdown(message.clean_content)
+    if content[-1] == '`':
+        content = content+'\\'
 
     emb = discord.Embed(
         description=f"**Message deleted in {message.channel.mention}**\n"
