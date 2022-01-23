@@ -2,6 +2,7 @@
 import datetime
 import sys
 import os
+import io
 import re
 import traceback
 import discord
@@ -180,8 +181,16 @@ async def on_message_edit(before, after):
         return
     logchannel = discord.utils.get(before.guild.channels, name="message-logs")
     if before.content != after.content:
-        message_content_before = before.clean_content
-        message_content_after = after.clean_content
+        message_content_before = discord.utils.escape_markdown(before.clean_content)
+        if len(message_content_before)!=0:
+            if message_content_before[-1]=='`':
+                message_content_before = message_content_before + "\\"
+        else:
+            message_content_before = "None"
+        message_content_after = discord.utils.escape_markdown(after.clean_content)
+        if len(message_content_after)!=0:
+            if message_content_after[-1]=='`':
+                message_content_after = message_content_after + "\\"
 
         desc_before = message_content_before[:750]
         desc_after = message_content_after[:750]
@@ -194,11 +203,11 @@ async def on_message_edit(before, after):
 
         if len(message_content_before) > 750:
             emb.add_field(name='Message Content Before Continued',
-                    value=f"```{message_content_before[1000:]}```")
+                    value=f"```{message_content_before[750:]}```")
 
         if len(message_content_after) > 750:
             emb.add_field(name='Message Content After Continued',
-                    value=f"```{message_content_after[1000:]}```")
+                    value=f"```{message_content_after[750:]}```")
 
         emb.set_author(name=f"{before.author}", icon_url=f"{before.author.avatar_url}")
         emb.set_footer(text="Message Edit Log")
@@ -215,18 +224,41 @@ async def on_message_delete(message):
         return
     logchannel = discord.utils.get(message.guild.channels, name="message-logs")
 
-    content = message.clean_content
+    content = discord.utils.escape_markdown(message.clean_content)
+    if len(content)!=0:
+        if content[-1] == '`':
+            content = content+'\\'
 
-    emb = discord.Embed(
-        description=f"**Message deleted in {message.channel.mention}**\n"
-        f"Message Content\n```{content}```\n",
-        colour=0xFF2E4A,
-        timestamp=datetime.datetime.now(datetime.timezone.utc),
-    )
-    emb.add_field(name = "Message URL", value = f"{message.jump_url}", inline = False)
-    emb.set_author(name=f"{message.author}", icon_url=f"{message.author.avatar_url}")
-    emb.set_footer(text="Message Delete Log")
-    await logchannel.send(embed=emb)
+    if (len(message.attachments)==0):
+        emb = discord.Embed(
+            description=f"**Message deleted in {message.channel.mention}**\n"
+            f"Message Content\n```{content}```\n",
+            colour=0xFF2E4A,
+            timestamp=datetime.datetime.now(datetime.timezone.utc),
+        )
+        emb.add_field(name = "Message URL", value = f"{message.jump_url}", inline = False)
+        emb.set_author(name=f"{message.author}", icon_url=f"{message.author.avatar_url}")
+        emb.set_footer(text="Message Delete Log")
+        await logchannel.send(embed=emb)
+    else:
+        for att in message.attachments:
+            emb = discord.Embed(
+                description=f"**Message deleted in {message.channel.mention}**\n"
+                f"Text Content if any : \n```{content}```\n",
+                colour=0xFF2E4A,
+                timestamp=datetime.datetime.now(datetime.timezone.utc),
+            )
+            emb.add_field(name = "Message URL", value = f"{message.jump_url}", inline = False)
+            async with aiohttp.ClientSession() as session:
+                async with session.get(att.proxy_url) as resp:
+                    if resp.status != 200:
+                        return await channel.send('Could not log file...')
+                    data = io.BytesIO(await resp.read())
+                    img = discord.File(data, filename="logimages.png")
+                    emb.set_image(url="attachment://logimages.png")
+            emb.set_author(name=f"{message.author}", icon_url=f"{message.author.avatar_url}")
+            emb.set_footer(text="Message Delete Log")
+            await logchannel.send(file=img, embed=emb)
 
 
 # On error Event
