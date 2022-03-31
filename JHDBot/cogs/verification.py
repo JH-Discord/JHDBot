@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import asyncio
 import discord
+import os
 from discord.ext import commands
 
 
@@ -12,7 +13,7 @@ class VerifyCog(commands.Cog):
     @commands.command(aliases=["verification"])
     async def verify(self, ctx, announcement_role=None):
         try:
-            if str(ctx.message.channel) == "welcome":
+            if str(ctx.message.channel) == os.getenv("WELCOME_CHANNEL"):
                 role = discord.utils.get(ctx.guild.roles, name="Member")
                 await ctx.message.author.add_roles(role)
                 flag = 0
@@ -20,7 +21,7 @@ class VerifyCog(commands.Cog):
                     role = discord.utils.get(ctx.guild.roles, name="Announcements")
                     await ctx.message.author.add_roles(role)
                     flag += 1
-                botchannel = discord.utils.get(ctx.message.author.guild.channels, name='bot-commands')
+                botchannel = discord.utils.get(ctx.message.author.guild.channels, name=os.getenv("BOT_COMMAND_CHANNEL"))
                 try:
                     await ctx.message.author.send(
                         f'Welcome to the server {ctx.message.author.mention}!\n'
@@ -38,7 +39,7 @@ class VerifyCog(commands.Cog):
                         f"{ctx.message.author.mention} successfully verified. Roles given `Member`."
                     )
             else:
-                await ctx.send("Command only works in #welcome channel : )")
+                await ctx.send("Command only works in #"+os.getenv("WELCOME_CHANNEL")+" channel : )")
             await asyncio.sleep(3)
             await ctx.message.delete()
         except:
