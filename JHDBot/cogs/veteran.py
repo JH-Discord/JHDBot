@@ -2,6 +2,7 @@
 import asyncio
 import urllib.request
 import discord
+import os
 from discord.ext import commands
 import aiohttp
 import json
@@ -26,7 +27,7 @@ class VeteranCog(commands.Cog):
         Check permissions to make sure the user is allowed to issue commands
         """
         if type(ctx.channel) == discord.channel.DMChannel:
-            await ctx.send('The bot does not respond to commands in DMs. Send your commands in the `#bot-commands` channel in JHDiscord.')
+            await ctx.send('The bot does not respond to commands in DMs. Send your commands in the `#'+os.getenv("BOT_COMMAND_CHANNEL")+'` channel in JHDiscord.')
             return
 
         cool_people = discord.utils.get(ctx.author.roles, name="Moderator Emeritus")
@@ -49,12 +50,12 @@ class VeteranCog(commands.Cog):
     )  # creating Commands ctx is something like context, send automatically
     async def beginner(self, ctx):
         if await self.check_perms(ctx):
-            otw = discord.utils.get(ctx.guild.channels, name="over-the-wire")
-            ctf = discord.utils.get(ctx.guild.channels, name="capture-the-flag")
-            thm = discord.utils.get(ctx.guild.channels, name="tryhackme")
-            big = discord.utils.get(ctx.guild.channels, name="beginners")
-            htb = discord.utils.get(ctx.guild.channels, name="hackthebox")
-            pro = discord.utils.get(ctx.guild.channels, name="programming")
+            otw = discord.utils.get(ctx.guild.channels, name=os.getenv("OVER_THE_WIRE"))
+            ctf = discord.utils.get(ctx.guild.channels, name=os.getenv("CAPTURE_THE_FLAG"))
+            thm = discord.utils.get(ctx.guild.channels, name=os.getenv("TRYHACKME"))
+            big = discord.utils.get(ctx.guild.channels, name=os.getenv("BEGINNERS"))
+            htb = discord.utils.get(ctx.guild.channels, name=os.getenv("HACKTHEBOX"))
+            pro = discord.utils.get(ctx.guild.channels, name=os.getenv("PROGRAMMING"))
             await ctx.send(
                 f"I. Bandit OverTheWire: (<https://overthewire.org/wargames/bandit/>) A wargame focusing on basic Linux "
                 f"commands and privilege escalation.\n\nII. Natas OverTheWire: (<https://overthewire.org/wargames/natas/>)"
@@ -119,7 +120,7 @@ class VeteranCog(commands.Cog):
     )  # creating Commands ctx is something like context, send automatically
     async def black_hat(self, ctx):
         if await self.check_perms(ctx):
-            channel = discord.utils.get(ctx.guild.channels, name="obligatory-rules")
+            channel = discord.utils.get(ctx.guild.channels, name=os.getenv("RULES_CHANNEL"))
             await ctx.send(
                 f"Unfortunately it seems as though you are discussing blackhat activities. The term Blackhat refers "
                 f"to hacking for personal gain or to be generally malicious. Please refer to {channel.mention} . We "

@@ -89,8 +89,8 @@ async def on_ready():
 # Event: when any member joins the server
 @bot.event
 async def on_member_join(member):
-    channel = discord.utils.get(member.guild.channels, name="welcome")
-    rules_channel = discord.utils.get(member.guild.channels, name="obligatory-rules")
+    channel = discord.utils.get(member.guild.channels, name=os.getenv("WELCOME_CHANNEL"))
+    rules_channel = discord.utils.get(member.guild.channels, name=os.getenv("RULES_CHANNEL"))
     await channel.send(
         f'**Hi there, {member.mention} Welcome to JHDiscord!**\n\nTo gain access to the rest of the server. '
         f'Please read the {rules_channel.mention} and then verify yourself to join the conversation.\n')

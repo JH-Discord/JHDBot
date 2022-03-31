@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import discord
+import os
 from discord.ext import commands
 import strings
 
@@ -26,14 +27,14 @@ class GeneralCog(commands.Cog):
             role = discord.utils.get(ctx.author.roles, name="Veteran")
             cool_people = discord.utils.get(ctx.author.roles, name="Moderator Emeritus")
             if (
-                str(ctx.message.channel) == "bot-commands"
+                str(ctx.message.channel) == os.getenv("BOT_COMMAND_CHANNEL")
                 or role is not None
                 or cool_people is not None
                 or ctx.message.author.guild_permissions.manage_messages
             ):
                 await ctx.send(f"Ping! - {round(self.bot.latency * 1000)}ms")
             else:
-                await ctx.send("Please use this command in `#bot-commands`")
+                await ctx.send("Please use this command in `#"+os.getenv("BOT_COMMAND_CHANNEL")+"`")
 
     # For Likt
     @commands.command(name="solve", hidden=True)
@@ -42,14 +43,14 @@ class GeneralCog(commands.Cog):
             role = discord.utils.get(ctx.author.roles, name="Veteran")
             cool_people = discord.utils.get(ctx.author.roles, name="Moderator Emeritus")
             if (
-                str(ctx.message.channel) == "bot-commands"
+                str(ctx.message.channel) == os.getenv("BOT_COMMAND_CHANNEL")
                 or role is not None
                 or cool_people is not None
                 or ctx.message.author.guild_permissions.manage_messages
             ):
                 await ctx.send("That is a definite maybe")
             else:
-                await ctx.send("Please use this command in `#bot-commands`")
+                await ctx.send("Please use this command in `#"+os.getenv("BOT_COMMAND_CHANNEL")+"`")
 
     # Report bot command
     @commands.command(
@@ -61,7 +62,7 @@ class GeneralCog(commands.Cog):
         if await self.pre_invoke(ctx):
             coolpeople = discord.utils.get(ctx.author.roles, name="Moderator Emeritus")
             if (
-                str(ctx.message.channel) == "bot-commands"
+                str(ctx.message.channel) == os.getenv("BOT_COMMAND_CHANNEL")
                 or coolpeople is not None
                 or ctx.message.author.guild_permissions.manage_messages
             ):
@@ -76,7 +77,7 @@ class GeneralCog(commands.Cog):
                         "Your report has been successfully forwarded to moderators"
                     )
             else:
-                await ctx.send("Please use this command in `#bot-commands`")
+                await ctx.send("Please use this command in `#"+os.getenv("BOT_COMMAND_CHANNEL")+"`")
 
     # reporting users
     @commands.command(
@@ -88,7 +89,7 @@ class GeneralCog(commands.Cog):
         if await self.pre_invoke(ctx):
             cool_people = discord.utils.get(ctx.author.roles, name="Moderator Emeritus")
             if (
-                str(ctx.message.channel) == "bot-commands"
+                str(ctx.message.channel) == os.getenv("BOT_COMMAND_CHANNEL")
                 or cool_people is not None
                 or ctx.message.author.guild_permissions.manage_messages
             ):
@@ -109,7 +110,7 @@ class GeneralCog(commands.Cog):
                         "Your report has been successfully forwarded to moderators"
                     )
             else:
-                await ctx.send("Please use this command in `#bot-commands`")
+                await ctx.send("Please use this command in `#"+os.getenv("BOT_COMMAND_CHANNEL")+"`")
 
     # Suggestion command
     @commands.command(
@@ -121,7 +122,7 @@ class GeneralCog(commands.Cog):
         if await self.pre_invoke(ctx):
             cool_people = discord.utils.get(ctx.author.roles, name="Moderator Emeritus")
             if (
-                str(ctx.message.channel) == "bot-commands"
+                str(ctx.message.channel) == os.getenv("BOT_COMMAND_CHANNEL")
                 or cool_people is not None
                 or ctx.message.author.guild_permissions.manage_messages
             ):
@@ -145,7 +146,7 @@ class GeneralCog(commands.Cog):
                     await msg.add_reaction("👎")
                     await ctx.send(f"Your suggestion has been added in {channel.mention}")
             else:
-                await ctx.send("Please use this command in `#bot-commands`")
+                await ctx.send("Please use this command in `#"+os.getenv("BOT_COMMAND_CHANNEL")+"`")
 
     # Channel desc message
     @commands.command(
@@ -158,7 +159,7 @@ class GeneralCog(commands.Cog):
             role = discord.utils.get(ctx.author.roles, name="Veteran")
             coolpeople = discord.utils.get(ctx.author.roles, name="Moderator Emeritus")
             if (
-                str(ctx.message.channel) == "bot-commands"
+                str(ctx.message.channel) == os.getenv("BOT_COMMAND_CHANNEL")
                 or role is not None
                 or coolpeople is not None
                 or ctx.message.author.guild_permissions.manage_messages
@@ -172,7 +173,7 @@ class GeneralCog(commands.Cog):
                 await ctx.message.author.send(embed=emb)
                 await ctx.send("Check your DMs! 📬")
             else:
-                await ctx.send("Please use this command in `#bot-commands`")
+                await ctx.send("Please use this command in `#"+os.getenv("BOT_COMMAND_CHANNEL")+"`")
 
     # FAQ message
     @commands.command(
@@ -183,7 +184,7 @@ class GeneralCog(commands.Cog):
             role = discord.utils.get(ctx.author.roles, name="Veteran")
             coolpeople = discord.utils.get(ctx.author.roles, name="Moderator Emeritus")
             if (
-                str(ctx.message.channel) == "bot-commands"
+                str(ctx.message.channel) == os.getenv("BOT_COMMAND_CHANNEL")
                 or role is not None
                 or coolpeople is not None
                 or ctx.message.author.guild_permissions.manage_messages
@@ -192,7 +193,7 @@ class GeneralCog(commands.Cog):
                 await self.attach_embed_info(ctx, emb)
                 await ctx.send(embed=emb)
             else:
-                await ctx.send("Please use this command in `#bot-commands`")
+                await ctx.send("Please use this command in `#"+os.getenv("BOT_COMMAND_CHANNEL")+"`")
 
     async def attach_embed_info(self, ctx=None, embed=None):
         embed.set_author(name="JHDiscord Bot", icon_url=f"{ctx.guild.icon_url}")
@@ -209,7 +210,7 @@ class GeneralCog(commands.Cog):
             role = discord.utils.get(ctx.author.roles, name="Veteran")
             cool_people = discord.utils.get(ctx.author.roles, name="Moderator Emeritus")
             if (
-                str(ctx.message.channel) == "bot-commands"
+                str(ctx.message.channel) == os.getenv("BOT_COMMAND_CHANNEL")
                 or role is not None
                 or cool_people is not None
                 or ctx.message.author.guild_permissions.manage_messages
@@ -219,7 +220,7 @@ class GeneralCog(commands.Cog):
                 await self.attach_embed_info(ctx, emb)
                 await ctx.send(embed=emb)
             else:
-                await ctx.send("Please use this command in `#bot-commands`")
+                await ctx.send("Please use this command in `#"+os.getenv("BOT_COMMAND_CHANNEL")+"`")
 
 def setup(bot):
     bot.add_cog(GeneralCog(bot))
