@@ -30,8 +30,6 @@ also `Nullpxl's bot - NullCTF`, I have read it's source code like thrice, it's s
 
 channels = """
 
-> WELP TODAY IS 1st APRIL SO CHANNELS NAME HERE WILL BE DIFFERENT FROM THE REAL CHANNELS.. just for today >_< (Sorry.. Not Sorry) 
-
 ***Channels and their descriptions***
 **INFO/NEWS**
 `#welcome`
