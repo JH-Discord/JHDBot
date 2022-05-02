@@ -278,7 +278,7 @@ async def on_command_error(ctx, error):
 
     if isinstance(error, commands.CommandNotFound):
         await ctx.send(
-            f"Invalid command. Please use `{bot.command_prefix}help` to know list current valid commands."
+            f"Invalid command. Please use `{bot.command_prefix}help` to list current valid commands."
         )
     else:
         embed = discord.Embed(
