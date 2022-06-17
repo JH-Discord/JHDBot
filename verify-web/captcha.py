@@ -24,10 +24,11 @@ def get_invite_link():
     data = b'{"max_age":3600,"max_uses":1,"target_user_id":null,"target_user_type":null,"temporary":true}'
     headers = {"content-type": "application/json", "Authorization": f"Bot {BOT_TOKEN}"}
     k = requests.post(
-        "https://discord.com/api/v6/channels/{}/invites".format(SERVER_ID),
+        f"https://discord.com/api/v6/channels/{SERVER_ID}/invites",
         headers=headers,
         data=data,
     )
+
 
     invite_code = k.json()["code"]
     if k.status_code != 200:

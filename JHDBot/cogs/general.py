@@ -11,11 +11,10 @@ class GeneralCog(commands.Cog):
         self.bot = bot
 
     async def pre_invoke(self, ctx) -> bool:
-        if type(ctx.channel) == discord.channel.DMChannel:
-            await ctx.send('Bot does not respond to commands in DMs. Send your commands in the `#bot-commands` channel in JHDiscord.')
-            return False
-        else:
+        if type(ctx.channel) != discord.channel.DMChannel:
             return True
+        await ctx.send('Bot does not respond to commands in DMs. Send your commands in the `#bot-commands` channel in JHDiscord.')
+        return False
 
     # Ping Command to check if server is up or not
     @commands.command(
@@ -72,7 +71,7 @@ class GeneralCog(commands.Cog):
                     channel = discord.utils.get(
                         ctx.message.author.guild.channels, name="dev-team"
                     )
-                    await channel.send(f"Reported by user {ctx.message.author} : " + reason)
+                    await channel.send(f"Reported by user {ctx.message.author} : {reason}")
                     await ctx.send(
                         "Your report has been successfully forwarded to moderators"
                     )
