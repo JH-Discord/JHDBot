@@ -38,11 +38,10 @@ class VeteranCog(commands.Cog):
             or ctx.message.author.guild_permissions.manage_messages
         ):
             return True
-        else:
-            await ctx.send("Seems like you are not authorized to use this command D:")
-            await asyncio.sleep(5)
-            await ctx.message.delete()
-            return False
+        await ctx.send("Seems like you are not authorized to use this command D:")
+        await asyncio.sleep(5)
+        await ctx.message.delete()
+        return False
 
     # beginner command
     @commands.command(
@@ -102,8 +101,8 @@ class VeteranCog(commands.Cog):
             async with aiohttp.ClientSession() as session:
                 async with session.get('https://api.thecatapi.com/api/images/get?format=json') as response:
                     html = json.loads(await response.text())
-                    emb = discord.Embed(description=f'Kato <3', colour=0x3CFF4C)
-                    emb.set_footer(text=f"Cute isn't it/kawai deso ?")
+                    emb = discord.Embed(description='Kato <3', colour=0x3CFF4C)
+                    emb.set_footer(text="Cute isn't it/kawai deso ?")
                     emb.set_image(url=(html[0]["url"]))
                     await ctx.send(embed=emb)
         else:
@@ -205,17 +204,15 @@ class VeteranCog(commands.Cog):
         name="lmgtfy", help="Let me google that for you.", usage="<query>"
     )
     async def _lmgtfy(self, ctx, *, query=None):
-        if await self.check_perms(ctx):
-            if query is None:
-                await ctx.send(
-                    f"Query not provided: `{self.bot.command_prefix}lmgtfy <query>`"
-                )
-            else:
-                lmgtfyurl = "https://lmgtfy.com/?q="
-                fullyurl = lmgtfyurl + urllib.parse.quote_plus(query, safe="")
-                await ctx.send(fullyurl)
-        else:
+        if not await self.check_perms(ctx):
             return
+        if query is None:
+            await ctx.send(
+                f"Query not provided: `{self.bot.command_prefix}lmgtfy <query>`"
+            )
+        else:
+            fullyurl = "https://lmgtfy.com/?q=" + urllib.parse.quote_plus(query, safe="")
+            await ctx.send(fullyurl)
 
     # google command
     @commands.command(
