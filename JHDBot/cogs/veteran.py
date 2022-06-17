@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import asyncio
+import contextlib
 import urllib.request
 import discord
 import os
@@ -17,10 +18,8 @@ class VeteranCog(commands.Cog):
         Clean up messages that trigger the command after it's invoked
         """
         await asyncio.sleep(5)
-        try:
+        with contextlib.suppress(Exception):
             await ctx.message.delete()
-        except:
-            pass
 
     async def check_perms(self, ctx) -> bool:
         """

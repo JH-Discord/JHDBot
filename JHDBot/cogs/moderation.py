@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import asyncio
+import contextlib
 import csv
 import random
 import discord
@@ -34,7 +35,7 @@ class ModeratorCog(commands.Cog):
                 )
             await asyncio.sleep(5)
             await msg.delete()
-        except:
+        except Exception:
             await ctx.send("The bot is unauthorized to delete messages D:")
 
     # Mute Command..
@@ -82,7 +83,7 @@ class ModeratorCog(commands.Cog):
                         await ctx.send(f"{user} has been unmuted in JHD")
             else:
                 await ctx.send("Sorry, it seems like you are not authorized to do it")
-        except:
+        except Exception:
             await ctx.send("Seems like the bot is not authorized to run this command")
 
     # unmute command..
@@ -109,7 +110,7 @@ class ModeratorCog(commands.Cog):
                 await ctx.send("Sorry, it seems like you are not authorized to do it")
             await asyncio.sleep(5)
             await ctx.message.delete()
-        except:
+        except Exception:
             await ctx.send("Seems like the Bot is not authorized to run this command")
 
 
@@ -138,12 +139,9 @@ class ModeratorCog(commands.Cog):
             kick_gifs = list(csv.reader(f))[0]
 
         gif = random.choice(kick_gifs)
-        try:
+        with contextlib.suppress(Exception):
             await user.send(f"You were kicked from JHDiscord : {reason}")
             await user.send(gif)
-        except:
-            pass
-
         await ctx.guild.kick(user=user, reason=reason)  # kicks that user
         await ctx.send(f"{user} has been kicked out from the server")
         await ctx.send(gif)
@@ -178,7 +176,7 @@ class ModeratorCog(commands.Cog):
                 await ctx.send("Sorry, it seems like you are not authorized to do it")
             await asyncio.sleep(5)
             await ctx.message.delete()
-        except:
+        except Exception:
             await ctx.send("The bot is unauthorized to ban members.")
 
     # MultiKick Member Command..
@@ -196,7 +194,7 @@ class ModeratorCog(commands.Cog):
                             user=user, reason=reason
                         )  # kicks that user
                         await ctx.send(f"{user} has been kicked out from the server")
-                    except:
+                    except Exception:
                         await ctx.send(
                             "Can't kick the user because of their permissions, though they might have gotten a kick message."
                         )
@@ -204,7 +202,7 @@ class ModeratorCog(commands.Cog):
                 await ctx.send("Sorry, it seems like you are not authorized to do it")
             await asyncio.sleep(5)
             await ctx.message.delete()
-        except:
+        except Exception:
             await ctx.send("The bot is unauthorized to kick members.")
 
     # Multiban Member Command..
@@ -220,7 +218,7 @@ class ModeratorCog(commands.Cog):
                         await user.send(f"You were banned from JHDiscord : {reason}")
                         await ctx.guild.ban(user=user, reason=reason)  # bans that user
                         await ctx.send(f"{user} has been banned out from the server")
-                    except:
+                    except Exception:
                         await ctx.send(
                             "Can't ban the user because of their permissions, though they might have gotten a ban message."
                         )
@@ -228,7 +226,7 @@ class ModeratorCog(commands.Cog):
                 await ctx.send("Sorry, it seems like you are not authorized to do it")
             await asyncio.sleep(5)
             await ctx.message.delete()
-        except:
+        except Exception:
             await ctx.send("The bot is unauthorized to ban members.")
 
     @commands.command(

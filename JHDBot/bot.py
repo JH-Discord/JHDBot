@@ -297,7 +297,7 @@ async def on_command_error(ctx, error):
 
         try:
             chan_name = ctx.channel.name
-        except:
+        except Exception:
             chan_name = "DMChannel"
 
         name = "Message Details:"
