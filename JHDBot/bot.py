@@ -196,7 +196,7 @@ async def on_message_edit(before, after):
         desc_after = message_content_after[:750]
 
         emb = discord.Embed(
-            description=f"**Message edited in {before.channel.mention} at {after.edited_at}\n**\nMessage content Before\n```{desc_before}```Message content After\n```{desc_after}```[Jump to message]({after.jump_url})",
+            description=f"**Message edited in {before.channel.mention} at {after.edited_at}\n**\nMessage content Before\n``` {desc_before} ```Message content After\n``` {desc_after} ```[Jump to message]({after.jump_url})",
             colour=0xFF9C2E,
             timestamp=datetime.datetime.now(datetime.timezone.utc),
         )
