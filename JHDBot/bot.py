@@ -29,7 +29,7 @@ hookChannel = os.getenv("LOGGING_WEBHOOK_CHANNEL")
 
 
 if __name__ == "__main__":
-    sys.path.insert(1, os.getcwd() + "/cogs/")
+    sys.path.insert(1, f"{os.getcwd()}/cogs/")
     for extension in extensions:
         try:
             bot.load_extension(extension)
@@ -97,7 +97,7 @@ async def on_member_join(member):
     logchannel = discord.utils.get(member.guild.channels, name='join-leave')
     emb = discord.Embed(description=f'User - {member.mention}\nId - {member.id}', colour=0x3CFF4C)
     emb.set_author(name='Member Joined', icon_url=f"{member.avatar_url}")
-    emb.set_footer(text=f'Join Log')
+    emb.set_footer(text='Join Log')
     await logchannel.send(embed=emb)
 
 
@@ -118,7 +118,7 @@ async def on_member_remove(member):
 async def on_voice_state_update(member, before, after):
     logchannel = discord.utils.get(member.guild.channels, name="voice-channel")
     role = discord.utils.get(member.guild.roles, name="voice-text")
-    if before.channel == None:
+    if before.channel is None:
         emb = discord.Embed(
             description=f"{member.mention}** joined voice channel **{after.channel.mention}",
             colour=0x00DAB4,
@@ -127,7 +127,7 @@ async def on_voice_state_update(member, before, after):
         emb.set_footer(text="Voice Channel Log")
         await logchannel.send(embed=emb)
         await member.add_roles(role)
-    elif after.channel == None:
+    elif after.channel is None:
         emb = discord.Embed(
             description=f"{member.mention}** left voice channel **{before.channel.mention}",
             colour=0x00DAB4,
@@ -182,15 +182,16 @@ async def on_message_edit(before, after):
     logchannel = discord.utils.get(before.guild.channels, name="message-logs")
     if before.content != after.content:
         message_content_before = discord.utils.escape_markdown(before.clean_content)
-        if len(message_content_before)!=0:
-            if message_content_before[-1]=='`':
-                message_content_before = message_content_before + "\\"
-        else:
+        if len(message_content_before) == 0:
             message_content_before = "None"
+        elif message_content_before[-1]=='`':
+            message_content_before = message_content_before + "\\"
         message_content_after = discord.utils.escape_markdown(after.clean_content)
-        if len(message_content_after)!=0:
-            if message_content_after[-1]=='`':
-                message_content_after = message_content_after + "\\"
+        if (
+            len(message_content_after) != 0
+            and message_content_after[-1] == '`'
+        ):
+            message_content_after = message_content_after + "\\"
 
         desc_before = message_content_before[:750]
         desc_after = message_content_after[:750]
@@ -212,8 +213,6 @@ async def on_message_edit(before, after):
         emb.set_author(name=f"{before.author}", icon_url=f"{before.author.avatar_url}")
         emb.set_footer(text="Message Edit Log")
         await logchannel.send(embed=emb)
-    else:
-        pass
 
 
 
@@ -225,9 +224,8 @@ async def on_message_delete(message):
     logchannel = discord.utils.get(message.guild.channels, name="message-logs")
 
     content = discord.utils.escape_markdown(message.clean_content)
-    if len(content)!=0:
-        if content[-1] == '`':
-            content = content+'\\'
+    if len(content) != 0 and content[-1] == '`':
+        content = content+'\\'
 
     if (len(message.attachments)==0):
         emb = discord.Embed(
@@ -291,14 +289,15 @@ async def on_command_error(ctx, error):
             traceback.format_exception(type(error), error, error.__traceback__)
         )
         exception_text = exception_text[
-            0 : exception_text.find("The above exception was")
+            : exception_text.find("The above exception was")
         ].strip()
+
 
         print(exception_text, file=sys.stderr)
 
         try:
             chan_name = ctx.channel.name
-        except:
+        except Exception:
             chan_name = "DMChannel"
 
         name = "Message Details:"
@@ -378,7 +377,7 @@ def poll_commands(cog) -> str:
     for cmd in cog.get_commands():
         if cmd.hidden:
             continue
-        args = "" if not cmd.usage else f" {cmd.usage}"
+        args = f" {cmd.usage}" if cmd.usage else ""
         commands += f"`{bot.command_prefix}{cmd.name}{args}`"
         for alias in cmd.aliases:
             commands += f" | `{bot.command_prefix}{alias}{args}`"

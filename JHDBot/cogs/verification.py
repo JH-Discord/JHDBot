@@ -29,7 +29,7 @@ class VerifyCog(commands.Cog):
                         f'and enter command `$chdesc` to get a description of almost every channel and `$faq` to get frequently asked questions. '
                         f'We hope you enjoy your stay and contribute in our community : )\n'
                         )
-                except:
+                except Exception:
                     await ctx.send(f'Welcome to the server {ctx.message.author}! We are glad to have you here :D\n\n')
                 channel = discord.utils.get(ctx.message.author.guild.channels, name='verifications-help')
                 if(flag==1):
@@ -42,7 +42,7 @@ class VerifyCog(commands.Cog):
                 await ctx.send("Command only works in #"+os.getenv("WELCOME_CHANNEL")+" channel : )")
             await asyncio.sleep(3)
             await ctx.message.delete()
-        except:
+        except Exception:
             await ctx.send(
                 "Some error happened while executing the command, please reach out to moderators/admins."
             )
