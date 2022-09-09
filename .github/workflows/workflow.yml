@@ -80,7 +80,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           file: ./JHDBot/Dockerfile
-          context: ./JHDBot
+          context: ./JHDBot/.
           platforms: linux/amd64,linux/arm64
           push: true
           tags: jhdiscord/jhd-bot-docker:${{ github.sha }}
