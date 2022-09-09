@@ -10,6 +10,7 @@ import aiohttp
 from discord import Intents
 from discord.ext import commands
 from dotenv import load_dotenv
+import discordhealthcheck
 
 load_dotenv()
 
@@ -21,6 +22,7 @@ bot = commands.Bot(
 )  # bot command prefix
 bot.remove_command("help")
 # Loading Cogs
+discordhealthcheck.start(bot)
 
 extensions = ["moderation", "veteran", "general", "verification"]
 

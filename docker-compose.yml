@@ -1,23 +1,31 @@
 version: '3'
 
+networks:
+  frontend:
+  backend:
+
 services:
   nginx:
     build: .
     container_name: nginx
     restart: "always"
     privileged: true
-    links:
-      - "webapp1:verify-app1"
-      - "webapp2:verify-app2"
+    networks:
+      - frontend
     ports:
       - "8080:80"
 
   jhd-bot:
-    build: JHDBot/.
+    image: jhdiscord/jhd-bot-docker:latest
+    build:
+        context: JHDBot/
+        dockerfile: Dockerfile
     container_name: jhd-bot
     restart: "always"
-    volumes:
-      - ./JHDBot/gifs:/usr/src/app/gifs:rw
+    networks:
+      - backend
+    ports:
+      - "40404"
     environment:
       - DISCORD_API_TOKEN=${DISCORD_API_TOKEN}
       - BOT_PREFIX_CHARACTER=${BOT_PREFIX_CHARACTER}
@@ -28,6 +36,10 @@ services:
     build: verify-web/.
     container_name: verify-app1
     restart: "always"
+    networks:
+      - frontend
+    ports:
+      - "8080:8080"
     environment:
       - RECAPTCHA_PUBLIC_KEY=${RECAPTCHA_PUBLIC_KEY}
       - RECAPTCHA_PRIVATE_KEY=${RECAPTCHA_PRIVATE_KEY}
@@ -36,14 +48,3 @@ services:
       - LOGGING_WEBHOOK_CHANNEL=${LOGGING_WEBHOOK_CHANNEL}
       - LOGGING_WEBHOOK_TOKEN=${LOGGING_WEBHOOK_TOKEN}
 
-  webapp2:
-    build: verify-web/.
-    container_name: verify-app2
-    restart: "always"
-    environment:
-      - RECAPTCHA_PUBLIC_KEY=${RECAPTCHA_PUBLIC_KEY}
-      - RECAPTCHA_PRIVATE_KEY=${RECAPTCHA_PRIVATE_KEY}
-      - DISCORD_API_TOKEN=${DISCORD_API_TOKEN}
-      - DISCORD_SERVER_CHANNEL_ID=${DISCORD_SERVER_CHANNEL_ID}
-      - LOGGING_WEBHOOK_CHANNEL=${LOGGING_WEBHOOK_CHANNEL}
-      - LOGGING_WEBHOOK_TOKEN=${LOGGING_WEBHOOK_TOKEN}
