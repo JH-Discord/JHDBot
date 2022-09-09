@@ -34,4 +34,6 @@ ENV PYTHONPATH=$PYTHONPATH:/home/app/python
 
 RUN pip install -r requirements.txt --target=/home/app/python --no-cache-dir
 
+HEALTHCHECK CMD discordhealthcheck || exit 1
+
 CMD ["python", "bot.py"]

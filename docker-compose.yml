@@ -24,7 +24,7 @@ services:
     networks:
       - backend
     ports:
-      - "5000"
+      - "40404"
     environment:
       - DISCORD_API_TOKEN=${DISCORD_API_TOKEN}
       - BOT_PREFIX_CHARACTER=${BOT_PREFIX_CHARACTER}
