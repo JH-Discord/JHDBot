@@ -16,6 +16,7 @@ services:
       - "8080:80"
 
   jhd-bot:
+    image: jhdiscord/jhd-bot-docker:latest
     build:
         context: JHDBot/
         dockerfile: Dockerfile
