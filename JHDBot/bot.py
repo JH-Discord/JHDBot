@@ -93,7 +93,10 @@ async def on_member_join(member):
     rules_channel = discord.utils.get(member.guild.channels, name=os.getenv("RULES_CHANNEL"))
     await channel.send(
         f'**Hi there, {member.mention} Welcome to JHDiscord!**\n\nTo gain access to the rest of the server. '
-        f'Please read the {rules_channel.mention} and then verify yourself to join the conversation.\n')
+        f'Please read the {rules_channel.mention} and then verify yourself to join the conversation.\n\n'
+        f'We have recently seen a scam affecting server members where fake accounts like `J H D#7864` and `J H D#8994` pretend to be john/us'
+        f' and phish members into crypto scams, please note our server is not associated with them, please report those account to discord and block them'
+        f', be smart and dont get scammed !! thanks :D')
     logchannel = discord.utils.get(member.guild.channels, name='join-leave')
     emb = discord.Embed(description=f'User - {member.mention}\nId - {member.id}', colour=0x3CFF4C)
     emb.set_author(name='Member Joined', icon_url=f"{member.avatar_url}")
