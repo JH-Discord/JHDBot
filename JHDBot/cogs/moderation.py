@@ -3,6 +3,8 @@ import asyncio
 import csv
 import random
 import discord
+import os
+import pathlib
 from discord.ext import commands
 
 
@@ -112,41 +114,49 @@ class ModeratorCog(commands.Cog):
         except:
             await ctx.send("Seems like the Bot is not authorized to run this command")
 
-
     @commands.command(
         name="kick",
         help="Kicks a specified user.",
-        usage="[user mention or id] [reason]"
+        usage="[user mention or id] [reason]",
     )
     @commands.has_permissions(kick_members=True)
     @commands.has_any_role("Admin", "Moderator")
     async def kick(self, ctx, user: discord.Member, *, reason=None):
-        if user is None or reason is None:
-            for c in self.get_commands():
-                if c.name == "kick":
-                    cmd = c
-                    break
-            await ctx.send(f"Usage: `{self.bot.command_prefix}{cmd.name} {cmd.usage}`")
-            return
+        if user.guild_permissions.manage_messages:
+            # check perms. if user has perms to manage message like if he mod he can't be banned by the bot.
+            await ctx.send(
+                f"Sorry. As much as I too would like to kick {user}, NightWolf wouldn't like that :("
+            )
+        elif ctx.message.author.guild_permissions.ban_members:
+            kickgifs_path = pathlib.Path(os.environ["GIFDIR"] + "/kick.csv")
+            kick_gifs = []
+            if kickgifs_path.exists():
+                with open(kickgifs_path, "r") as f:
+                    kick_gifs = list(csv.reader(f))[0]
+            else:
+                # Just use a generic kick gif if the file is not found
+                kick_gifs = [
+                    "https://tenor.com/view/kick-knock-out-hurt-ouch-gif-4799973"
+                ]
 
-        if user.guild_permissions.kick_members:
-            await ctx.send(f"Can't kick {user} because of their current permissions.")
-            return
+            gif = random.choice(kick_gifs)
 
-        kick_gifs = []
-        with open("gifs/kick.csv", "r") as f:
-            kick_gifs = list(csv.reader(f))[0]
+            await ctx.guild.kick(user=user, reason=reason)  # kick the user
+            await ctx.send(f"{user} has been kicked from the server")
+            await ctx.send(gif)
 
-        gif = random.choice(kick_gifs)
-        try:
-            await user.send(f"You were kicked from JHDiscord : {reason}")
-            await user.send(gif)
-        except:
-            pass
+            # This could throw an exception if the user does not allow DMs
+            try:
+                # Sends a DM letting the user know they were banned
+                await user.send(f"You were kicked from JHDiscord : {reason}")
+                await user.send(gif)
+            except:
+                pass
 
-        await ctx.guild.kick(user=user, reason=reason)  # kicks that user
-        await ctx.send(f"{user} has been kicked out from the server")
-        await ctx.send(gif)
+        else:
+            await ctx.send(
+                "Sorry, it seems like you are not authorized to kick members"
+            )
         await asyncio.sleep(5)
         await ctx.message.delete()
 
@@ -157,29 +167,41 @@ class ModeratorCog(commands.Cog):
     async def ban(
         self, ctx, user: discord.Member, *, reason=None
     ):  # gets context user and reason, default being None
-        try:
-            if user.guild_permissions.manage_messages:
-                # check perms. if user has perms to manage message like if he mod he can't be banned by the bot.
-                await ctx.send(f"Sorry, can't ban {user} because of perms : (")
-            elif ctx.message.author.guild_permissions.ban_members:
-                # checks if user who send the ban command is authorized to do it.
-                await user.send(f"You were banned from JHDiscord : {reason}")
-
-                ban_gifs = []
-                with open("gifs/ban.csv", "r") as f:
+        if user.guild_permissions.manage_messages:
+            # check perms. if user has perms to manage message like if he mod he can't be banned by the bot.
+            await ctx.send(
+                f"Sorry. As much as I too would like to ban {user}, NightWolf wouldn't like that :("
+            )
+        elif ctx.message.author.guild_permissions.ban_members:
+            bangifs_path = pathlib.Path(os.environ["GIFDIR"] + "/ban.csv")
+            ban_gifs = []
+            if bangifs_path.exists():
+                with open(bangifs_path, "r") as f:
                     ban_gifs = list(csv.reader(f))[0]
-
-                gif = random.choice(ban_gifs)
-                await user.send(gif)
-                await ctx.guild.ban(user=user, reason=reason)  # bans that user
-                await ctx.send(f"{user} has been banned from the server")
-                await ctx.send(gif)
             else:
-                await ctx.send("Sorry, it seems like you are not authorized to do it")
-            await asyncio.sleep(5)
-            await ctx.message.delete()
-        except:
-            await ctx.send("The bot is unauthorized to ban members.")
+                # Just use a generic ban gif if the file is not found
+                ban_gifs = [
+                    "https://tenor.com/view/blob-banned-ban-hammer-blob-ban-emoji-gif-16021044"
+                ]
+
+            gif = random.choice(ban_gifs)
+
+            await ctx.guild.ban(user=user, reason=reason)  # ban the user
+            await ctx.send(f"{user} has been banned from the server")
+            await ctx.send(gif)
+
+            # This could throw an exception if the user does not allow DMs
+            try:
+                # Sends a DM letting the user know they were banned
+                await user.send(f"You were banned from JHDiscord : {reason}")
+                await user.send(gif)
+            except:
+                pass
+
+        else:
+            await ctx.send("Sorry, it seems like you are not authorized to ban members")
+        await asyncio.sleep(5)
+        await ctx.message.delete()
 
     # MultiKick Member Command..
     @commands.command(name="multikick", hidden=True)  # a function to multikick members
@@ -232,31 +254,33 @@ class ModeratorCog(commands.Cog):
             await ctx.send("The bot is unauthorized to ban members.")
 
     @commands.command(
-        name="addgif",
-        help="Adds a ban/kick gif",
-        usage="[kick/ban] [url to gif]"
+        name="addgif", help="Adds a ban/kick gif", usage="[kick/ban] [url to gif]"
     )
     @commands.has_permissions(kick_members=True)
     @commands.has_any_role("Admin", "Moderator")
     async def addgif(self, ctx, option, *, url: str = None):
         if url is None:
-            await ctx.send(f"Usage: `{self.bot.command_prefix}{ctx.command.name} "
-                    f"{ctx.command.usage}`")
+            await ctx.send(
+                f"Usage: `{self.bot.command_prefix}{ctx.command.name} "
+                f"{ctx.command.usage}`"
+            )
             return
 
         filename = ""
         if option.lower() == "kick":
-            filename = "gifs/kick.csv"
+            filename = os.environ["GIFDIR"] + "/kick.csv"
         elif option.lower() == "ban":
-            filename = "gifs/ban.csv"
+            filename = os.environ["GIFDIR"] + "/ban.csv"
         else:
-            await ctx.send(f"Usage: `{self.bot.command_prefix}{ctx.command.name} "
-                    f"{ctx.command.usage}`")
+            await ctx.send(
+                f"Usage: `{self.bot.command_prefix}{ctx.command.name} "
+                f"{ctx.command.usage}`"
+            )
             return
 
-        url.strip('\n')
-        if url[-1] == '/':
-            url = url.rstrip('/')
+        url.strip("\n")
+        if url[-1] == "/":
+            url = url.rstrip("/")
 
         with open(filename, "r") as f:
             gifs = list(csv.reader(f))[0]
@@ -276,29 +300,33 @@ class ModeratorCog(commands.Cog):
         name="removegif",
         aliases=["rmgif"],
         help="Removes a ban/kick gif",
-        usage="[kick/ban] [url to gif]"
+        usage="[kick/ban] [url to gif]",
     )
     @commands.has_permissions(kick_members=True)
     @commands.has_any_role("Admin", "Moderator")
     async def removegif(self, ctx, option, *, url: str = None):
         if url is None:
-            await ctx.send(f"Usage: `{self.bot.command_prefix}{ctx.command.name} "
-                    f"{ctx.command.usage}`")
+            await ctx.send(
+                f"Usage: `{self.bot.command_prefix}{ctx.command.name} "
+                f"{ctx.command.usage}`"
+            )
             return
 
         filename = ""
         if option.lower() == "kick":
-            filename = "gifs/kick.csv"
+            filename = os.environ["GIFDIR"] + "/kick.csv"
         elif option.lower() == "ban":
-            filename = "gifs/ban.csv"
+            filename = os.environ["GIFDIR"] + "/ban.csv"
         else:
-            await ctx.send(f"Usage: `{self.bot.command_prefix}{ctx.command.name} "
-                    f"{ctx.command.usage}`")
+            await ctx.send(
+                f"Usage: `{self.bot.command_prefix}{ctx.command.name} "
+                f"{ctx.command.usage}`"
+            )
             return
 
-        url.strip('\n')
-        if url[-1] == '/':
-            url = url.rstrip('/')
+        url.strip("\n")
+        if url[-1] == "/":
+            url = url.rstrip("/")
 
         with open(filename, "r") as f:
             gifs = list(csv.reader(f))[0]
@@ -320,28 +348,29 @@ class ModeratorCog(commands.Cog):
         name="listgifs",
         aliases=["lsgifs"],
         help="List gifs in database",
-        usage="[kick/ban]"
+        usage="[kick/ban]",
     )
     @commands.has_permissions(kick_members=True)
     @commands.has_any_role("Admin", "Moderator")
     async def listgifs(self, ctx, option):
         filename = ""
         if option.lower() == "kick":
-            filename = "gifs/kick.csv"
+            filename = os.environ["GIFDIR"] + "/kick.csv"
         elif option.lower() == "ban":
-            filename = "gifs/ban.csv"
+            filename = os.environ["GIFDIR"] + "/ban.csv"
         else:
-            await ctx.send(f"Usage: `{self.bot.command_prefix}{ctx.command.name} "
-                    f"{ctx.command.usage}`")
+            await ctx.send(
+                f"Usage: `{self.bot.command_prefix}{ctx.command.name} "
+                f"{ctx.command.usage}`"
+            )
             return
 
         with open(filename, "r") as f:
             gifs = list(csv.reader(f))[0]
 
-        gifs = '\n'.join(gifs)
+        gifs = "\n".join(gifs)
         await ctx.send(f"{option} gifs:\n```\n{gifs}\n```")
         return
-
 
 
 def setup(bot):
