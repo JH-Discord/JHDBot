@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-import asyncio
-import urllib.request
-import discord
-import os
-from discord.ext import commands
 import aiohttp
+import asyncio
+import discord
+import inspect
 import json
+import os
+import urllib.request
+from discord.ext import commands
+
 
 class VeteranCog(commands.Cog):
     def __init__(self, bot):
@@ -50,32 +52,26 @@ class VeteranCog(commands.Cog):
     )  # creating Commands ctx is something like context, send automatically
     async def beginner(self, ctx):
         if await self.check_perms(ctx):
-            otw = discord.utils.get(ctx.guild.channels, name=os.getenv("OVER_THE_WIRE"))
-            ctf = discord.utils.get(ctx.guild.channels, name=os.getenv("CAPTURE_THE_FLAG"))
-            thm = discord.utils.get(ctx.guild.channels, name=os.getenv("TRYHACKME"))
-            big = discord.utils.get(ctx.guild.channels, name=os.getenv("BEGINNERS"))
-            htb = discord.utils.get(ctx.guild.channels, name=os.getenv("HACKTHEBOX"))
-            pro = discord.utils.get(ctx.guild.channels, name=os.getenv("PROGRAMMING"))
-            await ctx.send(
-                f"I. Bandit OverTheWire: (<https://overthewire.org/wargames/bandit/>) A wargame focusing on basic Linux "
-                f"commands and privilege escalation.\n\nII. Natas OverTheWire: (<https://overthewire.org/wargames/natas/>)"
-                f" A wargame focusing on teaching the basics of server side web-security."
-                f" All OTW content can be discussed in {otw.mention} \n\nIII. "
-                f"PicoCTF: (<https://picoctf.com/>) A super beginner-friendly CTF that is up year round for practice. You can chat "
-                f"about PicoCTF in {ctf.mention} \n\nIV. TryHackMe: (<https://tryhackme.com/>) A beginner friendly "
-                f"platform focusing on learning how to hack in more real-world situations than CTFs. There are so-called "
-                f'"rooms" for all levels and walkthroughs available if necessary. Questions can be asked in '
-                f'{thm.mention}. Also here is a guide, if you are starting with THM (<https://blog.tryhackme.com/free_path/>)\n\n'
-                f'V. Hack the Box (<https://www.hackthebox.eu/>) is a platform to learn and grow your pentesting skills.'
-                f' Boxes range from "easy" to "insane" and cover a broad range of topics.'
-                f' Walkthroughs cannot be posted but "Starting point" (<https://app.hackthebox.eu/starting-point>)'
-                f" will point you in the general direction. HTB Academy (<https://academy.hackthebox.eu/>) is another"
-                f" excellent resource. The {htb.mention} channel is provided for discussion.\n\n"
-                f"VI. Codecademy (<https://www.codecademy.com>): An interactive website for learning how to code. "
-                f"This website teaches a variety of languages ranging from C++ to JavaScript in a very intuitive way. "
-                f"Questions can be asked in the {pro.mention} channel.\n\n"
-                f"For any additional questions or concerns, please consult the {big.mention} channel."
-            )
+            wargames_channel = discord.utils.get(ctx.guild.channels, name=os.getenv("WARGAMES"))
+            ctfchat_channel = discord.utils.get(ctx.guild.channels, name=os.getenv("CTF_CHAT"))
+            beginner_channel = discord.utils.get(ctx.guild.channels, name=os.getenv("BEGINNERS"))
+            programming_channel = discord.utils.get(ctx.guild.channels, name=os.getenv("PROGRAMMING"))
+
+            beginner_message = f"""
+            I. OverTheWire: (<https://overthewire.org/wargames/>): Collection of wargames designed for learning about security and CTFs. Discussion about OverTheWire can be done in {wargames_channel.mention}.
+
+            II. PicoCTF: (<https://picoctf.com/>): A super beginner-friendly CTF that is up year round for practice. You can chat about PicoCTF in {ctfchat_channel.mention}.
+
+            III. TryHackMe: (<https://tryhackme.com/>): A beginner friendly platform focusing on learning how to hack in more real-world situations than CTFs. There are so-called "rooms" for all levels and walkthroughs available if necessary. Questions can be asked in {wargames_channel.mention}. Also here is a guide, if you are starting with THM (<https://blog.tryhackme.com/free_path/>)
+
+            IV. Hack the Box (<https://www.hackthebox.eu/>): A platform to learn and grow your pentesting skills. Boxes range from "easy" to "insane" and cover a broad range of topics. Walkthroughs cannot be posted but "Starting point" (<https://app.hackthebox.eu/starting-point>) will point you in the general direction. HTB Academy (<https://academy.hackthebox.eu/>) is another excellent resource. The {wargames_channel.mention} channel can be used for discussing Hack the Box content.
+
+            V. Codecademy (<https://www.codecademy.com>): An interactive website for learning how to code. This website teaches a variety of languages ranging from C++ to JavaScript in a very intuitive way. Questions can be asked in the {programming_channel.mention} channel.
+
+            For any additional questions or concerns, please consult the {beginner_channel.mention} channel.
+            """
+
+            await ctx.send(inspect.cleandoc(beginner_message))
         else:
             return
 
@@ -94,7 +90,7 @@ class VeteranCog(commands.Cog):
 
     # Cat command - to embed wholesomeness in chat
     @commands.command(
-        name="cat", 
+        name="cat",
         help="Command to add wholesomeness to chat."
     )
     async def cat(self, ctx):
