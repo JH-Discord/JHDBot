@@ -57,19 +57,7 @@ class VeteranCog(commands.Cog):
             beginner_channel = discord.utils.get(ctx.guild.channels, name=os.getenv("BEGINNERS"))
             programming_channel = discord.utils.get(ctx.guild.channels, name=os.getenv("PROGRAMMING"))
 
-            beginner_message = f"""
-            I. OverTheWire: (<https://overthewire.org/wargames/>): Collection of wargames designed for learning about security and CTFs. Discussion about OverTheWire can be done in {wargames_channel.mention}.
-
-            II. PicoCTF: (<https://picoctf.com/>): A super beginner-friendly CTF that is up year round for practice. You can chat about PicoCTF in {ctfchat_channel.mention}.
-
-            III. TryHackMe: (<https://tryhackme.com/>): A beginner friendly platform focusing on learning how to hack in more real-world situations than CTFs. There are so-called "rooms" for all levels and walkthroughs available if necessary. Questions can be asked in {wargames_channel.mention}. Also here is a guide, if you are starting with THM (<https://blog.tryhackme.com/free_path/>)
-
-            IV. Hack the Box (<https://www.hackthebox.eu/>): A platform to learn and grow your pentesting skills. Boxes range from "easy" to "insane" and cover a broad range of topics. Walkthroughs cannot be posted but "Starting point" (<https://app.hackthebox.eu/starting-point>) will point you in the general direction. HTB Academy (<https://academy.hackthebox.eu/>) is another excellent resource. The {wargames_channel.mention} channel can be used for discussing Hack the Box content.
-
-            V. Codecademy (<https://www.codecademy.com>): An interactive website for learning how to code. This website teaches a variety of languages ranging from C++ to JavaScript in a very intuitive way. Questions can be asked in the {programming_channel.mention} channel.
-
-            For any additional questions or concerns, please consult the {beginner_channel.mention} channel.
-            """
+            beginner_message = f"""## :slight_smile: Beginner Resources\nIf you want to begin your Cybersecurity journey, here are some useful resources to help you get started.\n\n**I. [Hack The Box Academy](<https://academy.hackthebox.com/catalogue/paths>)**:  A "University for Hackers." HTB Academy offers step-by-step cybersecurity courses that cover information security theory and prepare you for a job in cybersecurity.\n\n**II. [TryHackMe](<https://tryhackme.com/>)**:  TryHackMe is an online platform that teaches cybersecurity through hands-on exercises and real-world labs for all skill levels.\n\n**III. [OverTheWire](<https://overthewire.org/wargames/>)**: Collection of wargames designed for learning about security and CTFs.\n\n**IV. [CTFtime](<https://ctftime.org/event/list/upcoming>)**:  CTFtime is a great resource that lists upcoming events. If you're new to CTFs, no worries! Check out this helpful [video](<https://www.youtube.com/watch?v=Lus7aNf2xDg>) by LiveOverflow.\n\n**V.  [Codecademy](<https://www.codecademy.com>)**: An interactive website for learning how to code. This website teaches a variety of languages ranging from C++ to JavaScript in a very intuitive way.\n\n## :wave: Talk it up\n\n**I.** {beginner_channel.mention}: This channel is awesome for anyone new to hacking and security.\n\n**II.** {wargames_channel.mention}: Chat about cool resources like Hack The Box, TryHackMe, OverTheWire, and others.\n\n**III.** {ctfchat_channel.mention}: This is the place to talk about anything CTF-related that doesn't have its own channel.\n\n**IV.** {programming_channel.mention}:  Chat it up about coding projects you're working on.\n\n:blue_heart: **Happy hacking!**"""
 
             await ctx.send(inspect.cleandoc(beginner_message))
         else:
