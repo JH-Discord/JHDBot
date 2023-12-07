@@ -87,7 +87,7 @@ class VeteranCog(commands.Cog):
                 async with session.get('https://api.thecatapi.com/api/images/get?format=json') as response:
                     html = json.loads(await response.text())
                     emb = discord.Embed(description=f'Kato <3', colour=0x3CFF4C)
-                    emb.set_footer(text=f"Cute isn't it/kawai deso ?")
+                    emb.set_footer(text=f"Cute isn't it/kawaii da ne?")
                     emb.set_image(url=(html[0]["url"]))
                     await ctx.send(embed=emb)
         else:
