@@ -195,7 +195,7 @@ class VeteranCog(commands.Cog):
                     f"Query not provided: `{self.bot.command_prefix}lmgtfy <query>`"
                 )
             else:
-                lmgtfyurl = "https://lmgtfy.com/?q="
+                lmgtfyurl = "https://letmegooglethat.com/?q="
                 fullyurl = lmgtfyurl + urllib.parse.quote_plus(query, safe="")
                 await ctx.send(fullyurl)
         else:
