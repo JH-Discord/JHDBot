@@ -120,7 +120,7 @@ class ModeratorCog(commands.Cog):
         usage="[user mention or id] [reason]",
     )
     @commands.has_permissions(kick_members=True)
-    @commands.has_any_role("Admin", "Moderator")
+    @commands.has_any_role("Admin", "Moderator", "Trial Moderator")
     async def kick(self, ctx, user: discord.Member, *, reason=None):
         if user.guild_permissions.manage_messages:
             # check perms. if user has perms to manage message like if he mod he can't be banned by the bot.
@@ -257,7 +257,7 @@ class ModeratorCog(commands.Cog):
         name="addgif", help="Adds a ban/kick gif", usage="[kick/ban] [url to gif]"
     )
     @commands.has_permissions(kick_members=True)
-    @commands.has_any_role("Admin", "Moderator")
+    @commands.has_any_role("Admin", "Moderator", "Trial Moderator")
     async def addgif(self, ctx, option, *, url: str = None):
         if url is None:
             await ctx.send(
@@ -303,7 +303,7 @@ class ModeratorCog(commands.Cog):
         usage="[kick/ban] [url to gif]",
     )
     @commands.has_permissions(kick_members=True)
-    @commands.has_any_role("Admin", "Moderator")
+    @commands.has_any_role("Admin", "Moderator", "Trial Moderator")
     async def removegif(self, ctx, option, *, url: str = None):
         if url is None:
             await ctx.send(
@@ -351,7 +351,7 @@ class ModeratorCog(commands.Cog):
         usage="[kick/ban]",
     )
     @commands.has_permissions(kick_members=True)
-    @commands.has_any_role("Admin", "Moderator")
+    @commands.has_any_role("Admin", "Moderator", "Trial Moderator")
     async def listgifs(self, ctx, option):
         filename = ""
         if option.lower() == "kick":
