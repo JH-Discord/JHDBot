@@ -84,7 +84,7 @@ class VeteranCog(commands.Cog):
     async def cat(self, ctx):
         if await self.check_perms(ctx):
             async with aiohttp.ClientSession() as session:
-                async with session.get('https://api.thecatapi.com/api/images/get?format=json') as response:
+                async with session.get('https://api.thecatapi.com/v1/images/search?format=json') as response:
                     html = json.loads(await response.text())
                     emb = discord.Embed(description=f'Kato <3', colour=0x3CFF4C)
                     emb.set_footer(text=f"Cute isn't it/kawaii da ne?")
