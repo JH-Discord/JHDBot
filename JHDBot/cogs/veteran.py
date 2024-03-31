@@ -79,7 +79,7 @@ class VeteranCog(commands.Cog):
     # Cat command - to embed wholesomeness in chat
     @commands.command(
         name="cat",
-        help="Command to add wholesomeness to chat."
+        help="Command to add wholesomeness to chat...or change the subject"
     )
     async def cat(self, ctx):
         if await self.check_perms(ctx):
@@ -93,6 +93,23 @@ class VeteranCog(commands.Cog):
         else:
             return
 
+    # Dog command - to embed more wholesomeness in chat
+    @commands.command(
+        name="dog",
+        help="Another command to add wholesomeness to chat...or change the subject."
+    )
+    async def dog(self, ctx):
+        if await self.check_perms(ctx):
+            async with aiohttp.ClientSession() as session:
+                async with session.get('https://api.thedogapi.com/v1/images/search?format=json') as response:
+                    html = json.loads(await response.text())
+                    emb = discord.Embed(description=f'Inu <3', colour=0x3CFF4C)
+                    emb.set_footer(text=f"Cute isn't it/kawaii da ne?")
+                    emb.set_image(url=(html[0]["url"]))
+                    await ctx.send(embed=emb)
+        else:
+            return
+    
     # blackhat command
     @commands.command(
         name="blackhat",
