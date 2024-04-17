@@ -2,7 +2,7 @@ name: Check Apps For Errors And Build Docker Images
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   jhdbot-check:
