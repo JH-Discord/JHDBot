@@ -1,5 +1,5 @@
 discord.py==1.7.3
 python-dotenv
 urllib3==1.25.8
-requests==2.23.0
+requests==2.31.0
 requests-html==0.10.0
